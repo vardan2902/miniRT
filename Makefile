@@ -8,7 +8,12 @@ MLXDIR		=	./minilibx-linux
 LIBMLX		=	$(MLXDIR)/libmlx.a
 OBJ_DIR		=	obj
 SRC_DIR		=	src
-SRC_FILES	=	main.c
+
+UTILS_DIR	=	utils
+UTILS_SRCS	=	validator.c
+
+SRC_FILES	=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))	\
+				main.c
 SRCS		=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 MKDIR		=	mkdir -p
