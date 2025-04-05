@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/05 20:12:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/05 20:06:29 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
+#ifndef UTILS_H
+# define UTILS_H
 
-int	main(int argc, char **argv)
-{
-	int	fd;
+int	validate_args(int argc, char **argv);
 
-	fd = validate_args(argc, argv);
-	(void)fd;
-	return (0);
-}
+#endif
