@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/05 20:12:23 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:38:44 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	main(int argc, char **argv)
 {
-	int	fd;
+	int		fd;
+	t_mlx	mlx;
 
 	fd = validate_args(argc, argv);
-	(void)fd;
+	close(fd);
+	init_mlx(&mlx);
+	register_hooks(&mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/05 20:13:12 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:29:46 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,9 @@ static void	validate_extension(char *path)
 
 	ext = ft_strrchr(path, '.');
 	if (!ext)
-	{
-		perror("Error\n");
-		exit(1);
-	}
+		throw_error("");
 	if (path >= ext || ft_strcmp(ext, ".rt"))
-	{
-		perror("Error\n");
-		exit(1);
-	}
+		throw_error("");
 }
 
 static int	validate_file(char *path)
@@ -35,20 +29,14 @@ static int	validate_file(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		perror("Error\n");
-		exit(1);
-	}
+		throw_error("");
 	return (fd);
 }
 
 int	validate_args(int argc, char **argv)
 {
 	if (argc != 2)
-	{
-		perror("Error\n");
-		exit(1);
-	}
+		throw_error("");
 	validate_extension(argv[1]);
 	return (validate_file(argv[1]));
 }

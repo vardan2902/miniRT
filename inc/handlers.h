@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   handlers.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:49:50 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 16:16:59 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 18:45:59 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef HANDLERS_H
+# define HANDLERS_H
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <structs.h>
-# include <defines.h>
-# include <libft.h>
-# include <utils.h>
+int	handle_close(void *param);
+int	handle_keypress(int key, void *param);
 
 #endif

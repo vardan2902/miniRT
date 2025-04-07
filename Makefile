@@ -10,9 +10,13 @@ OBJ_DIR		=	obj
 SRC_DIR		=	src
 
 UTILS_DIR	=	utils
-UTILS_SRCS	=	validator.c
+UTILS_SRCS	=	validator.c error.c
+
+UTILS_MLX_DIR	=	utils/mlx
+UTILS_MLX_SRCS	=	init.c handlers.c
 
 SRC_FILES	=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))	\
+				$(addprefix $(UTILS_MLX_DIR)/, $(UTILS_MLX_SRCS))	\
 				main.c
 SRCS		=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))

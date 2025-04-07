@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:49:50 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 16:15:11 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 20:39:04 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include <minirt.h>
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <structs.h>
-# include <defines.h>
-# include <libft.h>
-# include <utils.h>
+int	handle_close(void *param)
+{
+	t_mlx	*mlx;
 
-#endif
+	mlx = (t_mlx *)param;
+	mlx_destroy_window(mlx->ptr, mlx->win);
+	exit(0);
+}
+
+int	handle_keypress(int key, void *param)
+{
+	t_mlx	*mlx;
+
+	mlx = (t_mlx *)param;
+	if (key == XK_Escape)
+		handle_close(mlx);
+	return (0);
+}

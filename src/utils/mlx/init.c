@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:49:50 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 15:59:05 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 20:37:57 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include <minirt.h>
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <structs.h>
-# include <defines.h>
-# include <libft.h>
-# include <utils.h>
+void	register_hooks(t_mlx *mlx)
+{
+	mlx_hook(mlx->win, KeyPress, KeyPressMask, handle_keypress, mlx);
+	mlx_hook(mlx->win, DestroyNotify, NoEventMask, handle_close, mlx);
+	mlx_loop(mlx->ptr);
+}
 
-#endif
+void	init_mlx(t_mlx *mlx)
+{
+	mlx->ptr = mlx_init();
+	if (!mlx->ptr)
+		throw_error("");
+	mlx->win = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, TITLE);
+	if (!mlx->win)
+		throw_error("");
+}

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:49:50 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 15:45:41 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 20:30:32 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include <minirt.h>
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <structs.h>
-# include <defines.h>
-# include <libft.h>
-# include <utils.h>
-
-#endif
+void	throw_error(char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(msg, 2);
+	exit(EXIT_FAILURE);
+}
