@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:45:41 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:56:38 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:30:32 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	throw_error(char *msg)
 {
-	write(2, msg, ft_strlen(msg));
-	exit(1);
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(msg, 2);
+	exit(EXIT_FAILURE);
 }
