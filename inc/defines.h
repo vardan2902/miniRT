@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 15:41:52 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 18:49:59 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#ifndef DEFINES_H
+# define DEFINES_H
 
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win;
-}	t_mlx;
+# define WIDTH 800
+# define HEIGHT 600
+# define TITLE "miniRT"
 
 #endif
