@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 16:45:47 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 16:15:11 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 16:59:36 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+int	handle_close(void *param)
 {
-	int	fd;
 	t_mlx	*mlx;
 
-	fd = validate_args(argc, argv);
-	(void)fd;
-	mlx = init_mlx();
-	(void)mlx;
+	mlx = (t_mlx *)param;
+	mlx_destroy_window(mlx->ptr, mlx->win);
 	free(mlx);
+	exit(0);
+}
+
+int	handle_keypress(int key, void *param)
+{
+	t_mlx	*mlx;
+
+	mlx = (t_mlx *)param;
+	if (key == XK_Escape)
+		handle_close(mlx);
 	return (0);
 }

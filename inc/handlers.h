@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handlers.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 16:45:47 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 16:16:59 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 16:59:24 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
+#ifndef HANDLERS_H
+# define HANDLERS_H
 
-int	main(int argc, char **argv)
-{
-	int	fd;
-	t_mlx	*mlx;
+int		handle_close(void *param);
+int		handle_keypress(int key, void *param);
 
-	fd = validate_args(argc, argv);
-	(void)fd;
-	mlx = init_mlx();
-	(void)mlx;
-	free(mlx);
-	return (0);
-}
+#endif

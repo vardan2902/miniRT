@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 16:45:47 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 15:41:52 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
+#ifndef STRUCT_H
+# define STRUCT_H
 
-int	main(int argc, char **argv)
+typedef struct s_mlx
 {
-	int	fd;
-	t_mlx	*mlx;
+	void	*ptr;
+	void	*win;
+}	t_mlx;
 
-	fd = validate_args(argc, argv);
-	(void)fd;
-	mlx = init_mlx();
-	(void)mlx;
-	free(mlx);
-	return (0);
-}
+#endif

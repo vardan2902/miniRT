@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.c                                        :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 15:47:38 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/07 15:59:05 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/07 17:05:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	validate_extension(char *path)
+static void	register_hooks(t_mlx *mlx)
 {
-	char	*ext;
-
-	ext = ft_strrchr(path, '.');
-	if (!ext)
-		throw_error("Error\n");
-	if (path >= ext || ft_strcmp(ext, ".rt"))
-		throw_error("Error\n");
+	mlx_hook(mlx->win, KeyPress, KeyPressMask, handle_keypress, mlx);
+	mlx_hook(mlx->win, DestroyNotify, NoEventMask, handle_close, mlx);
+	mlx_loop(mlx->ptr);
 }
 
-static int	validate_file(char *path)
+t_mlx	*init_mlx()
 {
-	int	fd;
+	t_mlx	*mlx;
 
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
+	mlx = (t_mlx *)malloc(sizeof (t_mlx));
+	if (!mlx)
 		throw_error("Error\n");
-	return (fd);
-}
-
-int	validate_args(int argc, char **argv)
-{
-	if (argc != 2)
+	mlx->ptr = mlx_init();
+	if (!mlx->ptr)
 		throw_error("Error\n");
-	validate_extension(argv[1]);
-	return (validate_file(argv[1]));
+	mlx->win = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, TITLE);
+	if (!mlx->win)
+		throw_error("Error\n");
+	register_hooks(mlx);
+	return (mlx);
 }
