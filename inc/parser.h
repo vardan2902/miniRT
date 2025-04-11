@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:35 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/09 18:12:40 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/09 20:39:51 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <float.h>
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <defines.h>
-# include <structs.h>
-# include <libft.h>
-# include <utils.h>
+bool	parse_line(t_scene *scene, char *identifier, char **line);
 
 #endif

@@ -10,7 +10,7 @@ OBJ_DIR		=	obj
 SRC_DIR		=	src
 
 UTILS_DIR	=	utils
-UTILS_SRCS	=	validator.c error.c
+UTILS_SRCS	=	validator.c parser.c error.c free.c float.c
 
 UTILS_MLX_DIR	=	utils/mlx
 UTILS_MLX_SRCS	=	init.c handlers.c

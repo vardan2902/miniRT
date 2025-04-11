@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 15:39:30 by vapetros          #+#    #+#             */
-/*   Updated: 2025/03/05 14:33:04 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/04/09 20:25:20 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "get_next_line_bonus.h"
 
 typedef struct s_list
 {
@@ -49,6 +50,7 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
 char			**ft_split(const char *s, char c);
+char			**ft_split_charset(char *str, char *charset);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
 void			*ft_memset(void *b, int c, size_t len);
