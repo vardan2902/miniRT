@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 15:39:30 by vapetros          #+#    #+#             */
-/*   Updated: 2025/04/09 20:25:20 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 18:34:15 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include "get_next_line_bonus.h"
+# include "get_next_line.h"
 
 typedef struct s_list
 {

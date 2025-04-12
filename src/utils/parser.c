@@ -6,463 +6,226 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:33:03 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/11 20:02:39 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 20:29:03 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	*build_ambient(char **line)
+bool	set_vector(char **instuction, t_vector *vector)
 {
-	t_ambient	*ambient;
-	char		**rgb;
-	char		*error_msg;
+	return (!(!to_float(instuction[0], &vector->x)
+			|| !to_float(instuction[1], &vector->y)
+			|| !to_float(instuction[2], &vector->z)));
+}
 
-	if (line[2])
+void	assign_rgb(char **instuction, t_rgb *rgb)
+{
+	rgb->r = ft_atoi(instuction[0]);
+	rgb->g = ft_atoi(instuction[1]);
+	rgb->b = ft_atoi(instuction[2]);
+}
+
+bool	create_object(void **obj, size_t size)
+{
+	*obj = malloc(size);
+	if (!obj)
+		perror(ERR_MALLOC);
+	return (!!*obj);
+}
+
+static bool	set_ratio(char *str, double *ratio, void *ptr)
+{
+	if (!is_in_limit(str, RATIO_MIN, RATIO_MAX)
+		|| !to_float(str, ratio))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
-		return (NULL);
+		free_and_log(ptr, ERR_INVALID_TOKEN, str, NULL);
+		return (false);
 	}
-	ambient = (t_ambient *)malloc(sizeof (t_ambient));
-	if (!ambient)
+	return (true);
+}
+
+static bool	set_position(char *str, t_vector *pos, void *ptr)
+{
+	char	**position;
+
+	position = ft_split(str, ',');
+	if (!position)
 	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
+		free_and_perror(ptr, ERR_MALLOC, NULL);
+		return (false);
 	}
-	if (!is_in_limit(line[0], RATIO_MIN, RATIO_MAX)
-		|| !set_float(line[0], &ambient->lighting))
+	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
+		|| !set_vector(position, pos))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(ambient);
-		return (NULL);
+		free_and_log(ptr, ERR_INVALID_TOKEN, str, position);
+		return (false);
 	}
-	rgb = ft_split(line[1], ',');
+	free_splitted(position);
+	return (true);
+}
+
+static bool	set_orientation(char *str, t_vector *orient, void *ptr)
+{
+	char	**orientation;
+
+	orientation = ft_split(str, ',');
+	if (!orientation)
+	{
+		free_and_perror(ptr, ERR_MALLOC, NULL);
+		return (false);
+	}
+	if (!is_instruction_in_range(orientation, ORIENT_MIN, ORIENT_MAX, 3)
+		|| !set_vector(orientation, orient))
+	{
+		free_and_log(ptr, ERR_INVALID_TOKEN, str, NULL);
+		free_splitted(orientation);
+		return (false);
+	}
+	free_splitted(orientation);
+	return (true);
+}
+
+static bool	check_rgb(char **rgb, char *str, void *ptr)
+{
 	if (!rgb)
 	{
-		perror("Error\nminiRT: malloc");
-		free(ambient);
-		return (NULL);
+		free_and_perror(ptr, ERR_MALLOC, NULL);
+		return (false);
 	}
 	if (!is_instruction_in_range(rgb, RGB_MIN, RGB_MAX, 3))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(ambient);
-		free_splitted(rgb);
-		return (NULL);
+		free_and_log(ptr, ERR_INVALID_TOKEN, str, rgb);
+		return (false);
 	}
-	ambient->rgb.r = ft_atoi(rgb[0]);
-	ambient->rgb.g = ft_atoi(rgb[1]);
-	ambient->rgb.b = ft_atoi(rgb[2]);
+	return (true);
+}
+
+static bool	set_rgb(char *str, t_rgb *color, void *ptr)
+{
+	char	**rgb;
+
+	rgb = ft_split(str, ',');
+	if (!check_rgb(rgb, str, ptr))
+		return (false);
+	assign_rgb(rgb, color);
 	free_splitted(rgb);
+	return (true);
+}
+
+static bool	check_arg_count(char *str)
+{
+	if (!str)
+		return (true);
+	log_error(ERR_INVALID_TOKEN, str);
+	return (false);
+}
+
+static void	*build_ambient(char **line)
+{
+	t_ambient	*ambient;
+
+	if (!check_arg_count(line[2])
+		|| !create_object((void **)&ambient, sizeof (t_ambient))
+		|| !set_ratio(line[0], &ambient->lighting, ambient)
+		|| !set_rgb(line[1], &ambient->rgb, ambient))
+		return (NULL);
 	return (ambient);
 }
 
 static void	*build_camera(char **line)
 {
 	t_camera	*camera;
-	char		**position;
-	char		**orientation;
-	char		*error_msg;
 
-	if (line[3])
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&camera, sizeof (t_camera))
+		|| !set_position(line[0], &camera->position, camera)
+		|| !set_orientation(line[1], &camera->orientation, camera))
 		return (NULL);
-	}
-	camera = (t_camera *)malloc(sizeof (t_camera));
-	if (!camera)
-	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
-	}
-	position = ft_split(line[0], ',');
-	if (!position)
-	{
-		perror("Error\nminiRT: malloc");
-		free(camera);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_float(position[0], &camera->position.x)
-		|| !set_float(position[1], &camera->position.y)
-		|| !set_float(position[2], &camera->position.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(camera);
-		free_splitted(position);
-		return (NULL);
-	}
-	orientation = ft_split(line[1], ',');
-	if (!orientation)
-	{
-		perror("Error\nminiRT: malloc");
-		free(camera);
-		free_splitted(position);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(orientation, ORIENTATION_MIN,
-			ORIENTATION_MAX, 3)
-		|| !set_float(orientation[0], &camera->orientation.x)
-		|| !set_float(orientation[1], &camera->orientation.y)
-		|| !set_float(orientation[2], &camera->orientation.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(camera);
-		free_splitted(position);
-		free_splitted(orientation);
-		return (NULL);
-	}
 	if (!is_in_limit(line[2], DEG_MIN, DEG_MAX)
-		|| !set_float(line[2], &camera->fov))
+		|| !to_float(line[2], &camera->fov))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
-		free(camera);
-		free_splitted(position);
-		free_splitted(orientation);
+		free_and_log(camera, ERR_INVALID_TOKEN, line[2], NULL);
 		return (NULL);
 	}
-	free_splitted(position);
-	free_splitted(orientation);
 	return (camera);
 }
 
 static void	*build_light(char **line)
 {
 	t_light	*light;
-	char	**position;
-	char	*error_msg;
+	char	**rgb;
 
-	if (line[3])
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&light, sizeof (t_light))
+		|| !set_position(line[0], &light->position, light)
+		|| !set_ratio(line[1], &light->brightness, light))
+		return (NULL);
+	rgb = ft_split(line[2], ',');
+	if (!check_rgb(rgb, line[2], light))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
+		free_splitted(rgb);
 		return (NULL);
 	}
-	light = (t_light *)malloc(sizeof (t_light));
-	if (!light)
-	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
-	}
-	position = ft_split(line[0], ',');
-	if (!position)
-	{
-		perror("Error\nminiRT: malloc");
-		free(light);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_float(position[0], &light->position.x)
-		|| !set_float(position[1], &light->position.y)
-		|| !set_float(position[2], &light->position.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(light);
-		free_splitted(position);
-		return (NULL);
-	}
-	if (!is_in_limit(line[1], RATIO_MIN, RATIO_MAX)
-		|| !set_float(line[1], &light->brightness))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(light);
-		free_splitted(position);
-		return (NULL);
-	}
-	free_splitted(position);
+	free_splitted(rgb);
 	return (light);
 }
 
 static void	*build_sphere(char **line)
 {
 	t_sphere	*sphere;
-	char		**position;
-	char		**rgb;
-	char		*error_msg;
 
-	if (line[3])
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&sphere, sizeof (t_sphere))
+		|| !set_position(line[0], &sphere->position, sphere))
 		return (NULL);
-	}
-	sphere = (t_sphere *)malloc(sizeof (t_sphere));
-	if (!sphere)
-	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
-	}
 	if (!is_in_limit(line[1], -DBL_MAX, DBL_MAX)
-		|| !set_float(line[1], &sphere->diameter))
+		|| !to_float(line[1], &sphere->diameter))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(sphere);
+		free_and_log(sphere, ERR_INVALID_TOKEN, line[1], NULL);
 		return (NULL);
 	}
-	position = ft_split(line[0], ',');
-	if (!position)
-	{
-		perror("Error\nminiRT: malloc");
-		free(sphere);
+	if (!set_rgb(line[2], &sphere->rgb, sphere))
 		return (NULL);
-	}
-	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_float(position[0], &sphere->position.x)
-		|| !set_float(position[1], &sphere->position.y)
-		|| !set_float(position[2], &sphere->position.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(sphere);
-		free_splitted(position);
-		return (NULL);
-	}
-	rgb = ft_split(line[2], ',');
-	if (!rgb)
-	{
-		perror("Error\nminiRT: malloc");
-		free(sphere);
-		free_splitted(position);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(rgb, RGB_MIN, RGB_MAX, 3))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
-		free(sphere);
-		free_splitted(position);
-		free_splitted(rgb);
-		return (NULL);
-	}
-	sphere->rgb.r = ft_atoi(rgb[0]);
-	sphere->rgb.g = ft_atoi(rgb[1]);
-	sphere->rgb.b = ft_atoi(rgb[2]);
-	free_splitted(position);
-	free_splitted(rgb);
 	return (sphere);
 }
 
 static void	*build_plane(char **line)
 {
 	t_plane	*plane;
-	char	**position;
-	char	**orientation;
-	char	**rgb;
-	char	*error_msg;
 
-	if (line[3])
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&plane, sizeof (t_plane))
+		|| !set_position(line[0], &plane->position, plane)
+		|| !set_orientation(line[1], &plane->orientation, plane)
+		|| !set_rgb(line[2], &plane->rgb, plane))
 		return (NULL);
-	}
-	plane = (t_plane *)malloc(sizeof (t_plane));
-	if (!plane)
-	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
-	}
-	position = ft_split(line[0], ',');
-	if (!position)
-	{
-		perror("Error\nminiRT: malloc");
-		free(plane);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_float(position[0], &plane->position.x)
-		|| !set_float(position[1], &plane->position.y)
-		|| !set_float(position[2], &plane->position.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(plane);
-		free_splitted(position);
-		return (NULL);
-	}
-	orientation = ft_split(line[1], ',');
-	if (!orientation)
-	{
-		perror("Error\nminiRT: malloc");
-		free(plane);
-		free_splitted(position);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(orientation, ORIENTATION_MIN,
-			ORIENTATION_MAX, 3)
-		|| !set_float(orientation[0], &plane->orientation.x)
-		|| !set_float(orientation[1], &plane->orientation.y)
-		|| !set_float(orientation[2], &plane->orientation.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(plane);
-		free_splitted(position);
-		free_splitted(orientation);
-		return (NULL);
-	}
-	rgb = ft_split(line[2], ',');
-	if (!rgb)
-	{
-		perror("Error\nminiRT: malloc");
-		free(plane);
-		free_splitted(position);
-		free_splitted(orientation);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(rgb, RGB_MIN, RGB_MAX, 3))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
-		free(plane);
-		free_splitted(position);
-		free_splitted(orientation);
-		free_splitted(rgb);
-		return (NULL);
-	}
-	plane->rgb.r = ft_atoi(rgb[0]);
-	plane->rgb.g = ft_atoi(rgb[1]);
-	plane->rgb.b = ft_atoi(rgb[2]);
-	free_splitted(rgb);
-	free_splitted(position);
-	free_splitted(orientation);
 	return (plane);
 }
 
 static void	*build_cylinder(char **line)
 {
 	t_cylinder	*cylinder;
-	char	**position;
-	char	**orientation;
-	char	**rgb;
-	char	*error_msg;
 
-	if (line[5])
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
+	if (!check_arg_count(line[5])
+		|| !create_object((void **)&cylinder, sizeof (t_cylinder))
+		|| !set_position(line[0], &cylinder->position, cylinder)
+		|| !set_orientation(line[1], &cylinder->orientation, cylinder))
 		return (NULL);
-	}
-	cylinder = (t_cylinder *)malloc(sizeof (t_cylinder));
-	if (!cylinder)
-	{
-		perror("Error\nminiRT: malloc");
-		return (NULL);
-	}
 	if (!is_in_limit(line[2], -DBL_MAX, DBL_MAX)
-		|| !set_float(line[2], &cylinder->diameter))
+		|| !to_float(line[2], &cylinder->diameter))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[2]);
-		log_error(error_msg);
-		free(error_msg);
-		free(cylinder);
+		free_and_log(cylinder, ERR_INVALID_TOKEN, line[2], NULL);
 		return (NULL);
 	}
 	if (!is_in_limit(line[3], -DBL_MAX, DBL_MAX)
-		|| !set_float(line[3], &cylinder->height))
+		|| !to_float(line[3], &cylinder->height))
 	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[3]);
-		log_error(error_msg);
-		free(error_msg);
-		free(cylinder);
+		free_and_log(cylinder, ERR_INVALID_TOKEN, line[3], NULL);
 		return (NULL);
 	}
-	position = ft_split(line[0], ',');
-	if (!position)
-	{
-		perror("Error\nminiRT: malloc");
-		free(cylinder);
+	if (!set_rgb(line[4], &cylinder->rgb, cylinder))
 		return (NULL);
-	}
-	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_float(position[0], &cylinder->position.x)
-		|| !set_float(position[1], &cylinder->position.y)
-		|| !set_float(position[2], &cylinder->position.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[0]);
-		log_error(error_msg);
-		free(error_msg);
-		free(cylinder);
-		free_splitted(position);
-		return (NULL);
-	}
-	orientation = ft_split(line[1], ',');
-	if (!orientation)
-	{
-		perror("Error\nminiRT: malloc");
-		free(cylinder);
-		free_splitted(position);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(orientation, ORIENTATION_MIN,
-			ORIENTATION_MAX, 3)
-		|| !set_float(orientation[0], &cylinder->orientation.x)
-		|| !set_float(orientation[1], &cylinder->orientation.y)
-		|| !set_float(orientation[2], &cylinder->orientation.z))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[1]);
-		log_error(error_msg);
-		free(error_msg);
-		free(cylinder);
-		free_splitted(position);
-		free_splitted(orientation);
-		return (NULL);
-	}
-	rgb = ft_split(line[4], ',');
-	if (!rgb)
-	{
-		perror("Error\nminiRT: malloc");
-		free(cylinder);
-		free_splitted(position);
-		free_splitted(orientation);
-		return (NULL);
-	}
-	if (!is_instruction_in_range(rgb, RGB_MIN, RGB_MAX, 3))
-	{
-		error_msg = ft_strjoin("miniRT: Invalid token: ", line[4]);
-		log_error(error_msg);
-		free(error_msg);
-		free(cylinder);
-		free_splitted(position);
-		free_splitted(orientation);
-		free_splitted(rgb);
-		return (NULL);
-	}
-	cylinder->rgb.r = ft_atoi(rgb[0]);
-	cylinder->rgb.g = ft_atoi(rgb[1]);
-	cylinder->rgb.b = ft_atoi(rgb[2]);
-	free_splitted(rgb);
-	free_splitted(position);
-	free_splitted(orientation);
 	return (cylinder);
 }
 
@@ -482,28 +245,33 @@ static bool	assign_object_list(t_list **list, char **line,
 	return (true);
 }
 
-static bool	assign_object(void **scene_obj, char **line,
-	void *(build)(char **))
+bool	parse_object(void **obj, char **line, char *id, void *(build)(char **))
 {
-	*scene_obj = build(line);
-	return (!!*scene_obj);
+	if (*obj)
+	{
+		log_error(ERR_ID_DUP, id);
+		return (false);
+	}
+	*obj = build(line);
+	return (!!*obj);
 }
 
-bool	parse_line(t_scene *scene, char *identifier, char **line)
+bool	parse_line(t_scene *scene, char *id, char **line)
 {
-	if (!ft_strcmp(identifier, AMBIENT))
-		return (assign_object((void **)&scene->ambient, line, build_ambient));
-	if (!ft_strcmp(identifier, CAMERA))
-		return (assign_object((void **)&scene->camera, line, build_camera));
-	if (!ft_strcmp(identifier, LIGHT))
-		return (assign_object((void **)&scene->light, line, build_light));
-	if (!ft_strcmp(identifier, SPHERE))
+	if (!ft_strcmp(id, AMBIENT))
+		return (parse_object((void **)&scene->ambient, line, id,
+				build_ambient));
+	if (!ft_strcmp(id, CAMERA))
+		return (parse_object((void **)&scene->camera, line, id, build_camera));
+	if (!ft_strcmp(id, LIGHT))
+		return (parse_object((void **)&scene->light, line, id, build_light));
+	if (!ft_strcmp(id, SPHERE))
 		return (assign_object_list(&scene->sphere_list, line,
 				build_sphere));
-	if (!ft_strcmp(identifier, CYLINDER))
+	if (!ft_strcmp(id, CYLINDER))
 		return (assign_object_list(&scene->cylinder_list, line,
 				build_cylinder));
-	if (!ft_strcmp(identifier, PLANE))
+	if (!ft_strcmp(id, PLANE))
 		return (assign_object_list(&scene->plane_list, line,
 				build_plane));
 	return (false);

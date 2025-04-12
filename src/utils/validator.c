@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/11 19:04:15 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 18:55:14 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ bool	is_identifier(char *str)
 		|| !ft_strcmp(str, CYLINDER) || !ft_strcmp(str, PLANE));
 }
 
-bool	is_instruction_in_range(char **inst, double min, double max, int size)
+bool	is_instruction_in_range(char **inst, double min,
+	double max, int size)
 {
 	int	i;
 

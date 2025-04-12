@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:12:40 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/09 20:39:51 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 18:53:27 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define PARSER_H
 
 bool	parse_line(t_scene *scene, char *identifier, char **line);
+void	parse_scene(t_scene *scene, int fd);
 
 #endif

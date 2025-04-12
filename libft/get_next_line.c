@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 21:47:07 by vapetros          #+#    #+#             */
-/*   Updated: 2025/01/28 16:24:55 by vapetros         ###   ########.fr       */
+/*   Created: 2025/01/13 17:13:26 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/12 18:33:26 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static void	*clear_storage(char *storage)
 {
@@ -19,22 +19,25 @@ static void	*clear_storage(char *storage)
 	return (NULL);
 }
 
-static char	*read_line(int fd, char *storage)
+static char	*read_and_store(int fd, char *storage)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	ssize_t	bytes_read;
 
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (clear_storage(storage));
 	bytes_read = 1;
 	while (!gnl_strchr(storage, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			break ;
-		buffer[bytes_read] = '\0';
-		storage = gnl_join(storage, buffer);
-		if (!storage)
-			return (NULL);
+		if (bytes_read > 0)
+		{
+			buffer[bytes_read] = '\0';
+			storage = gnl_concat(storage, buffer);
+		}
 	}
+	free(buffer);
 	if (bytes_read < 0)
 		return (clear_storage(storage));
 	return (storage);
@@ -65,22 +68,24 @@ static char	*update_storage(char *storage)
 		return (clear_storage(storage));
 	new_storage = gnl_strdup(line + 1);
 	free(storage);
+	if (!new_storage)
+		return (NULL);
 	return (new_storage);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*storage[FOPEN_MAX + 1];
+	static char	*storage;
 	char		*line;
 
 	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
+		return (storage = clear_storage(storage));
+	storage = read_and_store(fd, storage);
+	if (!storage)
 		return (NULL);
-	storage[fd] = read_line(fd, storage[fd]);
-	if (!storage[fd])
-		return (NULL);
-	line = extract_line(storage[fd]);
+	line = extract_line(storage);
 	if (!line)
-		return (storage[fd] = clear_storage(storage[fd]));
-	storage[fd] = update_storage(storage[fd]);
+		return (storage = clear_storage(storage));
+	storage = update_storage(storage);
 	return (line);
 }

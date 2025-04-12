@@ -9,14 +9,19 @@ LIBMLX		=	$(MLXDIR)/libmlx.a
 OBJ_DIR		=	obj
 SRC_DIR		=	src
 
+MLX_DIR		=	mlx
+MLX_SRCS	=	init.c handlers.c
+
 UTILS_DIR	=	utils
-UTILS_SRCS	=	validator.c parser.c error.c free.c float.c
+UTILS_SRCS	=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))				\
+				validator.c		parser.c	error.c	clean.c	float.c	\
+				scene_parser.c	scene.c
 
-UTILS_MLX_DIR	=	utils/mlx
-UTILS_MLX_SRCS	=	init.c handlers.c
+LOCAL_UTILS		=	local/print.c
 
-SRC_FILES	=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))	\
+SRC_FILES	=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))			\
 				$(addprefix $(UTILS_MLX_DIR)/, $(UTILS_MLX_SRCS))	\
+				$(LOCAL_UTILS)										\
 				main.c
 SRCS		=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
