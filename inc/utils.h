@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:31:12 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:00:50 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,17 @@ void	free_and_log(void *obj, char *msg, char *token,
 void	free_and_perror(void *obj, char *msg, char **instruction);
 void	init_scene(t_scene *scene);
 void	cleanup_scene(t_scene *scene);
+bool	set_vector(char **instuction, t_vector *vector);
+bool	set_ratio(char *str, double *ratio, void *ptr);
+bool	set_position(char *str, t_vector *pos, void *ptr);
+bool	set_orientation(char *str, t_vector *orient, void *ptr);
+bool	set_rgb(char *str, t_rgb *color, void *ptr);
+void	assign_rgb(char **instuction, t_rgb *rgb);
+bool	create_object(void **obj, size_t size);
+bool	check_rgb(char **rgb, char *str, void *ptr);
+bool	check_arg_count(char *str);
+bool	assign_object_list(t_list **list, char **line,
+			void *(build)(char **));
+bool	parse_object(void **obj, char **line, char *id, void *(build)(char **));
 
 #endif

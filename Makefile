@@ -1,34 +1,41 @@
-NAME		=	miniRT
-CC			=	cc
-MAKE		=	make
-CFLAGS		=	-Wall -Wextra -Werror
-LIBFTDIR	=	./libft
-LIBFT		=	$(LIBFTDIR)/libft.a
-MLXDIR		=	./minilibx-linux
-LIBMLX		=	$(MLXDIR)/libmlx.a
-OBJ_DIR		=	obj
-SRC_DIR		=	src
+NAME			=	miniRT
+CC				=	cc
+MAKE			=	make
+CFLAGS			=	-Wall -Wextra -Werror
+LIBFTDIR		=	./libft
+LIBFT			=	$(LIBFTDIR)/libft.a
+MLXDIR			=	./minilibx-linux
+LIBMLX			=	$(MLXDIR)/libmlx.a
+OBJ_DIR			=	obj
+SRC_DIR			=	src
 
-MLX_DIR		=	mlx
-MLX_SRCS	=	init.c handlers.c
+MLX_DIR			=	mlx
+MLX_SRCS		=	init.c handlers.c
 
-UTILS_DIR	=	utils
-UTILS_SRCS	=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))				\
-				validator.c		parser.c	error.c	clean.c	float.c	\
-				scene_parser.c	scene.c
+PARSING_DIR		=	parsing
+PARSING_SRCS	=	general.c scene.c instructions.c
+
+UTILS_DIR		=	utils
+UTILS_SRCS		=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))				\
+					$(addprefix $(PARSING_DIR)/, $(PARSING_SRCS))		\
+					validator.c		error.c	clean.c	float.c	scene.c
+
+PARSER_DIR		=	parser
+PARSER_SRCS		=	ambient.c	camera.c	light.c	plane.c	sphere.c	\
+					cylinder.c	parser.c
 
 LOCAL_UTILS		=	local/print.c
 
-SRC_FILES	=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))			\
-				$(addprefix $(UTILS_MLX_DIR)/, $(UTILS_MLX_SRCS))	\
-				$(LOCAL_UTILS)										\
-				main.c
-SRCS		=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-MKDIR		=	mkdir -p
+SRC_FILES		=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))			\
+					$(addprefix $(PARSER_DIR)/, $(PARSER_SRCS))	\
+					$(LOCAL_UTILS)										\
+					main.c
+SRCS			=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS			=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
+MKDIR			=	mkdir -p
 
-INCLUDES	=	-Iinc -I$(MLXDIR) -I$(LIBFTDIR)
-LINKERS		=	-L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lmlx_Linux -lXext -lX11 -lm -lz
+INCLUDES		=	-Iinc -I$(MLXDIR) -I$(LIBFTDIR)
+LINKERS			=	-L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lmlx_Linux -lXext -lX11 -lm -lz
 
 all: $(NAME)
 

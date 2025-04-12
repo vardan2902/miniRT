@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 18:12:40 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:39:49 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/12 20:42:12 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/12 20:42:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include <minirt.h>
 
-bool	parse_line(t_scene *scene, char *identifier, char **line);
-void	parse_scene(t_scene *scene, int fd);
-void	*build_ambient(char **line);
-void	*build_camera(char **line);
-void	*build_light(char **line);
-void	*build_sphere(char **line);
-void	*build_plane(char **line);
-void	*build_cylinder(char **line);
+void	*build_plane(char **line)
+{
+	t_plane	*plane;
 
-#endif
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&plane, sizeof (t_plane))
+		|| !set_position(line[0], &plane->position, plane)
+		|| !set_orientation(line[1], &plane->orientation, plane)
+		|| !set_rgb(line[2], &plane->rgb, plane))
+		return (NULL);
+	return (plane);
+}

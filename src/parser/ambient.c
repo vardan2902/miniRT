@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ambient.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 18:12:40 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:39:49 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/12 20:37:49 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/12 20:38:19 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include <minirt.h>
 
-bool	parse_line(t_scene *scene, char *identifier, char **line);
-void	parse_scene(t_scene *scene, int fd);
-void	*build_ambient(char **line);
-void	*build_camera(char **line);
-void	*build_light(char **line);
-void	*build_sphere(char **line);
-void	*build_plane(char **line);
-void	*build_cylinder(char **line);
+void	*build_ambient(char **line)
+{
+	t_ambient	*ambient;
 
-#endif
+	if (!check_arg_count(line[2])
+		|| !create_object((void **)&ambient, sizeof (t_ambient))
+		|| !set_ratio(line[0], &ambient->lighting, ambient)
+		|| !set_rgb(line[1], &ambient->rgb, ambient))
+		return (NULL);
+	return (ambient);
+}
