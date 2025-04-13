@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:15:49 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:25:16 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,35 @@ struct s_rgb
 
 struct s_ambient
 {
-	double	lighting;
+	float	lighting;
 	t_rgb	*rgb;
 };
 
 struct s_vector
 {
-	double	x;
-	double	y;
-	double	z;
+	float	x;
+	float	y;
+	float	z;
 };
 
 struct s_camera
 {
 	t_vector	*position;
 	t_vector	*orientation;
-	double		fov;
+	float		fov;
 };
 
 struct s_light
 {
 	t_vector	*position;
-	double		brightness;
+	float		brightness;
 };
 
 struct s_sphere
 {
 	t_vector	*position;
 	t_rgb		*rgb;
-	double		diameter;
+	float		diameter;
 };
 
 struct s_plane
@@ -84,8 +84,8 @@ struct s_cylinder
 	t_vector	*position;
 	t_vector	*orientation;
 	t_rgb		*rgb;
-	double		diameter;
-	double		height;
+	float		diameter;
+	float		height;
 };
 
 struct s_scene

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unique_instructions.c                              :+:      :+:    :+:   */
+/*   vector_ops.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 18:54:15 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 20:27:43 by vapetros         ###   ########.fr       */
+/*   Created: 2025/04/13 20:28:58 by vapetros          #+#    #+#             */
+/*   Updated: 2025/04/13 20:29:07 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	set_prop(char *str, float *prop)
+float	v_length(t_vector *a)
 {
-	if (!is_in_limit(str, FLT_MIN, FLT_MAX)
-		|| !to_float(str, prop))
-	{
-		log_error(ERR_INVALID_TOKEN, str);
-		return (false);
-	}
-	return (true);
+	return (v_dot_product(a, a));
+}
+
+t_vector	*v_normilize(t_vector *a)
+{
+	return (v_scalar_product(a, 1.0f / v_length(a)));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 19:46:57 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:25:16 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void	init_mlx(t_mlx *mlx);
 void	register_hooks(t_mlx *mlx);
 bool	is_line_empty(char *line);
 bool	is_identifier(char *str);
-bool	to_float(const char *str, double *out_value);
-bool	is_in_limit(const char *str, double min, double max);
-bool	is_instruction_in_range(char **inst, double min, double max, int size);
+bool	to_float(const char *str, float *out_value);
+bool	is_in_limit(const char *str, float min, float max);
+bool	is_instruction_in_range(char **inst, float min, float max, int size);
 void	free_splitted(char **splitted);
 void	init_scene(t_scene *scene);
 void	cleanup_scene(t_scene *scene);
 bool	set_vector(char **instuction, t_vector *vector);
-bool	set_ratio(char *str, double *ratio);
+bool	set_ratio(char *str, float *ratio);
 bool	set_position(char *str, t_vector **pos);
 bool	set_orientation(char *str, t_vector **orient);
 bool	set_rgb(char *str, t_rgb **color);
-bool	set_prop(char *str, double *prop);
+bool	set_prop(char *str, float *prop);
 void	assign_rgb(char **instuction, t_rgb *rgb);
 bool	create_object(void **obj, size_t size);
 bool	check_rgb(char **rgb, char *str);
