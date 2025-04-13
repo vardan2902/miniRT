@@ -15,10 +15,14 @@ MLX_SRCS		=	init.c handlers.c
 PARSING_DIR		=	parsing
 PARSING_SRCS	=	general.c scene.c instructions.c
 
+VALIDATING_DIR	=	validating
+VALIDATING_SRCS	=	checkers.c args.c
+
 UTILS_DIR		=	utils
 UTILS_SRCS		=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))				\
 					$(addprefix $(PARSING_DIR)/, $(PARSING_SRCS))		\
-					validator.c		error.c	clean.c	float.c	scene.c
+					$(addprefix $(VALIDATING_DIR)/, $(VALIDATING_SRCS))		\
+					error.c	clean.c	float.c	scene.c
 
 PARSER_DIR		=	parser
 PARSER_SRCS		=	ambient.c	camera.c	light.c	plane.c	sphere.c	\

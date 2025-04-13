@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_parser.c                                     :+:      :+:    :+:   */
+/*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:51:42 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:33:54 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:50:20 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ static bool	process_line(t_scene *scene, char *line)
 	}
 	free_splitted(splitted);
 	return (true);
+}
+
+bool	parse_object(void **obj, char **line, char *id, void *(build)(char **))
+{
+	if (*obj)
+	{
+		log_error(ERR_ID_DUP, id);
+		return (false);
+	}
+	*obj = build(line);
+	return (!!*obj);
 }
 
 void	parse_scene(t_scene *scene, int fd)

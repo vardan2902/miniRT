@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.c                                        :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 18:55:14 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/13 16:45:38 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 16:46:03 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,4 @@ int	validate_args(int argc, char **argv)
 		throw_error("");
 	validate_extension(argv[1]);
 	return (validate_file(argv[1]));
-}
-
-bool	is_line_empty(char *line)
-{
-	int	i;
-
-	i = -1;
-	while (line[++i])
-		if (!ft_isspace(line[i]))
-			return (false);
-	return (true);
-}
-
-bool	is_identifier(char *str)
-{
-	return (!ft_strcmp(str, AMBIENT) || !ft_strcmp(str, CAMERA)
-		|| !ft_strcmp(str, LIGHT) || !ft_strcmp(str, SPHERE)
-		|| !ft_strcmp(str, CYLINDER) || !ft_strcmp(str, PLANE));
-}
-
-bool	is_instruction_in_range(char **inst, double min,
-	double max, int size)
-{
-	int	i;
-
-	i = -1;
-	while (inst[++i])
-		if (!is_in_limit(inst[i], min, max))
-			return (false);
-	return (i == size);
 }

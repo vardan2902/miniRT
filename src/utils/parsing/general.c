@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normal_anun.c                                      :+:      :+:    :+:   */
+/*   general.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:47:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:48:27 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:52:47 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,4 @@ bool	assign_object_list(t_list **list, char **line,
 		return (false);
 	ft_lstadd_back(list, new);
 	return (true);
-}
-
-bool	parse_object(void **obj, char **line, char *id, void *(build)(char **))
-{
-	if (*obj)
-	{
-		log_error(ERR_ID_DUP, id);
-		return (false);
-	}
-	*obj = build(line);
-	return (!!*obj);
 }

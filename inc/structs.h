@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/11 20:04:28 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:02:24 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ struct s_mlx
 
 struct s_rgb
 {
-	unsigned char	r; // validate 0 - 255
+	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
 };
 
 struct s_ambient
 {
-	double	lighting; // ambient lighting ratio in the range [0.0,1.0]
+	double	lighting;
 	t_rgb	rgb;
 };
 
@@ -55,14 +55,14 @@ struct s_vector
 struct s_camera
 {
 	t_vector	position;
-	t_vector	orientation; // for orientation range is [-1, 1]
-	double		fov; // Horizontal field of view in degrees in the range [0,180]
+	t_vector	orientation;
+	double		fov;
 };
 
 struct s_light
 {
 	t_vector	position;
-	double		brightness; //  the light brightness ratio in the range [0.0,1.0]
+	double		brightness;
 };
 
 struct s_sphere

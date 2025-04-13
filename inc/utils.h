@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 21:00:50 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:51:58 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,4 @@ bool	check_rgb(char **rgb, char *str, void *ptr);
 bool	check_arg_count(char *str);
 bool	assign_object_list(t_list **list, char **line,
 			void *(build)(char **));
-bool	parse_object(void **obj, char **line, char *id, void *(build)(char **));
-
 #endif
