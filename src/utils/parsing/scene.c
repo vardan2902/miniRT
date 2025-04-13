@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:51:42 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:58:52 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:01:16 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 
 static void	check_mandatory_props(t_scene *scene)
 {
-	if (!scene->camera || (!scene->ambient && !scene->light))
-	{
-		if (!scene->camera)
-			log_error(ERR_MANDATORY_C, NULL);
-		else
-			log_error(ERR_MANDATORY_AL, NULL);
-		cleanup_scene(scene);
-		exit(EXIT_FAILURE);
-	}
+	if (scene->camera && (scene->ambient || scene->light))
+		return ;
+	if (!scene->camera)
+		log_error(ERR_MANDATORY_C, NULL);
+	else
+		log_error(ERR_MANDATORY_AL, NULL);
+	cleanup_scene(scene);
+	exit(EXIT_FAILURE);
 }
 
 static void	cleanup_line(char *line, t_scene *scene)
 {
-	if (line)
-	{
-		get_next_line(-1);
-		cleanup_scene(scene);
-		exit(EXIT_FAILURE);
-	}
+	if (!line)
+		return ;
+	get_next_line(-1);
+	cleanup_scene(scene);
+	exit(EXIT_FAILURE);
 }
 
 static bool	process_line(t_scene *scene, char *line)
