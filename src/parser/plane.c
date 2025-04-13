@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/12 20:42:12 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 18:29:04 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+void	*build_plane(char **line)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
+	t_plane	*plane;
 
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+	plane = NULL;
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&plane, sizeof (t_plane))
+		|| !set_position(line[0], &plane->position)
+		|| !set_orientation(line[1], &plane->orientation)
+		|| !set_rgb(line[2], &plane->rgb))
+	{
+		del_plane(plane);
+		return (NULL);
+	}
+	return (plane);
 }

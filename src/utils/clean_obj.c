@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.c                                        :+:      :+:    :+:   */
+/*   clean_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 20:29:46 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/13 18:06:23 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 19:57:45 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	validate_extension(char *path)
+void	cleanup_camera(t_camera *camera)
 {
-	char	*ext;
-
-	ext = ft_strrchr(path, '.');
-	if (!ext)
-		throw_error("");
-	if (path >= ext || ft_strcmp(ext, ".rt"))
-		throw_error("");
+	if (!camera)
+		return ;
+	free(camera->position);
+	free(camera->orientation);
+	free(camera);
 }
 
-static int	validate_file(char *path)
+void	cleanup_ambient(t_ambient *ambient)
 {
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		throw_error("");
-	return (fd);
+	if (!ambient)
+		return ;
+	free(ambient->rgb);
+	free(ambient);
 }
 
-int	validate_args(int argc, char **argv)
+void	cleanup_light(t_light *light)
 {
-	if (argc != 2)
-		throw_error("");
-	validate_extension(argv[1]);
-	return (validate_file(argv[1]));
+	if (!light)
+		return ;
+	free(light->position);
+	free(light);
 }

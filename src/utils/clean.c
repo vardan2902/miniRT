@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/09 18:23:57 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 19:46:44 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+void	free_splitted(char **splitted)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
+	int	i;
 
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+	if (!splitted)
+		return ;
+	i = -1;
+	while (splitted[++i])
+		free(splitted[i]);
+	free(splitted);
 }

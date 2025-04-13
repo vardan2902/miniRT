@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   unique_instructions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/13 18:54:15 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 18:57:03 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+bool	set_prop(char *str, double *prop)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
-
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+	if (!is_in_limit(str, -DBL_MAX, DBL_MAX)
+		|| !to_float(str, prop))
+	{
+		log_error(ERR_INVALID_TOKEN, str);
+		return (false);
+	}
+	return (true);
 }

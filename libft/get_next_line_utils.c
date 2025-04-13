@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ysaroyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 21:48:48 by vapetros          #+#    #+#             */
-/*   Updated: 2025/01/28 16:27:52 by vapetros         ###   ########.fr       */
+/*   Created: 2025/01/13 17:19:24 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/01/28 16:28:33 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
-
-size_t	gnl_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s && s[len])
-		++len;
-	return (len);
-}
+#include "get_next_line.h"
 
 char	*gnl_strchr(const char *s, int c)
 {
@@ -37,7 +27,17 @@ char	*gnl_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*gnl_join(char *s1, char *s2)
+size_t	gnl_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s && s[len])
+		len++;
+	return (len);
+}
+
+char	*gnl_concat(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -48,7 +48,7 @@ char	*gnl_join(char *s1, char *s2)
 		return (NULL);
 	len1 = gnl_strlen(s1);
 	len2 = gnl_strlen(s2);
-	str = (char *)malloc((len1 + len2 + 1) * sizeof (char));
+	str = (char *)malloc(len1 + len2 + 1);
 	if (!str)
 	{
 		free(s1);
@@ -74,7 +74,7 @@ char	*gnl_strdup(char *s)
 	if (!s)
 		return (NULL);
 	len = gnl_strlen(s);
-	dup = (char *)malloc((len + 1) * sizeof (char));
+	dup = (char *)malloc(len + 1);
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -87,7 +87,7 @@ char	*gnl_strdup(char *s)
 	return (dup);
 }
 
-char	*gnl_substr(char *s, size_t start, size_t len)
+char	*gnl_substr(char *s, unsigned int start, size_t len)
 {
 	char			*sub;
 	unsigned int	i;

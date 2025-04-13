@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/12 20:41:44 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 18:56:06 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+void	*build_sphere(char **line)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
+	t_sphere	*sphere;
 
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+	sphere = NULL;
+	if (!check_arg_count(line[3])
+		|| !create_object((void **)&sphere, sizeof (t_sphere))
+		|| !set_position(line[0], &sphere->position)
+		|| !set_prop(line[1], &sphere->diameter)
+		|| !set_rgb(line[2], &sphere->rgb))
+	{
+		del_sphere(sphere);
+		return (NULL);
+	}
+	return (sphere);
 }

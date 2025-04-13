@@ -1,30 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean_obj_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/13 18:07:28 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 18:08:02 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+void	del_sphere(void	*content)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
+	t_sphere	*sp;
 
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+	sp = (t_sphere *)content;
+	free(sp->position);
+	free(sp->rgb);
+	free(sp);
+}
+
+void	del_plane(void	*content)
+{
+	t_plane	*p;
+
+	p = (t_plane *)content;
+	free(p->position);
+	free(p->orientation);
+	free(p->rgb);
+	free(p);
+}
+
+void	del_cylinder(void	*content)
+{
+	t_cylinder	*cy;
+
+	cy = (t_cylinder *)content;
+	free(cy->position);
+	free(cy->orientation);
+	free(cy->rgb);
+	free(cy);
 }
