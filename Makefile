@@ -22,8 +22,9 @@ UTILS_DIR		=	utils
 UTILS_SRCS		=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))				\
 					$(addprefix $(PARSING_DIR)/, $(PARSING_SRCS))		\
 					$(addprefix $(VALIDATING_DIR)/, $(VALIDATING_SRCS))	\
-					error.c	clean.c	float.c	scene.c clean_obj.c			\
-					clean_obj_list.c
+					error.c		clean.c			float.c					\
+					scene.c		clean_obj.c		clean_obj_list.c		\
+					vector.c	vector_ops.c
 
 PARSER_DIR		=	parser
 PARSER_SRCS		=	ambient.c	camera.c	light.c	plane.c	sphere.c	\

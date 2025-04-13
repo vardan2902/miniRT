@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:39:45 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 19:21:27 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:26:15 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	handle_integer(const char *str, int *i, long double *result,
+static void	handle_integer(const char *str, int *i, double *result,
 	int *is_negative)
 {
 	while (str[*i] && ft_isspace(str[*i]))
@@ -29,9 +29,9 @@ static void	handle_integer(const char *str, int *i, long double *result,
 	}
 }
 
-static void	handle_precision(const char *str, int *i, long double *result)
+static void	handle_precision(const char *str, int *i, double *result)
 {
-	double		decimal_factor;
+	float		decimal_factor;
 
 	decimal_factor = 0.1;
 	if (str[*i] == '.')
@@ -46,9 +46,9 @@ static void	handle_precision(const char *str, int *i, long double *result)
 	}
 }
 
-bool	to_float(const char *str, double *fl)
+bool	to_float(const char *str, float *fl)
 {
-	long double	result;
+	double		result;
 	int			is_negative;
 	int			i;
 
@@ -67,9 +67,9 @@ bool	to_float(const char *str, double *fl)
 	return (true);
 }
 
-bool	is_in_limit(const char *str, double min, double max)
+bool	is_in_limit(const char *str, float min, float max)
 {
-	double	result;
+	float	result;
 
 	if (!to_float(str, &result))
 		return (false);

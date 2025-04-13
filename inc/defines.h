@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:33:47 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:25:02 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 # define CYLINDER "cy"
 # define PLANE "pl"
 
-# define RATIO_MIN 0.0
-# define RATIO_MAX 1.0
-# define ORIENT_MIN -1.0
-# define ORIENT_MAX 1.0
-# define RGB_MIN 0.0
-# define RGB_MAX 255.0
-# define DEG_MIN 0.0
-# define DEG_MAX 180.0
+# define RATIO_MIN 0.0f
+# define RATIO_MAX 1.0f
+# define ORIENT_MIN -1.0f
+# define ORIENT_MAX 1.0f
+# define RGB_MIN 0.0f
+# define RGB_MAX 255.0f
+# define DEG_MIN 0.0f
+# define DEG_MAX 180.0f
 
 # define ERR_INVALID_TOKEN "miniRT: Invalid token: "
 # define ERR_MALLOC "Error\nminiRT: malloc"
