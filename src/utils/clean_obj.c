@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:50:23 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/13 18:06:23 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/13 18:06:44 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	main(int argc, char **argv)
+void	cleanup_camera(t_camera *camera)
 {
-	int		fd;
-	t_mlx	mlx;
-	t_scene	scene;
+	if (camera)
+	{
+		free(camera->position);
+		free(camera->orientation);
+		free(camera);
+	}
+}
 
-	fd = validate_args(argc, argv);
-	init_scene(&scene);
-	parse_scene(&scene, fd);
-	close(fd);
-	print_scene(&scene);
-	init_mlx(&mlx);
-	register_hooks(&mlx);
-	cleanup_scene(&scene);
-	return (0);
+void	cleanup_ambient(t_ambient *ambient)
+{
+	if (ambient)
+	{
+		free(ambient->rgb);
+		free(ambient);
+	}
+}
+
+void	cleanup_light(t_light *light)
+{
+	if (light)
+	{
+		free(light->position);
+		free(light);
+	}
 }

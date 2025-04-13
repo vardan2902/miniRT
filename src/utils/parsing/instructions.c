@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:33:03 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:51:45 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:49:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,89 @@
 
 bool	set_vector(char **instuction, t_vector *vector)
 {
-	return (!(!to_float(instuction[0], &vector->x)
+	if ((!to_float(instuction[0], &vector->x)
 			|| !to_float(instuction[1], &vector->y)
-			|| !to_float(instuction[2], &vector->z)));
+			|| !to_float(instuction[2], &vector->z)))
+		return (free(vector), false);
+	return (true);
 }
 
-bool	set_ratio(char *str, double *ratio, void *ptr)
+bool	set_ratio(char *str, double *ratio)
 {
 	if (!is_in_limit(str, RATIO_MIN, RATIO_MAX)
 		|| !to_float(str, ratio))
 	{
-		free_and_log(ptr, ERR_INVALID_TOKEN, str, NULL);
+		log_error(ERR_INVALID_TOKEN, str);
 		return (false);
 	}
 	return (true);
 }
 
-bool	set_position(char *str, t_vector *pos, void *ptr)
+bool	set_position(char *str, t_vector **pos)
 {
-	char	**position;
+	char		**position;
 
+	*pos = (t_vector *)malloc(sizeof (t_vector));
+	if (!*pos)
+		return (false);
 	position = ft_split(str, ',');
 	if (!position)
 	{
-		free_and_perror(ptr, ERR_MALLOC, NULL);
+		perror(ERR_MALLOC);
+		free(*pos);
 		return (false);
 	}
 	if (!is_instruction_in_range(position, -DBL_MAX, DBL_MAX, 3)
-		|| !set_vector(position, pos))
+		|| !set_vector(position, *pos))
 	{
-		free_and_log(ptr, ERR_INVALID_TOKEN, str, position);
+		log_error(ERR_INVALID_TOKEN, str);
+		free_splitted(position);
+		free(*pos);
 		return (false);
 	}
 	free_splitted(position);
 	return (true);
 }
 
-bool	set_orientation(char *str, t_vector *orient, void *ptr)
+bool	set_orientation(char *str, t_vector **orient)
 {
-	char	**orientation;
+	char		**orientation;
 
+	*orient = (t_vector *)malloc(sizeof (t_vector));
+	if (!*orient)
+		return (false);
 	orientation = ft_split(str, ',');
 	if (!orientation)
 	{
-		free_and_perror(ptr, ERR_MALLOC, NULL);
+		perror(ERR_MALLOC);
+		free(*orient);
 		return (false);
 	}
 	if (!is_instruction_in_range(orientation, ORIENT_MIN, ORIENT_MAX, 3)
-		|| !set_vector(orientation, orient))
+		|| !set_vector(orientation, *orient))
 	{
-		free_and_log(ptr, ERR_INVALID_TOKEN, str, NULL);
+		log_error(ERR_INVALID_TOKEN, str);
 		free_splitted(orientation);
+		free(*orient);
 		return (false);
 	}
 	free_splitted(orientation);
 	return (true);
 }
 
-bool	set_rgb(char *str, t_rgb *color, void *ptr)
+bool	set_rgb(char *str, t_rgb **color)
 {
 	char	**rgb;
+	t_rgb	*new_color;
 
-	rgb = ft_split(str, ',');
-	if (!check_rgb(rgb, str, ptr))
+	new_color = (t_rgb *)malloc(sizeof (t_rgb));
+	if (!new_color)
 		return (false);
-	assign_rgb(rgb, color);
+	rgb = ft_split(str, ',');
+	if (!check_rgb(rgb, str))
+		return (false);
+	assign_rgb(rgb, new_color);
+	*color = new_color;
 	free_splitted(rgb);
 	return (true);
 }

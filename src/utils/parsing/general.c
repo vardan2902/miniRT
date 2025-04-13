@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:47:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:52:47 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:19:06 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ bool	create_object(void **obj, size_t size)
 	return (!!*obj);
 }
 
-bool	check_rgb(char **rgb, char *str, void *ptr)
+bool	check_rgb(char **rgb, char *str)
 {
 	if (!rgb)
 	{
-		free_and_perror(ptr, ERR_MALLOC, NULL);
+		perror(ERR_MALLOC);
 		return (false);
 	}
 	if (!is_instruction_in_range(rgb, RGB_MIN, RGB_MAX, 3))
 	{
-		free_and_log(ptr, ERR_INVALID_TOKEN, str, rgb);
+		log_error(ERR_INVALID_TOKEN, str);
+		free(rgb);
 		return (false);
 	}
 	return (true);

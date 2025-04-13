@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:40:21 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:02:47 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:16:54 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,20 @@ void	*build_camera(char **line)
 {
 	t_camera	*camera;
 
+	camera = NULL;
 	if (!check_arg_count(line[3])
 		|| !create_object((void **)&camera, sizeof (t_camera))
-		|| !set_position(line[0], &camera->position, camera)
-		|| !set_orientation(line[1], &camera->orientation, camera))
+		|| !set_position(line[0], &camera->position)
+		|| !set_orientation(line[1], &camera->orientation))
+	{
+		cleanup_camera(camera);
 		return (NULL);
+	}
 	if (!is_in_limit(line[2], DEG_MIN, DEG_MAX)
 		|| !to_float(line[2], &camera->fov))
 	{
-		free_and_log(camera, ERR_INVALID_TOKEN, line[2], NULL);
+		log_error(ERR_INVALID_TOKEN, line[2]);
+		cleanup_camera(camera);
 		return (NULL);
 	}
 	return (camera);

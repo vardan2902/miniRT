@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:51:42 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:50:20 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:58:52 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static void	check_mandatory_props(t_scene *scene)
 	}
 }
 
-static void	cleanup_line(char *line)
+static void	cleanup_line(char *line, t_scene *scene)
 {
 	if (line)
 	{
 		get_next_line(-1);
+		cleanup_scene(scene);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -40,10 +41,7 @@ static bool	process_line(t_scene *scene, char *line)
 
 	splitted = ft_split_charset(line, " \t\v\r\f\n");
 	if (!splitted)
-	{
-		cleanup_scene(scene);
 		return (false);
-	}
 	if (!is_identifier(splitted[0]))
 	{
 		log_error(ERR_WRONG_ID, splitted[0]);
@@ -88,6 +86,6 @@ void	parse_scene(t_scene *scene, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	cleanup_line(line);
+	cleanup_line(line, scene);
 	check_mandatory_props(scene);
 }

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:37:49 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/12 20:38:19 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:25:56 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*build_ambient(char **line)
 
 	if (!check_arg_count(line[2])
 		|| !create_object((void **)&ambient, sizeof (t_ambient))
-		|| !set_ratio(line[0], &ambient->lighting, ambient)
-		|| !set_rgb(line[1], &ambient->rgb, ambient))
+		|| !set_ratio(line[0], &ambient->lighting)
+		|| !set_rgb(line[1], &ambient->rgb))
 		return (NULL);
 	return (ambient);
 }

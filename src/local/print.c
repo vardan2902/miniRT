@@ -1,13 +1,13 @@
 #include <minirt.h>
 
-static void	print_vector(const char *name, t_vector vec)
+static void	print_vector(const char *name, t_vector *vec)
 {
-	printf("\t%s: (%.2f, %.2f, %.2f)\n", name, vec.x, vec.y, vec.z);
+	printf("\t%s: (%.2f, %.2f, %.2f)\n", name, vec->x, vec->y, vec->z);
 }
 
-static void	print_rgb(t_rgb rgb)
+static void	print_rgb(t_rgb *rgb)
 {
-	printf("\tRGB: (%hhu, %hhu, %hhu)\n", rgb.r, rgb.g, rgb.b);
+	printf("\tRGB: (%hhu, %hhu, %hhu)\n", rgb->r, rgb->g, rgb->b);
 }
 
 static void	print_sphere(t_sphere *sp)

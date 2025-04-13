@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:02:24 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:15:49 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ struct s_rgb
 struct s_ambient
 {
 	double	lighting;
-	t_rgb	rgb;
+	t_rgb	*rgb;
 };
 
 struct s_vector
@@ -54,36 +54,36 @@ struct s_vector
 
 struct s_camera
 {
-	t_vector	position;
-	t_vector	orientation;
+	t_vector	*position;
+	t_vector	*orientation;
 	double		fov;
 };
 
 struct s_light
 {
-	t_vector	position;
+	t_vector	*position;
 	double		brightness;
 };
 
 struct s_sphere
 {
-	t_vector	position;
-	t_rgb		rgb;
+	t_vector	*position;
+	t_rgb		*rgb;
 	double		diameter;
 };
 
 struct s_plane
 {
-	t_vector	position;
-	t_vector	orientation;
-	t_rgb		rgb;
+	t_vector	*position;
+	t_vector	*orientation;
+	t_rgb		*rgb;
 };
 
 struct s_cylinder
 {
-	t_vector	position;
-	t_vector	orientation;
-	t_rgb		rgb;
+	t_vector	*position;
+	t_vector	*orientation;
+	t_rgb		*rgb;
 	double		diameter;
 	double		height;
 };
