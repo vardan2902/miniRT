@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.h                                           :+:      :+:    :+:   */
+/*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 20:29:47 by vapetros          #+#    #+#             */
-/*   Updated: 2025/04/14 11:10:29 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/14 15:20:31 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_H
-# define VECTOR_H
+#include <minirt.h>
 
-# include <minirt.h>
+void	set_hit_point(t_hit *hit, float t, t_ray ray, t_object *object)
+{
+	t_vector	*position;
+	t_sphere	*obj;
 
-float		v_length(t_vector *a);
-float		v_dot_product(t_vector *a, t_vector *b);
-t_vector	*v_normalize(t_vector *a);
-t_vector	*v_scalar_product(t_vector *vec, float n);
-t_vector	*v_add(t_vector *a, t_vector *b);
-t_vector	*v_sub(t_vector *a, t_vector *b);
-t_vector	*v_cross_product(t_vector *a, t_vector *b);
-
-#endif
+	obj = (t_sphere *)object->object;
+	position = obj->position;
+	hit->t = t;
+	hit->position = v_add(ray.position, v_scalar_product(ray.orientation, t));
+	hit->orientation = v_normalize(v_sub(hit->position, position));
+	hit->object = object;
+}
