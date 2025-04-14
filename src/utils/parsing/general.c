@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:47:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:19:06 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:24:29 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,24 @@ bool	check_arg_count(char *str)
 	return (false);
 }
 
-bool	assign_object_list(t_list **list, char **line,
+bool	assign_object_list(t_list **list, enum e_object_types type, char **line,
 	void *(build)(char **))
 {
-	t_list	*new;
-	void	*new_obj;
+	t_list		*new;
+	t_object	*object;
+	void		*new_obj;
 
 	new_obj = build(line);
-	if (!new_obj)
+	if (!create_object((void **)&object, sizeof (t_object)))
 		return (false);
-	new = ft_lstnew(new_obj);
+	if (!new_obj)
+	{
+		free(object);
+		return (false);
+	}
+	object->object = new_obj;
+	object->type = type;
+	new = ft_lstnew(object);
 	if (!new)
 		return (false);
 	ft_lstadd_back(list, new);

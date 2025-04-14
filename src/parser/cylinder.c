@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:43:06 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:54:38 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:53:11 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	*build_cylinder(char **line)
 		|| !set_prop(line[3], &cylinder->height)
 		|| !set_rgb(line[4], &cylinder->rgb))
 	{
-		del_cylinder(cylinder);
 		return (NULL);
 	}
 	return (cylinder);

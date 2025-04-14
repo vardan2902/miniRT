@@ -41,12 +41,9 @@ void	print_scene(t_scene *scene)
 	if (!scene)
 	{
 		printf("Scene is NULL\n");
-		return;
+		return ;
 	}
-
 	printf("=== Scene Configuration ===\n");
-
-	// Print Camera
 	if (scene->camera)
 	{
 		printf("[Camera]\n");
@@ -54,46 +51,30 @@ void	print_scene(t_scene *scene)
 		print_vector("Orientation", scene->camera->orientation);
 		printf("\tFOV: %.2f\n", scene->camera->fov);
 	}
-
-	// Print Ambient Light
 	if (scene->ambient)
 	{
 		printf("[Ambient Light]\n");
 		printf("\tRatio: %.2f\n", scene->ambient->lighting);
 		print_rgb(scene->ambient->rgb);
 	}
-
-	// Print Light
 	if (scene->light)
 	{
 		printf("[Light]\n");
 		print_vector("Position", scene->light->position);
 		printf("\tBrightness: %.2f\n", scene->light->brightness);
 	}
-
-	// Print Spheres
-	if (scene->sphere_list)
+	if (scene->object_list)
 	{
-		printf("\n[Spheres]\n");
-		for (t_list *node = scene->sphere_list; node; node = node->next)
-			print_sphere((t_sphere *)node->content);
+		for (t_list *node = scene->object_list; node; node = node->next)
+		{
+			t_object	*obj = (t_object *)node->content;
+			if (obj->type == E_CYLINDER)
+				print_cylinder((t_cylinder *)obj->object);
+			if (obj->type == E_PLANE)
+				print_plane((t_plane *)obj->object);
+			if (obj->type == E_SPHERE)
+				print_sphere((t_sphere *)obj->object);
+		}
 	}
-
-	// Print Planes
-	if (scene->plane_list)
-	{
-		printf("\n[Planes]\n");
-		for (t_list *node = scene->plane_list; node; node = node->next)
-			print_plane((t_plane *)node->content);
-	}
-
-	// Print Cylinders
-	if (scene->cylinder_list)
-	{
-		printf("\n[Cylinders]\n");
-		for (t_list *node = scene->cylinder_list; node; node = node->next)
-			print_cylinder((t_cylinder *)node->content);
-	}
-
 	printf("===========================\n");
 }
