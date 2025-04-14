@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:33:03 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 20:27:53 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:43:35 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	set_position(char *str, t_vector **pos)
 		free(*pos);
 		return (false);
 	}
-	if (!is_instruction_in_range(position, FLT_MIN, FLT_MAX, 3)
+	if (!is_instruction_in_range(position, -FLT_MAX, FLT_MAX, 3)
 		|| !set_vector(position, *pos))
 	{
 		log_error(ERR_INVALID_TOKEN, str);

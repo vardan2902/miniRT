@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:07:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:08:02 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:48:56 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,18 @@ void	del_cylinder(void	*content)
 	free(cy->orientation);
 	free(cy->rgb);
 	free(cy);
+}
+
+void	del_object(void	*content)
+{
+	t_object	*object;
+
+	object = (t_object *)content;
+	if (object->type == E_CYLINDER)
+		del_cylinder(object->object);
+	if (object->type == E_PLANE)
+		del_plane(object->object);
+	if (object->type == E_SPHERE)
+		del_sphere(object->object);
+	free(object);
 }

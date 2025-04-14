@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 16:11:04 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:36:21 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,7 @@ struct s_scene
 	t_camera	*camera;
 	t_ambient	*ambient;
 	t_light		*light;
-	t_list		*sphere_list;
-	t_list		*plane_list;
-	t_list		*cylinder_list;
+	t_list		*object_list;
 };
 
 #endif

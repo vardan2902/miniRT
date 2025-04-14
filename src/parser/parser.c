@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:43:58 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:38:29 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:20:35 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ bool	parse_line(t_scene *scene, char *id, char **line)
 	if (!ft_strcmp(id, LIGHT))
 		return (parse_object((void **)&scene->light, line, id, build_light));
 	if (!ft_strcmp(id, SPHERE))
-		return (assign_object_list(&scene->sphere_list, line,
+		return (assign_object_list(&scene->object_list, E_SPHERE, line,
 				build_sphere));
 	if (!ft_strcmp(id, CYLINDER))
-		return (assign_object_list(&scene->cylinder_list, line,
+		return (assign_object_list(&scene->object_list, E_CYLINDER, line,
 				build_cylinder));
 	if (!ft_strcmp(id, PLANE))
-		return (assign_object_list(&scene->plane_list, line,
+		return (assign_object_list(&scene->object_list, E_PLANE, line,
 				build_plane));
 	return (false);
 }

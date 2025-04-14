@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:05:31 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:24:40 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ void	assign_rgb(char **instuction, t_rgb *rgb);
 bool	create_object(void **obj, size_t size);
 bool	check_rgb(char **rgb, char *str);
 bool	check_arg_count(char *str);
-bool	assign_object_list(t_list **list, char **line,
-			void *(build)(char **));
+bool	assign_object_list(t_list **list, enum e_object_types type, char **line,
+	void *(build)(char **));
 void	cleanup_camera(t_camera *camera);
 void	cleanup_ambient(t_ambient *ambient);
 void	cleanup_light(t_light *light);
 void	del_sphere(void *content);
 void	del_plane(void *content);
 void	del_cylinder(void *content);
+void	del_object(void	*content);
 void	set_hit_point(t_hit *hit, float t, t_ray ray, t_object *object);
 
 #endif

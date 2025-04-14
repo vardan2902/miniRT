@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:07:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:07:57 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:11:49 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void	init_scene(t_scene *scene)
 	scene->ambient = NULL;
 	scene->camera = NULL;
 	scene->light = NULL;
-	scene->cylinder_list = NULL;
-	scene->plane_list = NULL;
-	scene->sphere_list = NULL;
+	scene->object_list = NULL;
 }
 
 void	cleanup_scene(t_scene *scene)
@@ -30,10 +28,6 @@ void	cleanup_scene(t_scene *scene)
 	scene->ambient = NULL;
 	cleanup_light(scene->light);
 	scene->light = NULL;
-	ft_lstclear(&scene->sphere_list, del_sphere);
-	scene->sphere_list = NULL;
-	ft_lstclear(&scene->plane_list, del_plane);
-	scene->plane_list = NULL;
-	ft_lstclear(&scene->cylinder_list, del_cylinder);
-	scene->cylinder_list = NULL;
+	ft_lstclear(&scene->object_list, del_object);
+	scene->object_list = NULL;
 }
