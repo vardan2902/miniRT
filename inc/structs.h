@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 12:35:29 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:11:04 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTS_H
 
 # include <libft.h>
+# include <enums.h>
 
 typedef struct s_mlx			t_mlx;
 typedef struct s_rgb			t_rgb;
@@ -94,8 +95,8 @@ struct s_cylinder
 
 struct s_object
 {
-	char	*type;
-	void	*object;
+	enum e_object_types	type;
+	void				*object;
 };
 
 struct s_hit
