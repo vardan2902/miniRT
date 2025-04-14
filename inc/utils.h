@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 20:25:16 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:05:31 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	cleanup_light(t_light *light);
 void	del_sphere(void *content);
 void	del_plane(void *content);
 void	del_cylinder(void *content);
+void	set_hit_point(t_hit *hit, float t, t_ray ray, t_object *object);
 
 #endif
