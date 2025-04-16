@@ -6,13 +6,13 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:39:45 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:43:49 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:21:26 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	handle_integer(const char *str, int *i, double *result,
+static void	handle_integer(const char *str, int *i, float *result,
 	int *is_negative)
 {
 	while (str[*i] && ft_isspace(str[*i]))
@@ -29,7 +29,7 @@ static void	handle_integer(const char *str, int *i, double *result,
 	}
 }
 
-static void	handle_precision(const char *str, int *i, double *result)
+static void	handle_precision(const char *str, int *i, float *result)
 {
 	float		decimal_factor;
 
@@ -48,9 +48,9 @@ static void	handle_precision(const char *str, int *i, double *result)
 
 bool	to_float(const char *str, float *fl)
 {
-	double		result;
-	int			is_negative;
-	int			i;
+	float	result;
+	int		is_negative;
+	int		i;
 
 	result = 0.0;
 	is_negative = 0;

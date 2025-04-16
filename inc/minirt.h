@@ -6,12 +6,14 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:34:00 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:58:41 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:37:37 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+
+# define _GNU_SOURCE
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -31,6 +33,8 @@
 # include <vector.h>
 # include <intersect.h>
 # include <calculations.h>
+# include <ray.h>
+# include <light.h>
 
 // TODO: remove on finish
 # include <local.h>

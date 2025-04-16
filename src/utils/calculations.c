@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:18:41 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 12:39:10 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:25:11 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ float	calculate_hit(float discriminant, float a, float b)
 	sqrt_d = sqrt(discriminant);
 	x1 = (-b - sqrt_d) / (2.0f * a);
 	x2 = (-b + sqrt_d) / (2.0f * a);
-	if (x1 > 0.001f)
+	if (x1 > EPSILON)
 		return (x1);
-	if (x2 > 0.001f)
+	if (x2 > EPSILON)
 		return (x2);
 	return (-1);
 }

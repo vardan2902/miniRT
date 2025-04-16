@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:15:11 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/07 20:39:04 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:19:34 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	handle_close(void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
+	cleanup_scene(mlx->scene);
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	exit(0);
 }

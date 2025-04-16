@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 16:36:21 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:22:08 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,34 @@ typedef struct s_hit			t_hit;
 typedef struct s_ray			t_ray;
 typedef struct s_coefficients	t_coefficients;
 typedef struct s_scene			t_scene;
+typedef struct s_viewport		t_viewport;
+typedef struct s_basis			t_basis;
+typedef struct s_ndc			t_ndc;
+typedef struct s_img			t_img;
+
+struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+};
 
 struct s_mlx
 {
 	void	*ptr;
 	void	*win;
+	t_img	*img;
+	t_scene	*scene;
+	bool	need_render;
 };
 
 struct s_rgb
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
+	int	r;
+	int	g;
+	int	b;
 };
 
 struct s_ambient
@@ -101,7 +117,7 @@ struct s_object
 
 struct s_hit
 {
-	double		t;
+	float		t;
 	t_vector	*position;
 	t_vector	*orientation;
 	t_object	*object;
@@ -126,6 +142,25 @@ struct s_scene
 	t_ambient	*ambient;
 	t_light		*light;
 	t_list		*object_list;
+};
+
+struct s_viewport
+{
+	float	width;
+	float	height;
+};
+
+struct s_basis
+{
+	t_vector	*right;
+	t_vector	*up;
+	t_vector	*forward;
+};
+
+struct s_ndc
+{
+	float	u;
+	float	v;
 };
 
 #endif

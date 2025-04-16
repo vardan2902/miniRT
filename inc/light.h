@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculations.h                                     :+:      :+:    :+:   */
+/*   light.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 12:40:52 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:25:27 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/16 14:36:14 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/16 14:37:48 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CALCULATIONS_H
-# define CALCULATIONS_H
+#ifndef LIGHT_H
+# define LIGHT_H
 
-# include <minirt.h>
+# include <structs.h>
 
-void	calculate_coefficients(t_coefficients *coefficients,
-			t_ray ray, t_vector *position, float radius);
-float	calculate_discriminant(float a, float b, float c);
-float	calculate_hit(float discriminant, float a, float b);
+float	calculate_light_intensity(t_scene *scene, t_hit hit);
 
 #endif
