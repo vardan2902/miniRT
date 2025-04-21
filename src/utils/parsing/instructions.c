@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:33:03 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:43:35 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:52:38 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	set_position(char *str, t_vector **pos)
 
 bool	set_orientation(char *str, t_vector **orient)
 {
-	char		**orientation;
+	char	**orientation;
 
 	*orient = (t_vector *)malloc(sizeof (t_vector));
 	if (!*orient)
@@ -73,7 +73,8 @@ bool	set_orientation(char *str, t_vector **orient)
 		return (false);
 	}
 	if (!is_instruction_in_range(orientation, ORIENT_MIN, ORIENT_MAX, 3)
-		|| !set_vector(orientation, *orient))
+		|| !set_vector(orientation, *orient)
+		|| !normalize_orient(orient))
 	{
 		log_error(ERR_INVALID_TOKEN, str);
 		free_splitted(orientation);

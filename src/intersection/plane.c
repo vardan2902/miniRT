@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unique_instructions.c                              :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 18:54:15 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:52:48 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/14 12:20:59 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/21 13:11:24 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	set_prop(char *str, float *prop)
+bool	intersect_plane(t_ray ray, t_object *object, t_hit *hit)
 {
-	if (!is_in_limit(str, -FLT_MAX, FLT_MAX)
-		|| !to_float(str, prop))
-	{
-		log_error(ERR_INVALID_TOKEN, str);
-		return (false);
-	}
-	return (true);
-}
+	t_plane		*plane;
+	t_vector	*diff;
+	float		denom;
+	float		t;
 
-bool	normalize_orient(t_vector **orient)
-{
-	t_vector	*normal;
-
-	normal = v_normalize(*orient);
-	if (!normal)
+	plane = (t_plane *)object->object;
+	denom = v_dot_product(plane->orientation, ray.orientation);
+	if (fabs(denom) < 1e-6)
 		return (false);
-	free(*orient);
-	*orient = normal;
+	diff = v_sub(plane->position, ray.position);
+	t = v_dot_product(diff, plane->orientation) / denom;
+	if (t < EPSILON)
+		return (false);
+	set_hit_point(hit, t, ray, object);
 	return (true);
 }

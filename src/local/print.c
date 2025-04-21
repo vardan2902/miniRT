@@ -7,7 +7,7 @@ static void	print_vector(const char *name, t_vector *vec)
 
 static void	print_rgb(t_rgb *rgb)
 {
-	printf("\tRGB: (%hhu, %hhu, %hhu)\n", rgb->r, rgb->g, rgb->b);
+	printf("\tRGB: (%d, %d, %d)\n", rgb->r, rgb->g, rgb->b);
 }
 
 static void	print_sphere(t_sphere *sp)

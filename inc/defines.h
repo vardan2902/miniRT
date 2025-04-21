@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 20:25:02 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:19:50 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define TITLE "miniRT"
+
+# define EPSILON 0.0004f
 
 # define AMBIENT "A"
 # define CAMERA "C"
