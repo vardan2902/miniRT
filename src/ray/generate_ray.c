@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 16:19:11 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:17:26 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,40 @@ static t_ndc	get_pixel_ndc(int x, int y, int width, int height)
 	return (pixel);
 }
 
+t_vector	*get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
+{
+	t_vector	*orient;
+	t_vector	*w;
+	t_vector	*h;
+	t_vector	*total;
+	t_vector	*orient_normal;
+
+	w = v_scalar_product(basis->right, pixel.u * vp.width * 0.5f);
+	h = v_scalar_product(basis->up, pixel.v * vp.height * 0.5f);
+	total = v_add(w,h);
+	orient = v_add(total, basis->forward);
+	orient_normal = v_normalize(orient);
+	free(w);
+	free(h);
+	free(total);
+	free(basis->forward);
+	free(basis->up);
+	free(basis->right);
+	free(orient);
+	return(orient_normal);
+}
+
 t_ray	generate_ray(t_camera *camera, int x, int y)
 {
 	t_basis		basis;
 	t_viewport	vp;
 	t_ndc		pixel;
-	t_vector	*dir;
 	t_ray		ray;
 
 	basis = get_camera_basis(camera->orientation);
 	vp = compute_viewport_size(camera->fov, WIDTH, HEIGHT);
 	pixel = get_pixel_ndc(x, y, WIDTH, HEIGHT);
-	dir = v_add(
-			v_add(
-				v_scalar_product(basis.right, pixel.u * vp.width * 0.5f),
-				v_scalar_product(basis.up, pixel.v * vp.height * 0.5f)
-				),
-			basis.forward
-			);
-	dir = v_normalize(dir);
+	ray.orientation = get_ray_orientation(&basis, pixel, vp);
 	ray.position = camera->position;
-	ray.orientation = dir;
 	return (ray);
 }

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:31 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:49:44 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:18:14 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ static bool	is_in_shadow(t_scene *scene, t_hit hit,
 
 static float	calculate_diffuse(t_vector *normal, t_vector *light_dir)
 {
-	return (fmax(0.0f, v_dot_product(v_normalize(normal), light_dir)));
+	t_vector	*normalized;
+	float		defuse;
+
+	normalized = v_normalize(normal);
+	defuse = fmax(0.0f, v_dot_product(normalized, light_dir));
+	free(normalized);
+	return (defuse);
 }
 
 static float	calculate_attenuation(float distance)

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:20:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:47:22 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:11:24 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	intersect_plane(t_ray ray, t_object *object, t_hit *hit)
 		return (false);
 	diff = v_sub(plane->position, ray.position);
 	t = v_dot_product(diff, plane->orientation) / denom;
-	if (t < 0.001)
+	if (t < EPSILON)
 		return (false);
 	set_hit_point(hit, t, ray, object);
 	return (true);
