@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:22:08 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:18:36 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_viewport		t_viewport;
 typedef struct s_basis			t_basis;
 typedef struct s_ndc			t_ndc;
 typedef struct s_img			t_img;
+typedef struct s_mouse_state	t_mouse_state;
 
 struct s_img
 {
@@ -44,13 +45,23 @@ struct s_img
 	int		endian;
 };
 
+struct s_mouse_state
+{
+	int			last_x;
+	int			last_y;
+	bool		left_pressed;
+	bool		right_pressed;
+	t_object	*hit_object;
+};
+
 struct s_mlx
 {
-	void	*ptr;
-	void	*win;
-	t_img	*img;
-	t_scene	*scene;
-	bool	need_render;
+	void			*ptr;
+	void			*win;
+	t_img			*img;
+	t_scene			*scene;
+	t_mouse_state	mouse_state;
+	bool			need_render;
 };
 
 struct s_rgb

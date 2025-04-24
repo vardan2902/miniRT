@@ -32,7 +32,7 @@ PARSER_SRCS			=	ambient.c	camera.c	light.c	plane.c	sphere.c		\
 						cylinder.c	parser.c
 
 INTERSECTION_DIR	=	intersection
-INTERSECTION_SRCS	=	intersect.c	sphere.c	plane.c							\
+INTERSECTION_SRCS	=	intersect.c	sphere.c	plane.c	cylinder.c				\
 
 RAY_DIR				=	ray
 RAY_SRCS			=	generate_ray.c	trace_ray.c								\

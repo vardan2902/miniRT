@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:16:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:08:21 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:41:07 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@
 int	renderer(void *param);
 int	handle_close(void *param);
 int	handle_keypress(int key, void *param);
+int	handle_mouse_press(int button, int x, int y, void *param);
+int	handle_mouse_release(int button, int x, int y, void *param);
+int	handle_mouse_move(int x, int y, void *param);
 
 #endif

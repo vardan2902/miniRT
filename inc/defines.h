@@ -6,15 +6,15 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 16:19:50 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:36:44 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1200
+# define HEIGHT 1000
 # define TITLE "miniRT"
 
 # define EPSILON 0.0004f
