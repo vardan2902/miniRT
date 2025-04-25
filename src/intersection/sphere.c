@@ -6,13 +6,13 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:40:24 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:08:02 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:32:31 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	intersect_sphere(t_ray ray, t_object *object, t_hit *hit)
+bool	intersect_sphere(t_ray *ray, t_object *object, t_hit *hit)
 {
 	t_sphere		*sphere;
 	t_coefficients	coeff;

@@ -6,25 +6,30 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:31 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:18:14 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:54:15 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static bool	is_in_shadow(t_scene *scene, t_hit hit,
+static bool	is_in_shadow(t_scene *scene, t_hit *hit,
 		t_vector *light_dir, float distance)
 {
 	t_ray	shadow_ray;
 	t_hit	shadow_hit;
+	bool	hit_found;
 
-	shadow_ray.position = hit.position;
+	shadow_ray.position = hit->position;
 	shadow_ray.orientation = light_dir;
 	shadow_hit.t = FLT_MAX;
-	return (
-		find_hit(shadow_ray, &shadow_hit, scene)
-		&& shadow_hit.t < distance
-	);
+	shadow_hit.orientation = NULL;
+	shadow_hit.position = NULL;
+	hit_found = find_hit(&shadow_ray, &shadow_hit, scene);
+	if (shadow_hit.position)
+		free(shadow_hit.position);
+	if (shadow_hit.orientation)
+		free(shadow_hit.orientation);
+	return (hit_found && shadow_hit.t < distance);
 }
 
 static float	calculate_diffuse(t_vector *normal, t_vector *light_dir)
@@ -43,20 +48,26 @@ static float	calculate_attenuation(float distance)
 	return (1.0f / (1.0f + 0.001f * distance));
 }
 
-float	calculate_light_intensity(t_scene *scene, t_hit hit)
+float	calculate_light_intensity(t_scene *scene, t_hit *hit)
 {
 	t_vector	*light_dir;
+	t_vector	*normal;
 	float		distance;
 	float		diffuse;
 	float		attenuation;
 	float		intensity;
 
-	light_dir = v_sub(scene->light->position, hit.position);
+	light_dir = v_sub(scene->light->position, hit->position);
 	distance = v_length(light_dir);
-	light_dir = v_normalize(light_dir);
-	if (is_in_shadow(scene, hit, light_dir, distance))
+	normal = v_normalize(light_dir);
+	free(light_dir);
+	if (is_in_shadow(scene, hit, normal, distance))
+	{
+		free(normal);
 		return (scene->ambient->lighting);
-	diffuse = calculate_diffuse(hit.orientation, light_dir);
+	}
+	diffuse = calculate_diffuse(hit->orientation, normal);
+	free(normal);
 	attenuation = calculate_attenuation(distance);
 	intensity = scene->ambient->lighting
 		+ (scene->light->brightness * diffuse * attenuation);

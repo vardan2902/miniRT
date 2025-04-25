@@ -6,20 +6,20 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:18:41 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:17:36 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:31:35 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
 void	calculate_coefficients(t_coefficients *coefficients,
-			t_ray ray, t_vector *position, float radius)
+			t_ray *ray, t_vector *position, float radius)
 {
 	t_vector	*oc;
 
-	oc = v_sub(ray.position, position);
-	coefficients->a = v_dot_product(ray.orientation, ray.orientation);
-	coefficients->b = 2.0 * v_dot_product(oc, ray.orientation);
+	oc = v_sub(ray->position, position);
+	coefficients->a = v_dot_product(ray->orientation, ray->orientation);
+	coefficients->b = 2.0 * v_dot_product(oc, ray->orientation);
 	coefficients->c = v_dot_product(oc, oc) - radius * radius;
 	free(oc);
 }

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:26:02 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:58:54 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ unsigned int	rgb_to_hex(t_rgb color)
 int	renderer(void *param)
 {
 	t_mlx	*mlx;
-	t_ray	ray;
+	t_ray	*ray;
 	t_rgb	color;
 	int		y;
 	int		x;
@@ -51,7 +51,15 @@ int	renderer(void *param)
 		while (x < WIDTH)
 		{
 			ray = generate_ray(mlx->scene->camera, x, y);
+			if (!ray)
+			{
+				mlx->need_render = false;
+				return (0);
+			}
 			color = trace_ray(ray, mlx->scene);
+			free(ray->position);
+			free(ray->orientation);
+			free(ray);
 			put_pixel(mlx->img, x, y, rgb_to_hex(color));
 			x++;
 		}

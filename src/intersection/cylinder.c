@@ -6,19 +6,19 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:33:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/23 18:33:38 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:50:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	intersect_cylinder(t_ray ray, t_object *object, t_hit *hit)
+bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
 {
 	t_cylinder	*cylinder;
 
 	cylinder = (t_cylinder *)object->object;
-	t_vector	*oc = v_sub(ray.position, cylinder->position);
-	t_vector	*dir = ray.orientation;
+	t_vector	*oc = v_sub(ray->position, cylinder->position);
+	t_vector	*dir = ray->orientation;
 	t_vector	*axis = v_normalize(cylinder->orientation);
 	t_vector	*oc_proj = v_scalar_product(axis, v_dot_product(oc, axis));
 	t_vector	*d_proj = v_scalar_product(axis, v_dot_product(dir, axis));
@@ -45,7 +45,7 @@ bool	intersect_cylinder(t_ray ray, t_object *object, t_hit *hit)
 		float t = (i == 0) ? t0 : t1;
 		if (t < 0.001f) continue;
 
-		t_vector	*p = v_add(ray.position, v_scalar_product(ray.orientation, t));
+		t_vector	*p = v_add(ray->position, v_scalar_product(ray->orientation, t));
 		t_vector	*cp = v_sub(p, cylinder->position);
 		float height_on_axis = v_dot_product(cp, axis);
 
@@ -70,14 +70,14 @@ bool	intersect_cylinder(t_ray ray, t_object *object, t_hit *hit)
 	for (int i = 0; i < 2; i++) {
 		t_vector *cap_normal = axis;
 		if (i == 0) cap_normal = v_scalar_product(cap_normal, -1.0f);
-		float denom = v_dot_product(cap_normal, ray.orientation);
+		float denom = v_dot_product(cap_normal, ray->orientation);
 		if (fabs(denom) < 1e-6) continue;
 
-		t_vector *ocap = v_sub(cap_centers + i, ray.position);
+		t_vector *ocap = v_sub(cap_centers + i, ray->position);
 		float t = v_dot_product(ocap, cap_normal) / denom;
 		if (t < 0.001f) continue;
 
-		t_vector	*p = v_add(ray.position, v_scalar_product(ray.orientation, t));
+		t_vector	*p = v_add(ray->position, v_scalar_product(ray->orientation, t));
 		if (v_length(v_sub(p, cap_centers + i)) <= cylinder->diameter / 2.0f)
 		{
 			hit->t = t;

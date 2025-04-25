@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:36:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:37:48 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:49:07 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <structs.h>
 
-float	calculate_light_intensity(t_scene *scene, t_hit hit);
+float	calculate_light_intensity(t_scene *scene, t_hit *hit);
 
 #endif

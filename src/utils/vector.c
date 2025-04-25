@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:56:27 by vapetros          #+#    #+#             */
-/*   Updated: 2025/04/13 20:28:54 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:45:17 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_vector	*v_scalar_product(t_vector *vec, float n)
 {
 	t_vector	*new_vec;
 
+	if (!vec)
+		return (NULL);
 	new_vec = (t_vector *)malloc(sizeof (t_vector));
 	if (!new_vec)
 		return (NULL);
@@ -29,6 +31,8 @@ t_vector	*v_add(t_vector *a, t_vector *b)
 {
 	t_vector	*new_vec;
 
+	if (!a || !b)
+		return (NULL);
 	new_vec = (t_vector *)malloc(sizeof (t_vector));
 	if (!new_vec)
 		return (NULL);
@@ -42,6 +46,8 @@ t_vector	*v_sub(t_vector *a, t_vector *b)
 {
 	t_vector	*new_vec;
 
+	if (!a || !b)
+		return (NULL);
 	new_vec = (t_vector *)malloc(sizeof (t_vector));
 	if (!new_vec)
 		return (NULL);
@@ -53,6 +59,8 @@ t_vector	*v_sub(t_vector *a, t_vector *b)
 
 float	v_dot_product(t_vector *a, t_vector *b)
 {
+	if (!a || !b)
+		return (0.0f);
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
@@ -60,6 +68,8 @@ t_vector	*v_cross_product(t_vector *a, t_vector *b)
 {
 	t_vector	*new_vec;
 
+	if (!a || !b)
+		return (NULL);
 	new_vec = (t_vector *)malloc(sizeof (t_vector));
 	if (!new_vec)
 		return (NULL);

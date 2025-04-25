@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:15:11 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/24 18:18:49 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:17:21 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,54 @@ int	handle_mouse_press(int button, int x, int y, void *param)
 		mlx->mouse_state.last_x = x;
 		mlx->mouse_state.last_y = y;
 	}
+	else if (button == SCROLL_UP)
+	{
+		if (!pick_object_at(x, y, mlx->scene, &mlx->mouse_state.hit_object)
+			|| mlx->mouse_state.hit_object->type == E_PLANE)
+			return (0);
+		if (mlx->mouse_state.hit_object->type == E_SPHERE)
+		{
+			t_sphere	*sphere;
+
+			sphere = (t_sphere *)mlx->mouse_state.hit_object->object;
+			sphere->diameter += 1;
+		}
+		else if (mlx->mouse_state.hit_object->type == E_CYLINDER)
+		{
+			t_cylinder	*cylinder;
+
+			cylinder = (t_cylinder *)mlx->mouse_state.hit_object->object;
+			cylinder->diameter += 1;
+			cylinder->height += 2;
+		}
+		mlx->mouse_state.last_x = x;
+		mlx->mouse_state.last_y = y;
+		mlx->need_render = true;
+	}
+	else if (button == SCROLL_DOWN)
+	{
+		if (!pick_object_at(x, y, mlx->scene, &mlx->mouse_state.hit_object)
+			|| mlx->mouse_state.hit_object->type == E_PLANE)
+			return (0);
+		if (mlx->mouse_state.hit_object->type == E_SPHERE)
+		{
+			t_sphere	*sphere;
+
+			sphere = (t_sphere *)mlx->mouse_state.hit_object->object;
+			sphere->diameter -= 1;
+		}
+		else if (mlx->mouse_state.hit_object->type == E_CYLINDER)
+		{
+			t_cylinder	*cylinder;
+
+			cylinder = (t_cylinder *)mlx->mouse_state.hit_object->object;
+			cylinder->diameter -= 1;
+			cylinder->height -= 2;
+		}
+		mlx->mouse_state.last_x = x;
+		mlx->mouse_state.last_y = y;
+		mlx->need_render = true;
+	}
 	return (0);
 }
 
@@ -71,7 +119,7 @@ int	handle_mouse_release(int button, int x, int y, void *param)
 	return (0);
 }
 
-t_vector *rotate_vector(t_vector *v, t_vector *axis, float angle)
+static t_vector *rotate_vector(t_vector *v, t_vector *axis, float angle)
 {
 	t_vector *normalized_axis = v_normalize(axis);
 	float cos_theta = cosf(angle);
@@ -134,3 +182,5 @@ int	handle_mouse_move(int x, int y, void *param)
 	}
 	return (0);
 }
+
+// int

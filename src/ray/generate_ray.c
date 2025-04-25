@@ -6,25 +6,35 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:17:26 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:09:15 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static t_basis	get_camera_basis(t_vector *forward)
+static t_basis	*get_camera_basis(t_vector *forward)
 {
 	t_vector	world_up;
-	t_basis		basis;
+	t_basis		*basis;
+	t_vector	*temp;
 
+	if (!forward)
+		return (NULL);
 	world_up.x = 0;
 	world_up.y = 1;
 	world_up.z = 0;
+	basis = (t_basis *)malloc(sizeof (t_basis));
+	if (!basis)
+		return (NULL);
 	if (fabs(v_dot_product(forward, &world_up)) > 0.999f)
 		world_up = (t_vector){0, 0, 1};
-	basis.forward = v_normalize(forward);
-	basis.right = v_normalize(v_cross_product(&world_up, basis.forward));
-	basis.up = v_normalize(v_cross_product(basis.forward, basis.right));
+	basis->forward = v_normalize(forward);
+	temp = v_cross_product(&world_up, basis->forward);
+	basis->right = v_normalize(temp);
+	free(temp);
+	temp = v_cross_product(basis->forward, basis->right);
+	basis->up = v_normalize(temp);
+	free(temp);
 	return (basis);
 }
 
@@ -64,24 +74,37 @@ t_vector	*get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
 	free(w);
 	free(h);
 	free(total);
-	free(basis->forward);
-	free(basis->up);
-	free(basis->right);
 	free(orient);
-	return(orient_normal);
+	return (orient_normal);
 }
 
-t_ray	generate_ray(t_camera *camera, int x, int y)
+t_ray	*generate_ray(t_camera *camera, int x, int y)
 {
-	t_basis		basis;
+	t_basis		*basis;
 	t_viewport	vp;
 	t_ndc		pixel;
-	t_ray		ray;
+	t_ray		*ray;
 
+	ray = (t_ray *)malloc(sizeof (t_ray));
+	if (!ray)
+		return (NULL);
 	basis = get_camera_basis(camera->orientation);
 	vp = compute_viewport_size(camera->fov, WIDTH, HEIGHT);
 	pixel = get_pixel_ndc(x, y, WIDTH, HEIGHT);
-	ray.orientation = get_ray_orientation(&basis, pixel, vp);
-	ray.position = camera->position;
+	ray->orientation = get_ray_orientation(basis, pixel, vp);
+	free(basis->forward);
+	free(basis->up);
+	free(basis->right);
+	free(basis);
+	ray->position = (t_vector *)malloc(sizeof (t_vector));
+	if (!ray->position)
+	{
+		free(ray->orientation);
+		free(ray);
+		return (NULL);
+	}
+	ray->position->x = camera->position->x;
+	ray->position->y = camera->position->y;
+	ray->position->z = camera->position->z;
 	return (ray);
 }
