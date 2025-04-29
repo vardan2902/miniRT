@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
+/*   interactions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 18:23:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:36:17 by ysaroyan         ###   ########.fr       */
+/*   Created: 2025/04/26 19:40:05 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/04/26 19:41:19 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
+#ifndef INTERACTIONS_H
+# define INTERACTIONS_H
 
-void	free_splitted(char **splitted)
-{
-	int	i;
+# include <structs.h>
 
-	if (!splitted)
-		return ;
-	i = -1;
-	while (splitted[++i])
-		free(splitted[i]);
-	free(splitted);
-}
+void	resize_object(t_mlx *mlx, bool is_plus);
+void	rotate_object(t_mlx *mlx, float dx, float dy);
+void	translate_object(t_mlx *mlx, float dx, float dy);
 
-void	free_ray(t_ray *ray)
-{
-	free(ray->position);
-	free(ray->orientation);
-	free(ray);
-}
-
-void	free_hit(t_hit *hit)
-{
-	if (hit->position)
-		free(hit->position);
-	if (hit->orientation)
-		free(hit->orientation);
-}
+#endif

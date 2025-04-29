@@ -9,14 +9,21 @@ LIBMLX				=	$(MLXDIR)/libmlx.a
 OBJ_DIR				=	obj
 SRC_DIR				=	src
 
+MLX_HANDLERS_DIR	=	handlers
+MLX_HANDLERS_SRCS	=	mouse.c	keyboard.c	helpers.c
+
 MLX_DIR				=	mlx
-MLX_SRCS			=	init.c handlers.c renderer.c
+MLX_SRCS			=	$(addprefix $(MLX_HANDLERS_DIR)/, $(MLX_HANDLERS_SRCS))	\
+						init.c		renderer.c
 
 PARSING_DIR			=	parsing
 PARSING_SRCS		=	general.c scene.c instructions.c unique_instructions.c
 
 VALIDATING_DIR		=	validating
 VALIDATING_SRCS		=	checkers.c args.c
+
+INTERACTIONS_DIR	=	interactions
+INTERACTIONS_SRCS	=	rotate.c translate.c resize.c
 
 UTILS_DIR			=	utils
 UTILS_SRCS			=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))					\
@@ -25,7 +32,7 @@ UTILS_SRCS			=	$(addprefix $(MLX_DIR)/, $(MLX_SRCS))					\
 						error.c		clean.c			float.c						\
 						scene.c		clean_obj.c		clean_obj_list.c			\
 						vector.c	vector_ops.c	calculations.c				\
-						hit.c
+						hit.c		camera.c
 
 PARSER_DIR			=	parser
 PARSER_SRCS			=	ambient.c	camera.c	light.c	plane.c	sphere.c		\
@@ -47,6 +54,7 @@ SRC_FILES			=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))				\
 						$(addprefix $(RAY_DIR)/, $(RAY_SRCS))					\
 						$(addprefix $(INTERSECTION_DIR)/, $(INTERSECTION_SRCS))	\
 						$(addprefix $(LIGHT_DIR)/, $(LIGHT_SRCS))				\
+						$(addprefix $(INTERACTIONS_DIR)/, $(INTERACTIONS_SRCS))	\
 						$(LOCAL_UTILS)											\
 						main.c
 SRCS				=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))

@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/25 16:58:54 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:13:15 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,20 @@ int	renderer(void *param)
 	mlx = (t_mlx *)param;
 	if (!mlx->need_render)
 		return (0);
-	y = 0;
-	while (y < HEIGHT)
+	y = -1;
+	while (++y < HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
+		x = -1;
+		while (++x < WIDTH)
 		{
 			ray = generate_ray(mlx->scene->camera, x, y);
 			if (!ray)
-			{
-				mlx->need_render = false;
-				return (0);
-			}
+				return (mlx->need_render = false, 0);
 			color = trace_ray(ray, mlx->scene);
-			free(ray->position);
-			free(ray->orientation);
-			free(ray);
+			free_ray(ray);
 			put_pixel(mlx->img, x, y, rgb_to_hex(color));
-			x++;
 		}
-		y++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img->img, 0, 0);
-	mlx->need_render = false;
-	return (0);
+	return (mlx->need_render = false, 0);
 }

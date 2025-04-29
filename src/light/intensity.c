@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:31 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/24 19:54:15 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:32:47 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ float	calculate_light_intensity(t_scene *scene, t_hit *hit)
 	t_vector	*normal;
 	float		distance;
 	float		diffuse;
-	float		attenuation;
 	float		intensity;
 
 	light_dir = v_sub(scene->light->position, hit->position);
@@ -68,8 +67,8 @@ float	calculate_light_intensity(t_scene *scene, t_hit *hit)
 	}
 	diffuse = calculate_diffuse(hit->orientation, normal);
 	free(normal);
-	attenuation = calculate_attenuation(distance);
 	intensity = scene->ambient->lighting
-		+ (scene->light->brightness * diffuse * attenuation);
+		+ (scene->light->brightness * diffuse
+			* calculate_attenuation(distance));
 	return (fmin(1.0f, intensity));
 }

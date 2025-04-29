@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/25 17:07:37 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:40:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,12 @@ bool	find_hit(t_ray *ray, t_hit *hit, t_scene *scene)
 		{
 			if (temp_hit.t < hit->t)
 			{
-				if (hit->orientation)
-					free(hit->orientation);
-				if (hit->position)
-					free(hit->position);
+				free_hit(hit);
 				*hit = temp_hit;
 				found_hit = true;
 			}
 			else
-			{
-				if (temp_hit.orientation)
-					free(temp_hit.orientation);
-				if (temp_hit.position)
-					free(temp_hit.position);
-			}
+				free_hit(&temp_hit);
 		}
 		obj = obj->next;
 	}
@@ -97,26 +89,18 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	closest_t = INFINITY;
 	while (node)
 	{
-		t_object *obj = (t_object *)node->content;
 		ray = generate_ray(scene->camera, x, y);
-		if (intersect(obj, ray, &tmp_hit)
+		if (intersect((t_object *)node->content, ray, &tmp_hit)
 			&& tmp_hit.t > EPSILON && tmp_hit.t < closest_t)
 		{
 			closest_t = tmp_hit.t;
-			closest_obj = obj;
-			if (tmp_hit.orientation)
-				free(tmp_hit.orientation);
-			if (tmp_hit.position)
-				free(tmp_hit.position);
+			closest_obj = (t_object *)node->content;
+			free_hit(&tmp_hit);
 		}
-		free(ray->orientation);
-		free(ray->position);
+		free_ray(ray);
 		node = node->next;
 	}
 	if (closest_obj)
-	{
-		*object = closest_obj;
-		return (true);
-	}
+		return (*object = closest_obj, true);
 	return (false);
 }

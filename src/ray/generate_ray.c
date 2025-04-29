@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/24 19:09:15 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:34:23 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_vector	*get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
 
 	w = v_scalar_product(basis->right, pixel.u * vp.width * 0.5f);
 	h = v_scalar_product(basis->up, pixel.v * vp.height * 0.5f);
-	total = v_add(w,h);
+	total = v_add(w, h);
 	orient = v_add(total, basis->forward);
 	orient_normal = v_normalize(orient);
 	free(w);
@@ -98,11 +98,7 @@ t_ray	*generate_ray(t_camera *camera, int x, int y)
 	free(basis);
 	ray->position = (t_vector *)malloc(sizeof (t_vector));
 	if (!ray->position)
-	{
-		free(ray->orientation);
-		free(ray);
-		return (NULL);
-	}
+		return (free(ray->orientation), free(ray), NULL);
 	ray->position->x = camera->position->x;
 	ray->position->y = camera->position->y;
 	ray->position->z = camera->position->z;

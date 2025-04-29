@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/23 17:18:36 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:36:49 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ struct s_mouse_state
 {
 	int			last_x;
 	int			last_y;
+	int			move_counter;
 	bool		left_pressed;
 	bool		right_pressed;
 	t_object	*hit_object;
@@ -62,6 +63,7 @@ struct s_mlx
 	t_scene			*scene;
 	t_mouse_state	mouse_state;
 	bool			need_render;
+	bool			interactive;
 };
 
 struct s_rgb
