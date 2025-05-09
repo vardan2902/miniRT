@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:34:23 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:58:59 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ static t_basis	*get_camera_basis(t_vector *forward)
 	return (basis);
 }
 
-static t_viewport	compute_viewport_size(float fov, int width, int height)
+static t_viewport	compute_viewport_size(float fov)
 {
 	float		aspect_ratio;
 	t_viewport	vp;
 
-	aspect_ratio = (float)width / (float)height;
+	aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	vp.width = 2.0 * tan(fov * 0.5 * M_PI / 180.0);
 	vp.height = vp.width / aspect_ratio;
 	return (vp);
 }
 
-static t_ndc	get_pixel_ndc(int x, int y, int width, int height)
+static t_ndc	get_pixel_ndc(int x, int y)
 {
 	t_ndc	pixel;
 
-	pixel.u = ((x + 0.5f) / (float)width) * 2.0f - 1.0f;
-	pixel.v = 1.0f - ((y + 0.5f) / (float)height) * 2.0f;
+	pixel.u = ((x + 0.5f) / (float)WIDTH) * 2.0f - 1.0f;
+	pixel.v = 1.0f - ((y + 0.5f) / (float)HEIGHT) * 2.0f;
 	return (pixel);
 }
 
@@ -89,8 +89,8 @@ t_ray	*generate_ray(t_camera *camera, int x, int y)
 	if (!ray)
 		return (NULL);
 	basis = get_camera_basis(camera->orientation);
-	vp = compute_viewport_size(camera->fov, WIDTH, HEIGHT);
-	pixel = get_pixel_ndc(x, y, WIDTH, HEIGHT);
+	vp = compute_viewport_size(camera->fov);
+	pixel = get_pixel_ndc(x, y);
 	ray->orientation = get_ray_orientation(basis, pixel, vp);
 	free(basis->forward);
 	free(basis->up);

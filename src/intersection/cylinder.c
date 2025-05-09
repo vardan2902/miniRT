@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:33:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:52:51 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:46:13 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void	compute_quadratic_parts(t_ray *ray, t_cylinder *cylinder, float *a, 
 	t_vector	*b_part;
 
 	*axis = v_normalize(cylinder->orientation);
+	oc = v_sub(ray->position, cylinder->position);
 	oc_proj = v_scalar_product(*axis, v_dot_product(oc, *axis));
 	d_proj = v_scalar_product(*axis, v_dot_product(ray->orientation, *axis));
 	a_part = v_sub(ray->orientation, d_proj);
 	b_part = v_sub(oc, oc_proj);
-	oc = v_sub(ray->position, cylinder->position);
 	*a = v_dot_product(a_part, a_part);
 	*b = 2.0f * v_dot_product(a_part, b_part);
 	*c = v_dot_product(b_part, b_part) - powf(cylinder->diameter / 2.0f, 2);
