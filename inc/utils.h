@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:32:37 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:16:51 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ bool		is_instruction_in_range(char **inst, float min, float max, int size);
 void		free_splitted(char **splitted);
 void		init_scene(t_scene *scene);
 void		cleanup_scene(t_scene *scene);
-bool		set_vector(char **instuction, t_vector *vector);
+bool		set_vector(char **instuction, t_vector *v, bool is_orientation);
 bool		set_ratio(char *str, float *ratio);
 bool		set_position(char *str, t_vector **pos);
 bool		set_orientation(char *str, t_vector **orient);
 bool		set_rgb(char *str, t_rgb **color);
 bool		set_prop(char *str, float *prop);
-bool		normalize_orient(t_vector **orient);
 void		assign_rgb(char **instuction, t_rgb *rgb);
 bool		create_object(void **obj, size_t size);
 bool		check_rgb(char **rgb, char *str);
@@ -56,8 +55,9 @@ t_vector	*get_position_by_type(t_object *object);
 t_vector	*get_orientation_by_type(t_object *object);
 bool		pick_object_at(int x, int y, t_scene *scene, t_object **object);
 void		free_ray(t_ray *ray);
-void		free_hit(t_hit *hit);
-t_vector	*get_cam_right(t_mlx *mlx);
-t_vector	*get_cam_up(t_mlx *mlx, t_vector *right);
+t_vector	get_cam_right(t_mlx *mlx);
+t_vector	get_cam_up(t_mlx *mlx, t_vector right);
+t_basis		*get_camera_basis(t_vector *forward);
+t_viewport	compute_viewport_size(float fov);
 
 #endif

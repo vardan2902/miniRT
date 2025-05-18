@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:23:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:36:17 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:00:47 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,4 @@ void	free_ray(t_ray *ray)
 	free(ray->position);
 	free(ray->orientation);
 	free(ray);
-}
-
-void	free_hit(t_hit *hit)
-{
-	if (hit->position)
-		free(hit->position);
-	if (hit->orientation)
-		free(hit->orientation);
 }

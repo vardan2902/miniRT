@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/25 17:36:49 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:35:53 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ struct s_object
 struct s_hit
 {
 	float		t;
-	t_vector	*position;
-	t_vector	*orientation;
+	t_vector	position;
+	t_vector	orientation;
 	t_object	*object;
 };
 
@@ -149,9 +149,17 @@ struct s_coefficients
 	float	c;
 };
 
+struct s_basis
+{
+	t_vector	right;
+	t_vector	up;
+	t_vector	forward;
+};
+
 struct s_scene
 {
 	t_camera	*camera;
+	t_basis		world_basis;
 	t_ambient	*ambient;
 	t_light		*light;
 	t_list		*object_list;
@@ -161,13 +169,6 @@ struct s_viewport
 {
 	float	width;
 	float	height;
-};
-
-struct s_basis
-{
-	t_vector	*right;
-	t_vector	*up;
-	t_vector	*forward;
 };
 
 struct s_ndc

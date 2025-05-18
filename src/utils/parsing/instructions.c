@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:33:03 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:52:38 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:32:12 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	set_vector(char **instuction, t_vector *vector)
+bool	set_vector(char **instuction, t_vector *v, bool is_orientation)
 {
-	if ((!to_float(instuction[0], &vector->x)
-			|| !to_float(instuction[1], &vector->y)
-			|| !to_float(instuction[2], &vector->z)))
-		return (free(vector), false);
+	t_vector	new_vec;
+
+	if ((!to_float(instuction[0], &new_vec.x)
+			|| !to_float(instuction[1], &new_vec.y)
+			|| !to_float(instuction[2], &new_vec.z)))
+		return (free(v), false);
+	if (is_orientation)
+		new_vec = v_normalize(new_vec);
+	assign_vector(new_vec, v);
 	return (true);
 }
 
@@ -47,7 +52,7 @@ bool	set_position(char *str, t_vector **pos)
 		return (false);
 	}
 	if (!is_instruction_in_range(position, -FLT_MAX, FLT_MAX, 3)
-		|| !set_vector(position, *pos))
+		|| !set_vector(position, *pos, false))
 	{
 		log_error(ERR_INVALID_TOKEN, str);
 		free_splitted(position);
@@ -73,8 +78,7 @@ bool	set_orientation(char *str, t_vector **orient)
 		return (false);
 	}
 	if (!is_instruction_in_range(orientation, ORIENT_MIN, ORIENT_MAX, 3)
-		|| !set_vector(orientation, *orient)
-		|| !normalize_orient(orient))
+		|| !set_vector(orientation, *orient, true))
 	{
 		log_error(ERR_INVALID_TOKEN, str);
 		free_splitted(orientation);

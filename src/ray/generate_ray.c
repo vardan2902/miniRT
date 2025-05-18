@@ -3,49 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   generate_ray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/05 20:58:59 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:17:41 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static t_basis	*get_camera_basis(t_vector *forward)
+t_basis	*get_camera_basis(t_vector *forward)
 {
 	t_vector	world_up;
 	t_basis		*basis;
-	t_vector	*temp;
 
-	if (!forward)
-		return (NULL);
-	world_up.x = 0;
-	world_up.y = 1;
-	world_up.z = 0;
+	world_up.x = 0.0f;
+	world_up.y = 1.0f;
+	world_up.z = 0.0f;
+
 	basis = (t_basis *)malloc(sizeof (t_basis));
 	if (!basis)
 		return (NULL);
-	if (fabs(v_dot_product(forward, &world_up)) > 0.999f)
-		world_up = (t_vector){0, 0, 1};
-	basis->forward = v_normalize(forward);
-	temp = v_cross_product(&world_up, basis->forward);
-	basis->right = v_normalize(temp);
-	free(temp);
-	temp = v_cross_product(basis->forward, basis->right);
-	basis->up = v_normalize(temp);
-	free(temp);
+	if (fabs(v_dot_product(world_up, *forward)) > 0.999f)
+		world_up = (t_vector){1.0f, 0.0f, 0.0f};
+	assign_vector(*forward, &basis->forward);
+	assign_vector(v_normalize(v_cross_product(basis->forward, world_up)),
+		&basis->right);
+	assign_vector(v_normalize(v_cross_product(basis->right, basis->forward)),
+		&basis->up);
 	return (basis);
 }
 
-static t_viewport	compute_viewport_size(float fov)
+t_viewport	compute_viewport_size(float fov)
 {
 	float		aspect_ratio;
+	float		h_fov_rad;
+	float		v_fov_rad;
 	t_viewport	vp;
 
 	aspect_ratio = (float)WIDTH / (float)HEIGHT;
-	vp.width = 2.0 * tan(fov * 0.5 * M_PI / 180.0);
-	vp.height = vp.width / aspect_ratio;
+	h_fov_rad = fov * M_PI / 180.0f;
+	v_fov_rad = 2.0f * atanf(tanf(h_fov_rad / 2.0f) / aspect_ratio);
+	vp.height = 2.0f * tanf(v_fov_rad / 2.0f);
+	vp.width = vp.height * aspect_ratio;
 	return (vp);
 }
 
@@ -58,49 +58,41 @@ static t_ndc	get_pixel_ndc(int x, int y)
 	return (pixel);
 }
 
-t_vector	*get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
+t_vector	get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
 {
-	t_vector	*orient;
-	t_vector	*w;
-	t_vector	*h;
-	t_vector	*total;
-	t_vector	*orient_normal;
+	t_vector	orient;
+	t_vector	w;
+	t_vector	h;
+	t_vector	total;
+	t_vector	orient_normal;
 
 	w = v_scalar_product(basis->right, pixel.u * vp.width * 0.5f);
 	h = v_scalar_product(basis->up, pixel.v * vp.height * 0.5f);
 	total = v_add(w, h);
 	orient = v_add(total, basis->forward);
 	orient_normal = v_normalize(orient);
-	free(w);
-	free(h);
-	free(total);
-	free(orient);
 	return (orient_normal);
 }
 
-t_ray	*generate_ray(t_camera *camera, int x, int y)
+void	generate_ray(t_ray *ray, t_camera *camera, int x, int y)
 {
 	t_basis		*basis;
 	t_viewport	vp;
 	t_ndc		pixel;
-	t_ray		*ray;
 
-	ray = (t_ray *)malloc(sizeof (t_ray));
-	if (!ray)
-		return (NULL);
 	basis = get_camera_basis(camera->orientation);
 	vp = compute_viewport_size(camera->fov);
 	pixel = get_pixel_ndc(x, y);
-	ray->orientation = get_ray_orientation(basis, pixel, vp);
-	free(basis->forward);
-	free(basis->up);
-	free(basis->right);
+	assign_vector(get_ray_orientation(basis, pixel, vp), ray->orientation);
 	free(basis);
 	ray->position = (t_vector *)malloc(sizeof (t_vector));
 	if (!ray->position)
-		return (free(ray->orientation), free(ray), NULL);
+	{
+		free(ray->orientation);
+		free(ray);
+		return ;
+	}
 	ray->position->x = camera->position->x;
 	ray->position->y = camera->position->y;
 	ray->position->z = camera->position->z;
-	return (ray);
 }

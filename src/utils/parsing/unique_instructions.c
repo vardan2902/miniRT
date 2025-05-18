@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unique_instructions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:54:15 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/16 14:52:48 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:18:45 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,5 @@ bool	set_prop(char *str, float *prop)
 		log_error(ERR_INVALID_TOKEN, str);
 		return (false);
 	}
-	return (true);
-}
-
-bool	normalize_orient(t_vector **orient)
-{
-	t_vector	*normal;
-
-	normal = v_normalize(*orient);
-	if (!normal)
-		return (false);
-	free(*orient);
-	*orient = normal;
 	return (true);
 }

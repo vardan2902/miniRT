@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:19:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:32:17 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:41:13 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,10 @@ t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 	float	light_intensity;
 
 	hit.t = FLT_MAX;
-	hit.orientation = NULL;
-	hit.position = NULL;
 	if (!find_hit(ray, &hit, scene))
-	{
-		free_hit(&hit);
 		return ((t_rgb){0.0, 0.0, 0.0});
-	}
 	light_intensity = calculate_light_intensity(scene, &hit);
 	rgb = get_rgb_by_type(hit.object);
-	free_hit(&hit);
 	ambient_effect = color_scale(*scene->ambient->rgb,
 			scene->ambient->lighting);
 	light_effect = color_scale(*rgb, light_intensity);

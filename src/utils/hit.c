@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/28 19:40:28 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:02:21 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,17 @@ t_vector	*get_orientation_by_type(t_object *object)
 void	set_hit_point(t_hit *hit, float t, t_ray *ray, t_object *object)
 {
 	t_vector	*position;
-	t_vector	*temp;
+	t_vector	pos;
+	t_vector	orient;
 
 	position = get_position_by_type(object);
 	if (!position)
 		return ;
 	hit->t = t;
-	temp = v_scalar_product(ray->orientation, t);
-	hit->position = v_add(ray->position, temp);
-	free(temp);
-	temp = v_sub(hit->position, position);
-	hit->orientation = v_normalize(temp);
-	free(temp);
+	pos = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
+	hit->position = pos;
+	orient = v_normalize(v_sub(hit->position, *position));
+	hit->orientation = orient;
 	hit->object = object;
 }
 
@@ -64,12 +63,9 @@ bool	find_hit(t_ray *ray, t_hit *hit, t_scene *scene)
 		{
 			if (temp_hit.t < hit->t)
 			{
-				free_hit(hit);
 				*hit = temp_hit;
 				found_hit = true;
 			}
-			else
-				free_hit(&temp_hit);
 		}
 		obj = obj->next;
 	}
@@ -87,19 +83,19 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	closest_obj = NULL;
 	node = scene->object_list;
 	closest_t = INFINITY;
+	ray = malloc(sizeof (t_ray));
 	while (node)
 	{
-		ray = generate_ray(scene->camera, x, y);
+		generate_ray(ray, scene->camera, x, y);
 		if (intersect((t_object *)node->content, ray, &tmp_hit)
 			&& tmp_hit.t > EPSILON && tmp_hit.t < closest_t)
 		{
 			closest_t = tmp_hit.t;
 			closest_obj = (t_object *)node->content;
-			free_hit(&tmp_hit);
 		}
-		free_ray(ray);
 		node = node->next;
 	}
+	free_ray(ray);
 	if (closest_obj)
 		return (*object = closest_obj, true);
 	return (false);

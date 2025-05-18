@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:36:08 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/24 18:30:12 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:42:49 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	intersect(t_object *object, t_ray *ray, t_hit *hit)
 		return (intersect_sphere(ray, object, hit));
 	if (object->type == E_PLANE)
 		return (intersect_plane(ray, object, hit));
-	if (object->type == E_CYLINDER)
-		return (intersect_cylinder(ray, object, hit));
+	// if (object->type == E_CYLINDER)
+		// return (intersect_cylinder(ray, object, hit));
 	return (false);
 }
