@@ -12,15 +12,14 @@
 
 #include <minirt.h>
 
-// void	change_light_pos(t_vector *change_vec, t_mlx *mlx)
-// {
-// 	t_vector	*light_pos;
+void	change_light_pos(t_vector *change_vec, t_mlx *mlx)
+{
+	t_vector	light_pos;
 
-// 	light_pos = v_add(*mlx->scene->light->position, *change_vec);
-// 	*mlx->scene->light->position = *light_pos;
-// 	mlx->need_render = true;
-// 	free(light_pos);
-// }
+	light_pos = v_add(*mlx->scene->light->position, *change_vec);
+	*mlx->scene->light->position = light_pos;
+	mlx->need_render = true;
+}
 
 // void	change_camera_orient(t_vector change_vec, t_mlx *mlx, float scale)
 // {

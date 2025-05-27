@@ -26,7 +26,6 @@ void	free_splitted(char **splitted)
 
 void	free_ray(t_ray *ray)
 {
-	free(ray->position);
 	free(ray->orientation);
 	free(ray);
 }

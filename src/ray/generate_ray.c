@@ -20,7 +20,6 @@ t_basis	*get_camera_basis(t_vector *forward)
 	world_up.x = 0.0f;
 	world_up.y = 1.0f;
 	world_up.z = 0.0f;
-
 	basis = (t_basis *)malloc(sizeof (t_basis));
 	if (!basis)
 		return (NULL);
@@ -49,7 +48,7 @@ t_viewport	compute_viewport_size(float fov)
 	return (vp);
 }
 
-static t_ndc	get_pixel_ndc(int x, int y)
+t_ndc	get_pixel_ndc(int x, int y)
 {
 	t_ndc	pixel;
 
@@ -74,25 +73,10 @@ t_vector	get_ray_orientation(t_basis *basis, t_ndc pixel, t_viewport vp)
 	return (orient_normal);
 }
 
-void	generate_ray(t_ray *ray, t_camera *camera, int x, int y)
+void	generate_ray(t_ray *ray, t_ndc pixel, t_basis *basis, t_viewport vp)
 {
-	t_basis		*basis;
-	t_viewport	vp;
-	t_ndc		pixel;
-
-	basis = get_camera_basis(camera->orientation);
-	vp = compute_viewport_size(camera->fov);
-	pixel = get_pixel_ndc(x, y);
-	assign_vector(get_ray_orientation(basis, pixel, vp), ray->orientation);
-	free(basis);
-	ray->position = (t_vector *)malloc(sizeof (t_vector));
-	if (!ray->position)
-	{
-		free(ray->orientation);
-		free(ray);
+	ray->orientation = (t_vector *)malloc(sizeof (t_vector));
+	if (!ray->orientation)
 		return ;
-	}
-	ray->position->x = camera->position->x;
-	ray->position->y = camera->position->y;
-	ray->position->z = camera->position->z;
+	assign_vector(get_ray_orientation(basis, pixel, vp), ray->orientation);
 }

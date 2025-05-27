@@ -16,10 +16,10 @@ void	register_hooks(t_mlx *mlx)
 {
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, handle_keypress, mlx);
 	mlx_hook(mlx->win, DestroyNotify, NoEventMask, handle_close, mlx);
-	// mlx_hook(mlx->win, ButtonPress, ButtonPressMask, handle_mouse_press, mlx);
-	// mlx_hook(mlx->win, MotionNotify, PointerMotionMask, handle_mouse_move, mlx);
-	// mlx_hook(mlx->win, ButtonRelease, ButtonReleaseMask,
-	// 	handle_mouse_release, mlx);
+	mlx_hook(mlx->win, ButtonPress, ButtonPressMask, handle_mouse_press, mlx);
+	mlx_hook(mlx->win, MotionNotify, PointerMotionMask, handle_mouse_move, mlx);
+	mlx_hook(mlx->win, ButtonRelease, ButtonReleaseMask,
+		handle_mouse_release, mlx);
 	mlx_loop_hook(mlx->ptr, renderer, mlx);
 	mlx_loop(mlx->ptr);
 }

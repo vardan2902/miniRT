@@ -16,6 +16,6 @@
 # include <structs.h>
 
 t_rgb	trace_ray(t_ray *ray, t_scene *scene);
-void	generate_ray(t_ray *ray, t_camera *camera, int x, int y);
+void	generate_ray(t_ray *ray, t_ndc pixel, t_basis *basis, t_viewport vp);
 
 #endif

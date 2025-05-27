@@ -35,7 +35,7 @@
 # include <calculations.h>
 # include <ray.h>
 # include <light.h>
-// # include <interactions.h>
+# include <interactions.h>
 
 // TODO: remove on finish
 # include <local.h>

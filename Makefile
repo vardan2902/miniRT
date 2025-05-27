@@ -10,8 +10,7 @@ OBJ_DIR				=	obj
 SRC_DIR				=	src
 
 MLX_HANDLERS_DIR	=	handlers
-MLX_HANDLERS_SRCS	=	keyboard.c	helpers.c
-#mouse.c
+MLX_HANDLERS_SRCS	=	keyboard.c	helpers.c mouse.c
 MLX_DIR				=	mlx
 MLX_SRCS			=	$(addprefix $(MLX_HANDLERS_DIR)/, $(MLX_HANDLERS_SRCS))	\
 						init.c		renderer.c
@@ -54,9 +53,9 @@ SRC_FILES			=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))				\
 						$(addprefix $(RAY_DIR)/, $(RAY_SRCS))					\
 						$(addprefix $(INTERSECTION_DIR)/, $(INTERSECTION_SRCS))	\
 						$(addprefix $(LIGHT_DIR)/, $(LIGHT_SRCS))				\
+						$(addprefix $(INTERACTIONS_DIR)/, $(INTERACTIONS_SRCS))	\
 						$(LOCAL_UTILS)											\
 						main.c
-# $(addprefix $(INTERACTIONS_DIR)/, $(INTERACTIONS_SRCS))
 
 SRCS				=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS				=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_FILES))

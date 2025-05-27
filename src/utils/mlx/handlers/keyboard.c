@@ -38,21 +38,21 @@ static void	handle_camera_rotate(int key, t_mlx *mlx)
 		change_camera_orient('z', mlx, 0.1f);
 }
 
-// static void	handle_light_translation(int key, t_mlx *mlx)
-// {
-// 	if (key == XK_l)
-// 		change_light_pos(&(t_vector){0.2f, 0, 0}, mlx);
-// 	else if (key == XK_j)
-// 		change_light_pos(&(t_vector){-1.0f, 0, 0}, mlx);
-// 	else if (key == XK_i)
-// 		change_light_pos(&(t_vector){0, 1.0f, 0}, mlx);
-// 	else if (key == XK_k)
-// 		change_light_pos(&(t_vector){0, -1.0f, 0}, mlx);
-// 	else if (key == XK_o)
-// 		change_light_pos(&(t_vector){0, 0, 1.0f}, mlx);
-// 	else if (key == XK_u)
-// 		change_light_pos(&(t_vector){0, 0, -1.0f}, mlx);
-// }
+static void	handle_light_translation(int key, t_mlx *mlx)
+{
+	if (key == XK_l)
+		change_light_pos(&(t_vector){0.2f, 0, 0}, mlx);
+	else if (key == XK_j)
+		change_light_pos(&(t_vector){-1.0f, 0, 0}, mlx);
+	else if (key == XK_i)
+		change_light_pos(&(t_vector){0, 1.0f, 0}, mlx);
+	else if (key == XK_k)
+		change_light_pos(&(t_vector){0, -1.0f, 0}, mlx);
+	else if (key == XK_o)
+		change_light_pos(&(t_vector){0, 0, 1.0f}, mlx);
+	else if (key == XK_u)
+		change_light_pos(&(t_vector){0, 0, -1.0f}, mlx);
+}
 
 int	handle_keypress(int key, void *param)
 {
@@ -62,6 +62,6 @@ int	handle_keypress(int key, void *param)
 	if (key == XK_Escape)
 		handle_close(param);
 	handle_camera_rotate(key, mlx);
-	// handle_light_translation(key, mlx);
+	handle_light_translation(key, mlx);
 	return (0);
 }
