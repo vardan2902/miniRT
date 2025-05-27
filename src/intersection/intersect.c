@@ -18,7 +18,7 @@ bool	intersect(t_object *object, t_ray *ray, t_hit *hit)
 		return (intersect_sphere(ray, object, hit));
 	if (object->type == E_PLANE)
 		return (intersect_plane(ray, object, hit));
-	// if (object->type == E_CYLINDER)
-		// return (intersect_cylinder(ray, object, hit));
+	if (object->type == E_CYLINDER)
+		return (intersect_cylinder(ray, object, hit));
 	return (false);
 }

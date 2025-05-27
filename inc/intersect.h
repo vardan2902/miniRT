@@ -18,6 +18,6 @@
 bool	intersect(t_object *object, t_ray *ray, t_hit *hit);
 bool	intersect_sphere(t_ray *ray, t_object *sphere, t_hit *hit);
 bool	intersect_plane(t_ray *ray, t_object *object, t_hit *hit);
-// bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit);
+bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit);
 
 #endif
