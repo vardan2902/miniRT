@@ -28,7 +28,7 @@ void	change_light_pos(t_vector *change_vec, t_mlx *mlx)
 // 	cam_orient = v_rotate(*mlx->scene->camera->orientation, change_vec, scale);
 // 	*mlx->scene->camera->orientation = v_normalize(cam_orient);
 // 	mlx->need_render = true;
-// }
+// }i
 
 
 t_vector rotate_vector_around_x(t_vector v, float angle)

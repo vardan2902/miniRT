@@ -79,8 +79,6 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	t_list		*node;
 	t_ray		*ray;
 	t_basis		*basis;
-	t_viewport	vp;
-	t_ndc	pixel;
 	float		closest_t;
 
 	closest_obj = NULL;
@@ -90,12 +88,10 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	if (!ray)
 		return (false);
 	basis = get_camera_basis(scene->camera->orientation);
-	vp = compute_viewport_size(scene->camera->fov);
+	generate_ray(ray, get_pixel_ndc(x, y), basis, compute_viewport_size(scene->camera->fov));
+	ray->position = scene->camera->position;
 	while (node)
 	{
-		pixel = get_pixel_ndc(x, y);
-		generate_ray(ray, pixel, basis, vp);
-		ray->position = scene->camera->position;
 		if (intersect((t_object *)node->content, ray, &tmp_hit)
 			&& tmp_hit.t > EPSILON && tmp_hit.t < closest_t)
 		{

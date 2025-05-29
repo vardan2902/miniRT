@@ -18,6 +18,7 @@
 # define TITLE "miniRT"
 
 # define EPSILON 0.0004f
+# define BASE_SCALE 0.02f 
 
 # define AMBIENT "A"
 # define CAMERA "C"
@@ -34,6 +35,10 @@
 # define RGB_MAX 255.0f
 # define DEG_MIN 0.0f
 # define DEG_MAX 180.0f
+# define MIN_DIAMETER 1.0f
+# define MAX_DIAMETER 100.0f
+# define MIN_HEIGHT 1.0f
+# define MAX_HEIGHT 300.0f
 
 # define ERR_INVALID_TOKEN "miniRT: Invalid token: "
 # define ERR_MALLOC "Error\nminiRT: malloc"

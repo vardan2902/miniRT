@@ -52,8 +52,8 @@ t_ndc	get_pixel_ndc(int x, int y)
 {
 	t_ndc	pixel;
 
-	pixel.u = ((x + 0.5f) / (float)WIDTH) * 2.0f - 1.0f;
-	pixel.v = 1.0f - ((y + 0.5f) / (float)HEIGHT) * 2.0f;
+	pixel.u = 2.0f * ((x + 0.5f) / (float)WIDTH) - 1.0f;
+	pixel.v = 1.0f - 2.0f * ((y + 0.5f) / (float)HEIGHT);
 	return (pixel);
 }
 
