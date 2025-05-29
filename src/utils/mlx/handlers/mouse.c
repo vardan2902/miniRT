@@ -78,7 +78,6 @@ int	handle_mouse_release(int button, int x, int y, void *param)
 		mlx->mouse_state.left_pressed = false;
 	if (button == RIGHT_CLICK)
 		mlx->mouse_state.right_pressed = false;
-	mlx->mouse_state.move_counter = 0;
 	return (0);
 }
 
@@ -87,16 +86,12 @@ int	handle_mouse_move(int x, int y, void *param)
 	float		dx;
 	float		dy;
 	t_mlx		*mlx;
-	int			event_threshold;
 
-	event_threshold = 120;
 	mlx = (t_mlx *)param;
 	dx = x - mlx->mouse_state.last_x;
 	dy = y - mlx->mouse_state.last_y;
-	mlx->mouse_state.move_counter++;
-	if (mlx->mouse_state.move_counter < event_threshold || (dx == 0 || dy == 0))
+	if (dx == 0 || dy == 0)
 		return (0);
-	mlx->mouse_state.move_counter = 0;
 	if (mlx->mouse_state.left_pressed)
 	{
 		translate_object(mlx, dx, dy);

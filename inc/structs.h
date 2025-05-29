@@ -49,7 +49,6 @@ struct s_mouse_state
 {
 	int			last_x;
 	int			last_y;
-	int			move_counter;
 	bool		left_pressed;
 	bool		right_pressed;
 	t_object	*hit_object;
