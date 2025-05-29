@@ -21,16 +21,6 @@ void	change_light_pos(t_vector *change_vec, t_mlx *mlx)
 	mlx->need_render = true;
 }
 
-// void	change_camera_orient(t_vector change_vec, t_mlx *mlx, float scale)
-// {
-// 	t_vector	cam_orient;
-
-// 	cam_orient = v_rotate(*mlx->scene->camera->orientation, change_vec, scale);
-// 	*mlx->scene->camera->orientation = v_normalize(cam_orient);
-// 	mlx->need_render = true;
-// }i
-
-
 t_vector rotate_vector_around_x(t_vector v, float angle)
 {
 	t_vector result;
@@ -74,13 +64,13 @@ void change_camera_orient(char axis, t_mlx *mlx, float angle) {
 
     if (axis == 'x') {
         rotated_orient = rotate_vector_around_x(*orient, angle);
-        rotated_up = rotate_vector_around_x(cam->up, angle); // Also rotate up!
+        rotated_up = rotate_vector_around_x(cam->up, angle);
     } else if (axis == 'y') {
         rotated_orient = rotate_vector_around_y(*orient, angle);
-        rotated_up = rotate_vector_around_y(cam->up, angle); // Also rotate up!
+        rotated_up = rotate_vector_around_y(cam->up, angle);
     } else if (axis == 'z') {
         rotated_orient = rotate_vector_around_z(*orient, angle);
-        rotated_up = rotate_vector_around_z(cam->up, angle); // Also rotate up!
+        rotated_up = rotate_vector_around_z(cam->up, angle);
     } else return;
 
     *cam->orientation = v_normalize(rotated_orient);
