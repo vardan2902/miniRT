@@ -22,7 +22,7 @@ static void	set_new_pos(t_mlx *mlx, t_vector right, float dx, float dy)
 
 	up = get_cam_up(mlx, right);
 	position = get_position_by_type(mlx->mouse_state.hit_object);
-	right_scalar = v_scalar_product(right, -dx * 0.03f);
+	right_scalar = v_scalar_product(right, dx * 0.03f);
 	new_pos = v_add(*position, right_scalar);
 	up_scalar = v_scalar_product(up, -dy * 0.03f);
 	new_pos = v_add(new_pos, up_scalar);
