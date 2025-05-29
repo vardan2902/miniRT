@@ -87,7 +87,7 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	ray = malloc(sizeof (t_ray));
 	if (!ray)
 		return (false);
-	basis = get_camera_basis(scene->camera->orientation);
+	basis = get_camera_basis(scene->camera);
 	generate_ray(ray, get_pixel_ndc(x, y), basis, compute_viewport_size(scene->camera->fov));
 	ray->position = scene->camera->position;
 	while (node)

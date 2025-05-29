@@ -89,6 +89,7 @@ struct s_camera
 {
 	t_vector	*position;
 	t_vector	*orientation;
+	t_vector	up;  
 	float		fov;
 };
 

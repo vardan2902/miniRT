@@ -57,7 +57,7 @@ bool		pick_object_at(int x, int y, t_scene *scene, t_object **object);
 void		free_ray(t_ray *ray);
 t_vector	get_cam_right(t_mlx *mlx);
 t_vector	get_cam_up(t_mlx *mlx, t_vector right);
-t_basis		*get_camera_basis(t_vector *forward);
+t_basis 	*get_camera_basis(t_camera *camera);
 t_viewport	compute_viewport_size(float fov);
 t_ndc		get_pixel_ndc(int x, int y);
 

@@ -67,20 +67,23 @@ t_vector rotate_vector_around_z(t_vector v, float angle)
 	return result;
 }
 
-void	change_camera_orient(char axis, t_mlx *mlx, float angle)
-{
-	t_vector	*orient;
-	t_vector	rotated;
+void change_camera_orient(char axis, t_mlx *mlx, float angle) {
+    t_camera *cam = mlx->scene->camera;
+    t_vector *orient = cam->orientation;
+    t_vector rotated_orient, rotated_up;
 
-	orient = mlx->scene->camera->orientation;
-	if (axis == 'x')
-		rotated = rotate_vector_around_x(*orient, angle);
-	else if (axis == 'y')
-		rotated = rotate_vector_around_y(*orient, angle);
-	else if (axis == 'z')
-		rotated = rotate_vector_around_z(*orient, angle);
-	else
-		return ;
-	*orient = v_normalize(rotated);
-	mlx->need_render = true;
+    if (axis == 'x') {
+        rotated_orient = rotate_vector_around_x(*orient, angle);
+        rotated_up = rotate_vector_around_x(cam->up, angle); // Also rotate up!
+    } else if (axis == 'y') {
+        rotated_orient = rotate_vector_around_y(*orient, angle);
+        rotated_up = rotate_vector_around_y(cam->up, angle); // Also rotate up!
+    } else if (axis == 'z') {
+        rotated_orient = rotate_vector_around_z(*orient, angle);
+        rotated_up = rotate_vector_around_z(cam->up, angle); // Also rotate up!
+    } else return;
+
+    *cam->orientation = v_normalize(rotated_orient);
+    cam->up = v_normalize(rotated_up);
+    mlx->need_render = true;
 }

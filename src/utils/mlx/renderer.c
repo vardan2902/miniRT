@@ -78,7 +78,7 @@ int	renderer(void *param)
 	mlx = (t_mlx *)param;
 	if (!mlx->need_render)
 		return (0);
-	basis = get_camera_basis(mlx->scene->camera->orientation);
+	basis = get_camera_basis(mlx->scene->camera);
 	if (!basis)
 		return (0);
 	vp = compute_viewport_size(mlx->scene->camera->fov);

@@ -12,27 +12,17 @@
 
 #include <minirt.h>
 
-t_basis	*get_camera_basis(t_vector *forward)
+t_basis *get_camera_basis(t_camera *camera)
 {
-	t_vector	world_up;
-	t_basis		*basis;
+    t_basis *basis = malloc(sizeof(t_basis));
+    if (!basis) return NULL;
 
-	world_up.x = 0.0f;
-	world_up.y = 1.0f;
-	world_up.z = 0.0f;
-	basis = (t_basis *)malloc(sizeof (t_basis));
-	if (!basis)
-		return (NULL);
-	if (fabs(v_dot_product(world_up, *forward)) > 0.999f)
-		world_up = (t_vector){1.0f, 0.0f, 0.0f};
-	assign_vector(*forward, &basis->forward);
-	assign_vector(v_normalize(v_cross_product(basis->forward, world_up)),
-		&basis->right);
-	assign_vector(v_normalize(v_cross_product(basis->right, basis->forward)),
-		&basis->up);
-	return (basis);
+    basis->right = v_normalize(v_cross_product(*camera->orientation, camera->up));
+    basis->up = v_normalize(v_cross_product(basis->right, *camera->orientation));
+    basis->forward = *camera->orientation;
+
+    return basis;
 }
-
 t_viewport	compute_viewport_size(float fov)
 {
 	float		aspect_ratio;
