@@ -92,24 +92,25 @@ static bool	check_caps(t_ray *ray, t_object *object, t_hit *hit, t_vector axis)
 		t_vector	cap_normal = (i == 0) ? v_scalar_product(axis, -1.0f) : axis;
 		float denom = v_dot_product(cap_normal, *ray->orientation);
 
-		if (fabs(denom) < 1e-6)
-			continue;
-
-		t_vector ocap = v_sub(cap_centers[i], *ray->position);
-		float t = v_dot_product(ocap, cap_normal) / denom;
-
-		if (t > EPSILON)
+		if (fabs(denom) > EPSILON)
 		{
-			t_vector p = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
-			if (v_length(v_sub(p, cap_centers[i])) <= cylinder->diameter / 2.0f)
+			t_vector ocap = v_sub(cap_centers[i], *ray->position);
+			float t = v_dot_product(ocap, cap_normal) / denom;
+
+			if (t > EPSILON)
 			{
-				hit->t = t;
-				hit->position = v_scalar_product(p, 1);
-				hit->orientation = v_scalar_product(cap_normal, 1);
-				hit->object = object;
-				return (true);
+				t_vector p = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
+				if (v_length(v_sub(p, cap_centers[i])) <= cylinder->diameter / 2.0f)
+				{
+					hit->t = t;
+					hit->position = p;
+					hit->orientation = cap_normal;
+					hit->object = object;
+					return true;
+				}
 			}
 		}
+
 		i++;
 	}
 	return (false);
@@ -120,18 +121,27 @@ bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
 	t_cylinder		*cylinder;
 	t_coefficients	coeff;
 	t_vector		axis;
-	float			t0; 
-	float			t1;
+	float			t0, t1;
+	t_hit			side_hit, cap_hit;
+	bool			side_ok = false, cap_ok = false;
 
 	cylinder = (t_cylinder *)object->object;
 	axis = compute_quadratic_parts(ray, cylinder, &coeff);
 	if (solve_quadratic(&coeff, &t0, &t1))
 	{
-		if (valid_cylinder_hit(ray, object, hit, t0, axis) ||
-			valid_cylinder_hit(ray, object, hit, t1, axis))
-			return (true);
+		side_ok = valid_cylinder_hit(ray, object, &side_hit, t0, axis) ||
+				  valid_cylinder_hit(ray, object, &side_hit, t1, axis);
 	}
-	if (check_caps(ray, object, hit, axis))
-		return (true);
-	return (false);
+	cap_ok = check_caps(ray, object, &cap_hit, axis);
+	if (side_ok && (!cap_ok || side_hit.t < cap_hit.t))
+	{
+		*hit = side_hit;
+		return true;
+	}
+	else if (cap_ok)
+	{
+		*hit = cap_hit;
+		return true;
+	}
+	return false;
 }
