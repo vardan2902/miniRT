@@ -12,17 +12,19 @@
 
 #include <minirt.h>
 
-t_basis *get_camera_basis(t_camera *camera)
+t_basis	*get_camera_basis(t_camera *camera)
 {
-    t_basis *basis = malloc(sizeof(t_basis));
-    if (!basis) return NULL;
+	t_basis	*basis;
 
-    basis->right = v_normalize(v_cross_product(*camera->orientation, camera->up));
-    basis->up = v_normalize(v_cross_product(basis->right, *camera->orientation));
-    basis->forward = *camera->orientation;
-
-    return basis;
+	basis = malloc(sizeof(t_basis));
+	if (!basis)
+		return NULL;
+	basis->right = v_normalize(v_cross_product(camera->up, *camera->orientation));
+	basis->up = v_normalize(v_cross_product(*camera->orientation, basis->right));
+	basis->forward = *camera->orientation;
+	return (basis);
 }
+
 t_viewport	compute_viewport_size(float fov)
 {
 	float		aspect_ratio;
