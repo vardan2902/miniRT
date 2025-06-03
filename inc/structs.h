@@ -104,6 +104,7 @@ struct s_sphere
 	t_vector	*position;
 	t_rgb		*rgb;
 	float		diameter;
+	float		initial_diameter;
 };
 
 struct s_plane
@@ -120,6 +121,8 @@ struct s_cylinder
 	t_rgb		*rgb;
 	float		diameter;
 	float		height;
+	float		initial_diameter;
+	float		initial_height;
 };
 
 struct s_object

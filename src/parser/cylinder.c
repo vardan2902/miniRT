@@ -23,6 +23,8 @@ void	*build_cylinder(char **line)
 		|| !set_orientation(line[1], &cylinder->orientation)
 		|| !set_prop(line[2], &cylinder->diameter)
 		|| !set_prop(line[3], &cylinder->height)
+		|| !set_prop(line[2], &cylinder->initial_diameter)
+		|| !set_prop(line[3], &cylinder->initial_height)
 		|| !set_rgb(line[4], &cylinder->rgb))
 	{
 		return (NULL);
