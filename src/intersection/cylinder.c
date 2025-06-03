@@ -80,40 +80,46 @@ static bool	check_caps(t_ray *ray, t_object *object, t_hit *hit, t_vector axis)
 {
 	t_cylinder	*cylinder;
 	int			i;
+	bool		hit_found;
+	float		radius_sq;
+	t_vector	cap_center;
+	t_vector	cap_normal;
 
 	cylinder = (t_cylinder *)object->object;
-	t_vector	cap_centers[2] = {
-		v_add(*cylinder->position, v_scalar_product(axis, 0.0f)),
-		v_add(*cylinder->position, v_scalar_product(axis, cylinder->height))
-	};
-	i = 0;
-	while (i < 2)
+	radius_sq = powf(cylinder->diameter / 2.0f, 2);
+	hit_found = false;
+	hit->t = INFINITY;
+	i = -1;
+	while (++i < 2)
 	{
-		t_vector	cap_normal = (i == 0) ? v_scalar_product(axis, -1.0f) : axis;
+		cap_center = (i == 0) ? *cylinder->position : 
+					v_add(*cylinder->position, v_scalar_product(axis, cylinder->height));
+		cap_normal = (i == 0) ? v_scalar_product(axis, -1.0f) : axis;
+		
 		float denom = v_dot_product(cap_normal, *ray->orientation);
-
-		if (fabs(denom) > EPSILON)
+		if (fabs(denom) <= EPSILON)
+			continue;
+			
+		t_vector oc = v_sub(cap_center, *ray->position);
+		float t = v_dot_product(oc, cap_normal) / denom;
+		
+		if (t < EPSILON || t >= hit->t)
+			continue;
+			
+		t_vector p = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
+		t_vector diff = v_sub(p, cap_center);
+		float dist_sq = v_dot_product(diff, diff);
+		
+		if (dist_sq <= radius_sq)
 		{
-			t_vector ocap = v_sub(cap_centers[i], *ray->position);
-			float t = v_dot_product(ocap, cap_normal) / denom;
-
-			if (t > EPSILON)
-			{
-				t_vector p = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
-				if (v_length(v_sub(p, cap_centers[i])) <= cylinder->diameter / 2.0f)
-				{
-					hit->t = t;
-					hit->position = p;
-					hit->orientation = cap_normal;
-					hit->object = object;
-					return true;
-				}
-			}
+			hit->t = t;
+			hit->position = p;
+			hit->orientation = cap_normal;
+			hit->object = object;
+			hit_found = true;
 		}
-
-		i++;
 	}
-	return (false);
+	return (hit_found);
 }
 
 bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
