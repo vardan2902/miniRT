@@ -24,7 +24,6 @@ void	*build_sphere(char **line)
 		|| !set_prop(line[1], &sphere->initial_diameter)
 		|| !set_rgb(line[2], &sphere->rgb))
 	{
-		del_sphere(sphere);
 		return (NULL);
 	}
 	return (sphere);

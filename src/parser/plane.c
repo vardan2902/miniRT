@@ -23,7 +23,6 @@ void	*build_plane(char **line)
 		|| !set_orientation(line[1], &plane->orientation)
 		|| !set_rgb(line[2], &plane->rgb))
 	{
-		del_plane(plane);
 		return (NULL);
 	}
 	return (plane);
