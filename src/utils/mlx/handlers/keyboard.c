@@ -62,6 +62,7 @@ int	handle_keypress(int key, void *param)
 	if (key == XK_Escape)
 		handle_close(param);
 	handle_camera_rotate(key, mlx);
-	handle_light_translation(key, mlx);
+	if (mlx->scene->light)
+		handle_light_translation(key, mlx);
 	return (0);
 }
