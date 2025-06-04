@@ -26,7 +26,7 @@ static void	set_new_pos(t_mlx *mlx, t_vector right, float dx, float dy)
 	position = get_position_by_type(mlx->mouse_state.hit_object);
 	distance = v_length(v_sub(*position, *mlx->scene->camera->position));
 	speed = distance * 0.001f;
-	right_scalar = v_scalar_product(right, dx * speed);
+	right_scalar = v_scalar_product(right, -dx * speed);
 	up_scalar = v_scalar_product(up, -dy * speed);
 	new_pos = v_add(*position, right_scalar);
 	new_pos = v_add(new_pos, up_scalar);

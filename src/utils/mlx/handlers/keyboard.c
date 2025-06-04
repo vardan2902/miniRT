@@ -29,9 +29,9 @@ static void	handle_camera_rotate(int key, t_mlx *mlx)
 	else if (key == XK_s)
 		change_camera_orient('x', mlx, 0.1f);
 	else if (key == XK_a)
-		change_camera_orient('y', mlx, 0.1f);
-	else if (key == XK_d)
 		change_camera_orient('y', mlx, -0.1f);
+	else if (key == XK_d)
+		change_camera_orient('y', mlx, 0.1f);
 	else if (key == XK_q)
 		change_camera_orient('z', mlx, -0.1f);
 	else if (key == XK_e)
@@ -41,9 +41,9 @@ static void	handle_camera_rotate(int key, t_mlx *mlx)
 static void	handle_light_translation(int key, t_mlx *mlx)
 {
 	if (key == XK_l)
-		change_light_pos(&(t_vector){-6.0f, 0, 0}, mlx);
-	else if (key == XK_j)
 		change_light_pos(&(t_vector){6.0f, 0, 0}, mlx);
+	else if (key == XK_j)
+		change_light_pos(&(t_vector){-6.0f, 0, 0}, mlx);
 	else if (key == XK_i)
 		change_light_pos(&(t_vector){0, 6.0f, 0}, mlx);
 	else if (key == XK_k)
