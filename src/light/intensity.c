@@ -51,15 +51,18 @@ float	calculate_light_intensity(t_scene *scene, t_hit *hit)
 	float		distance;
 	float		diffuse;
 	float		intensity;
+	float		lighting;
 
 	light_dir = v_sub(*scene->light->position, hit->position);
 	distance = v_length(light_dir);
 	normal = v_normalize(light_dir);
+	if (scene->ambient)
+		lighting = scene->ambient->lighting; 
+	else
+		lighting = 0.5f;
 	if (is_in_shadow(scene, hit, normal, distance))
-		return (scene->ambient->lighting);
+		return (lighting);
 	diffuse = calculate_diffuse(&hit->orientation, normal);
-	intensity = scene->ambient->lighting
-		+ (scene->light->brightness * diffuse
-			* calculate_attenuation(distance));
+	intensity = lighting + (scene->light->brightness * diffuse * calculate_attenuation(distance));
 	return (fmin(1.0f, intensity));
 }

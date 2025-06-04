@@ -39,10 +39,16 @@ t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 	hit.t = FLT_MAX;
 	if (!find_hit(ray, &hit, scene))
 		return ((t_rgb){0.0, 0.0, 0.0});
-	light_intensity = calculate_light_intensity(scene, &hit);
+	if (scene->light)	
+		light_intensity = calculate_light_intensity(scene, &hit);
+	else
+		light_intensity = scene->ambient->lighting;
 	rgb = get_rgb_by_type(hit.object);
-	ambient_effect = color_scale(*scene->ambient->rgb,
-			scene->ambient->lighting);
+	if (scene->ambient)
+		ambient_effect = color_scale(*scene->ambient->rgb,
+				scene->ambient->lighting);
+	else
+		ambient_effect = (t_rgb){0, 0, 0};	
 	light_effect = color_scale(*rgb, light_intensity);
 	return ((t_rgb){
 		fmin(255, ambient_effect.r + light_effect.r),
