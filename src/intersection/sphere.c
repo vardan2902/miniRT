@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:40:24 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:08:02 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:36:05 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-bool	intersect_sphere(t_ray ray, t_object *object, t_hit *hit)
+bool	intersect_sphere(t_ray *ray, t_object *object, t_hit *hit)
 {
 	t_sphere		*sphere;
 	t_coefficients	coeff;

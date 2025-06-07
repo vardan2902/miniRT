@@ -30,11 +30,9 @@ int	count_words(char *str, char *charset)
 {
 	int	i;
 	int	count;
-	int	in_word;
 
 	i = 0;
 	count = 0;
-	in_word = 0;
 	while (str[i])
 	{
 		while (str[i] && is_sep(str[i], charset))

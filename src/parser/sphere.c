@@ -21,9 +21,9 @@ void	*build_sphere(char **line)
 		|| !create_object((void **)&sphere, sizeof (t_sphere))
 		|| !set_position(line[0], &sphere->position)
 		|| !set_prop(line[1], &sphere->diameter)
+		|| !set_prop(line[1], &sphere->initial_diameter)
 		|| !set_rgb(line[2], &sphere->rgb))
 	{
-		del_sphere(sphere);
 		return (NULL);
 	}
 	return (sphere);

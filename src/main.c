@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:27:06 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:43:48 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 	init_scene(&scene);
 	parse_scene(&scene, fd);
 	close(fd);
-	init_mlx(&mlx);
 	mlx.scene = &scene;
+	init_mlx(&mlx);
 	register_hooks(&mlx);
 	return (0);
 }

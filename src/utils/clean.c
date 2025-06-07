@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:23:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 19:46:44 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:00:47 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@ void	free_splitted(char **splitted)
 	while (splitted[++i])
 		free(splitted[i]);
 	free(splitted);
+}
+
+void	free_ray(t_ray *ray)
+{
+	free(ray->orientation);
+	free(ray);
 }

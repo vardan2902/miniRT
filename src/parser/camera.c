@@ -30,5 +30,6 @@ void	*build_camera(char **line)
 		log_error(ERR_INVALID_TOKEN, line[2]);
 		return (NULL);
 	}
+	camera->up = (t_vector){0, 1, 0};
 	return (camera);
 }

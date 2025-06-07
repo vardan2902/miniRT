@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:22:08 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:35:53 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_viewport		t_viewport;
 typedef struct s_basis			t_basis;
 typedef struct s_ndc			t_ndc;
 typedef struct s_img			t_img;
+typedef struct s_mouse_state	t_mouse_state;
 
 struct s_img
 {
@@ -44,13 +45,24 @@ struct s_img
 	int		endian;
 };
 
+struct s_mouse_state
+{
+	int			last_x;
+	int			last_y;
+	bool		left_pressed;
+	bool		right_pressed;
+	t_object	*hit_object;
+};
+
 struct s_mlx
 {
-	void	*ptr;
-	void	*win;
-	t_img	*img;
-	t_scene	*scene;
-	bool	need_render;
+	void			*ptr;
+	void			*win;
+	t_img			*img;
+	t_scene			*scene;
+	t_mouse_state	mouse_state;
+	bool			need_render;
+	bool			interactive;
 };
 
 struct s_rgb
@@ -77,6 +89,7 @@ struct s_camera
 {
 	t_vector	*position;
 	t_vector	*orientation;
+	t_vector	up;  
 	float		fov;
 };
 
@@ -91,6 +104,7 @@ struct s_sphere
 	t_vector	*position;
 	t_rgb		*rgb;
 	float		diameter;
+	float		initial_diameter;
 };
 
 struct s_plane
@@ -107,6 +121,8 @@ struct s_cylinder
 	t_rgb		*rgb;
 	float		diameter;
 	float		height;
+	float		initial_diameter;
+	float		initial_height;
 };
 
 struct s_object
@@ -118,8 +134,8 @@ struct s_object
 struct s_hit
 {
 	float		t;
-	t_vector	*position;
-	t_vector	*orientation;
+	t_vector	position;
+	t_vector	orientation;
 	t_object	*object;
 };
 
@@ -136,9 +152,17 @@ struct s_coefficients
 	float	c;
 };
 
+struct s_basis
+{
+	t_vector	right;
+	t_vector	up;
+	t_vector	forward;
+};
+
 struct s_scene
 {
 	t_camera	*camera;
+	t_basis		world_basis;
 	t_ambient	*ambient;
 	t_light		*light;
 	t_list		*object_list;
@@ -148,13 +172,6 @@ struct s_viewport
 {
 	float	width;
 	float	height;
-};
-
-struct s_basis
-{
-	t_vector	*right;
-	t_vector	*up;
-	t_vector	*forward;
 };
 
 struct s_ndc
