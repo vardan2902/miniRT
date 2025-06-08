@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 17:16:57 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:41:43 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <libft.h>
 # include <enums.h>
+# include <ctype.h>
+# include <mlx_int.h>
 
 typedef struct s_mlx				t_mlx;
 typedef struct s_rgb				t_rgb;
@@ -33,15 +35,15 @@ typedef struct s_scene				t_scene;
 typedef struct s_viewport			t_viewport;
 typedef struct s_basis				t_basis;
 typedef struct s_ndc				t_ndc;
-typedef struct s_img				t_img;
+typedef struct s_mlx_img			t_mlx_img;
 typedef struct s_mouse_state		t_mouse_state;
 typedef struct s_cylinder_props		t_cylinder_props;
 typedef struct s_cylinder_cap		t_cylinder_cap;
 typedef struct s_check_cap_props	t_check_cap_props;
 
-struct s_img
+struct s_mlx_img
 {
-	void	*img;
+	t_img	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
@@ -59,9 +61,9 @@ struct s_mouse_state
 
 struct s_mlx
 {
-	void			*ptr;
+	t_xvar			*ptr;
 	void			*win;
-	t_img			*img;
+	t_mlx_img		*img;
 	t_scene			*scene;
 	t_mouse_state	mouse_state;
 	bool			need_render;

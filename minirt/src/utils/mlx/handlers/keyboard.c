@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:55:22 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 19:22:25 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:45:05 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,18 @@ int	handle_close(void *param)
 
 	mlx = (t_mlx *)param;
 	cleanup_scene(mlx->scene);
+	if (mlx->img)
+	{
+		free(mlx->img->img->image);
+		free(mlx->img->img);
+		free(mlx->img);
+	}
 	mlx_destroy_window(mlx->ptr, mlx->win);
+	if (mlx->ptr)
+	{
+		mlx_destroy_display(mlx->ptr);
+		free(mlx->ptr);
+	}
 	exit(0);
 }
 

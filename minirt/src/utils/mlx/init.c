@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:59:05 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 18:43:56 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:25:50 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_basis	get_world_basis(void)
 
 void	init_mlx(t_mlx *mlx)
 {
-	t_img	*img;
+	t_mlx_img	*img;
 
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
@@ -50,7 +50,7 @@ void	init_mlx(t_mlx *mlx)
 	mlx->win = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, TITLE);
 	if (!mlx->win)
 		throw_error("mlx_new_window failed");
-	img = (t_img *)malloc(sizeof (t_img));
+	img = (t_mlx_img *)malloc(sizeof (t_mlx_img));
 	if (!img)
 		perror(ERR_MALLOC);
 	img->img = mlx_new_image(mlx->ptr, WIDTH, HEIGHT);

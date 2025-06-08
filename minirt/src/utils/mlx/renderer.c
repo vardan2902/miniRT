@@ -6,13 +6,13 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 14:52:19 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:26:08 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	put_pixel(t_img *img, int x, int y, int color)
+static void	put_pixel(t_mlx_img *img, int x, int y, int color)
 {
 	char	*data;
 
@@ -37,8 +37,7 @@ int	clean_renderer(t_basis *basis, t_ray *ray)
 {
 	if (basis)
 		free(basis);
-	if (ray)
-		free(ray);
+	free_ray(ray);
 	return (0);
 }
 
@@ -87,6 +86,8 @@ int	renderer(void *param)
 		return (clean_renderer(basis, NULL));
 	ray->position = mlx->scene->camera->position;
 	ray->orientation = (t_vector *)malloc(sizeof (t_vector));
+	if (!ray->orientation)
+		return (0);
 	trace_loop(mlx, basis, &vp, ray);
 	clean_renderer(basis, ray);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img->img, 0, 0);
