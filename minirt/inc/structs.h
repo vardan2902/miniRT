@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 15:41:43 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:39:38 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <enums.h>
 # include <ctype.h>
 # include <mlx_int.h>
+# include <stdbool.h>
 
 typedef struct s_mlx				t_mlx;
 typedef struct s_rgb				t_rgb;
@@ -40,6 +41,7 @@ typedef struct s_mouse_state		t_mouse_state;
 typedef struct s_cylinder_props		t_cylinder_props;
 typedef struct s_cylinder_cap		t_cylinder_cap;
 typedef struct s_check_cap_props	t_check_cap_props;
+typedef struct s_roots				t_roots;
 
 struct s_mlx_img
 {
@@ -185,10 +187,15 @@ struct s_ndc
 	float	v;
 };
 
+struct s_roots
+{
+	float	t1;
+	float	t2;
+};
+
 struct s_cylinder_props
 {
-	float		t0;
-	float		t1;
+	t_roots		roots;
 	t_hit		side_hit;
 	t_hit		cap_hit;
 	bool		side_ok;

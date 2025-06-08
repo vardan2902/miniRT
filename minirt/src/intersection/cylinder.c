@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:33:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 17:16:14 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:55:05 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,17 @@ static t_vector	compute_quadratic_parts(t_ray *ray, t_cylinder *cylinder,
 static bool	solve_quadratic(t_coefficients *coeff, t_cylinder_props *props)
 {
 	float	discriminant;
-	float	sqrt_disc;
 	float	tmp;
 
-	discriminant = coeff->b * coeff->b - 4 * coeff->a * coeff->c;
+	discriminant = calculate_discriminant(coeff->a, coeff->b, coeff->c);
 	if (discriminant < 0.0f)
 		return (false);
-	sqrt_disc = sqrtf(discriminant);
-	props->t0 = (-coeff->b - sqrt_disc) / (2.0f * coeff->a);
-	props->t1 = (-coeff->b + sqrt_disc) / (2.0f * coeff->a);
-	if (props->t0 > props->t1)
+	props->roots = calculate_hit(discriminant, coeff->a, coeff->b);
+	if (props->roots.t1 > props->roots.t2)
 	{
-		tmp = props->t0;
-		props->t0 = props->t1;
-		props->t1 = tmp;
+		tmp = props->roots.t1;
+		props->roots.t1 = props->roots.t2;
+		props->roots.t2 = tmp;
 	}
 	return (true);
 }
@@ -86,6 +83,7 @@ bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
 	t_cylinder			*cylinder;
 	t_coefficients		coeff;
 	t_cylinder_props	props;
+	bool				intersection_found;
 
 	props.side_ok = false;
 	props.cap_ok = false;
@@ -93,19 +91,17 @@ bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
 	props.axis = compute_quadratic_parts(ray, cylinder, &coeff);
 	if (solve_quadratic(&coeff, &props))
 	{
-		props.side_ok = valid_cylinder_hit(ray, object, &props, props.t0)
-			|| valid_cylinder_hit(ray, object, &props, props.t1);
+		props.side_ok = valid_cylinder_hit(ray, object, &props, props.roots.t1)
+			|| valid_cylinder_hit(ray, object, &props, props.roots.t2);
 	}
 	props.cap_ok = check_caps(ray, object, &props.cap_hit, props.axis);
-	if (props.side_ok && (!props.cap_ok || props.side_hit.t < props.cap_hit.t))
-	{
+	intersection_found = props.side_ok && (!props.cap_ok
+			|| props.side_hit.t < props.cap_hit.t);
+	if (intersection_found)
 		*hit = props.side_hit;
-		return (true);
-	}
 	else if (props.cap_ok)
-	{
 		*hit = props.cap_hit;
-		return (true);
-	}
-	return (false);
+	if (props.roots.t1 < 0)
+		hit->orientation = v_scalar_product(hit->orientation, -1.0f);
+	return (intersection_found || props.cap_ok);
 }

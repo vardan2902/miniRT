@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 14:51:00 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:44:01 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 void	set_hit_point(t_hit *hit, float t, t_ray *ray, t_object *object)
 {
 	t_vector	*position;
-	t_vector	pos;
-	t_vector	orient;
 
 	position = get_position_by_type(object);
 	if (!position)
 		return ;
 	hit->t = t;
-	pos = v_add(*ray->position, v_scalar_product(*ray->orientation, t));
-	hit->position = pos;
-	orient = v_normalize(v_sub(hit->position, *position));
-	hit->orientation = orient;
+	hit->position = v_add(*ray->position,
+			v_scalar_product(*ray->orientation, t));
+	hit->orientation = v_normalize(v_sub(hit->position, *position));
 	hit->object = object;
 }
 

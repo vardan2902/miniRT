@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:59:05 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 15:25:50 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:45:19 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	register_hooks(t_mlx *mlx)
 {
+	mlx->mouse_state.hit_object = NULL;
+	mlx->mouse_state.last_x = 0;
+	mlx->mouse_state.last_y = 0;
+	mlx->mouse_state.left_pressed = false;
+	mlx->mouse_state.right_pressed = false;
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, handle_keypress, mlx);
 	mlx_hook(mlx->win, DestroyNotify, NoEventMask, handle_close, mlx);
 	mlx_hook(mlx->win, ButtonPress, ButtonPressMask, handle_mouse_press, mlx);

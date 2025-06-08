@@ -6,16 +6,17 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 17:16:45 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:29:33 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include <minirt.h>
+# include <structs.h>
 # include <handlers.h>
 # include <parser.h>
+# include <stdbool.h>
 
 int				validate_args(int argc, char **argv);
 void			throw_error(char *msg);

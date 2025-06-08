@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:19:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 17:27:27 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:25:27 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 	hit.t = FLT_MAX;
 	if (!find_hit(ray, &hit, scene))
 		return ((t_rgb){0.0, 0.0, 0.0});
-	if (scene->light)
-		light_intensity = calculate_light_intensity(scene, &hit);
-	else
-		light_intensity = scene->ambient->lighting;
+	light_intensity = calculate_light_intensity(scene, &hit);
 	rgb = get_rgb_by_type(hit.object);
 	ambient_effect = color_scale(*scene->ambient->rgb,
 			scene->ambient->lighting);

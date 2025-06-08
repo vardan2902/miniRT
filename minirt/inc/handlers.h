@@ -6,12 +6,14 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:16:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 19:21:42 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:24:49 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HANDLERS_H
 # define HANDLERS_H
+
+# include <structs.h>
 
 int		renderer(void *param);
 int		handle_close(void *param);

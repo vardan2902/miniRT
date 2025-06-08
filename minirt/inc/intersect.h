@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:42:33 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 13:49:39 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:27:29 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define INTERSECT_H
 
 # include <structs.h>
+# include <stdbool.h>
 
 bool	intersect(t_object *object, t_ray *ray, t_hit *hit);
 bool	intersect_sphere(t_ray *ray, t_object *sphere, t_hit *hit);

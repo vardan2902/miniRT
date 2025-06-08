@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   enums.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:48:01 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/21 17:39:50 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:26:25 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUMS_H
 # define ENUMS_H
+
+# include <X11/X.h>
 
 enum e_object_types
 {

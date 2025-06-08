@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:12:40 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:53 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:27:58 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include <stdbool.h>
+# include <structs.h>
 
 bool	parse_line(t_scene *scene, char *identifier, char **line);
 void	parse_scene(t_scene *scene, int fd);

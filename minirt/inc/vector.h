@@ -6,14 +6,14 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:29:47 by vapetros          #+#    #+#             */
-/*   Updated: 2025/05/18 18:52:58 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:30:08 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_H
 # define VECTOR_H
 
-# include <minirt.h>
+# include <structs.h>
 
 float		v_length(t_vector a);
 float		v_dot_product(t_vector a, t_vector b);

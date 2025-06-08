@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/18 17:36:44 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:46:08 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define TITLE "miniRT"
 
 # define EPSILON 0.0004f
-# define BASE_SCALE 0.02f 
+# define BASE_SCALE 0.02f
 
 # define AMBIENT "A"
 # define CAMERA "C"
