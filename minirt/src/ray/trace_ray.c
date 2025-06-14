@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:19:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 18:25:27 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:48:53 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ static t_rgb	color_scale(t_rgb rgb, float intensity)
 	return ((t_rgb){rgb.r * intensity, rgb.g * intensity, rgb.b * intensity});
 }
 
+static t_rgb	calculate_final_color(t_rgb *ambient, t_rgb *light,
+	t_object *active, t_object *hit)
+{
+	int	blur_effect;
+
+	blur_effect = 0;
+	if (active && active != hit)
+		blur_effect = 100;
+	return ((t_rgb){
+		fmax(fmin(255, ambient->r + light->r + blur_effect), 0),
+		fmax(fmin(255, ambient->g + light->g + blur_effect), 0),
+		fmax(fmin(255, ambient->b + light->b + blur_effect), 0)
+	});
+}
+
 t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 {
 	t_hit	hit;
@@ -44,9 +59,6 @@ t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 	ambient_effect = color_scale(*scene->ambient->rgb,
 			scene->ambient->lighting);
 	light_effect = color_scale(*rgb, light_intensity);
-	return ((t_rgb){
-		fmin(255, ambient_effect.r + light_effect.r),
-		fmin(255, ambient_effect.g + light_effect.g),
-		fmin(255, ambient_effect.b + light_effect.b)
-	});
+	return (calculate_final_color(&ambient_effect, &light_effect,
+			scene->mlx->hit_object, hit.object));
 }

@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 17:29:33 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:34:00 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool			is_in_limit(const char *str, float min, float max);
 bool			is_instruction_in_range(char **inst, float min, float max,
 					int size);
 void			free_splitted(char **splitted);
-void			init_scene(t_scene *scene);
+void			init_scene(t_scene *scene, t_mlx *mlx);
 void			cleanup_scene(t_scene *scene);
 bool			set_vector(char **instuction, t_vector *v, bool is_orientation);
 bool			set_ratio(char *str, float *ratio);

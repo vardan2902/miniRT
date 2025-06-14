@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:55:22 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 15:45:05 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:54:51 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,28 @@ static void	handle_light_translation(int key, t_mlx *mlx)
 		change_light_pos(&(t_vector){0, 0, -6.0f}, mlx);
 }
 
+static void	handle_transform_actions(int key, t_mlx *mlx)
+{
+	if (key == XK_0)
+	{
+		mlx->hit_object = NULL;
+		mlx->need_render = true;
+	}
+	if (key == XK_r || key == XK_t)
+		mlx->action = key;
+	else if (key == XK_x || key == XK_y || key == XK_z)
+		mlx->axis = key;
+	else if (key == XK_Up || key == XK_Down)
+	{
+		if (!mlx->hit_object || !mlx->action || !mlx->axis)
+			return ;
+		if (mlx->action == XK_r)
+			rotate_object(mlx, key);
+		else if (mlx->action == XK_t)
+			translate_object(mlx, key);
+	}
+}
+
 int	handle_keypress(int key, void *param)
 {
 	t_mlx		*mlx;
@@ -73,7 +95,7 @@ int	handle_keypress(int key, void *param)
 	if (key == XK_Escape)
 		handle_close(param);
 	handle_camera_rotate(key, mlx);
-	if (mlx->scene->light)
-		handle_light_translation(key, mlx);
+	handle_light_translation(key, mlx);
+	handle_transform_actions(key, mlx);
 	return (0);
 }

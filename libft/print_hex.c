@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_hex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:08:52 by vapetros          #+#    #+#             */
-/*   Updated: 2025/01/25 17:47:42 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:18:29 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ static void	print_pointer_with_flags(unsigned long ptr, t_flags flags,
 	if (!flags.left_align)
 		print_padding(padding, ' ', size);
 	if (flags.precision_specified)
-		print_padding(flags.precision - ((ptr != 0) && \
-			(len - (len - flags.precision))), '0', size);
+		print_padding(flags.precision - ((ptr != 0)
+				&& (len - (len - flags.precision))), '0', size);
 	*size += write(1, "0x", 2);
 	print_hex_helper(ptr, size, "0123456789abcdef");
 	if (flags.left_align)

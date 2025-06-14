@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 19:39:38 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:35:24 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_viewport			t_viewport;
 typedef struct s_basis				t_basis;
 typedef struct s_ndc				t_ndc;
 typedef struct s_mlx_img			t_mlx_img;
-typedef struct s_mouse_state		t_mouse_state;
 typedef struct s_cylinder_props		t_cylinder_props;
 typedef struct s_cylinder_cap		t_cylinder_cap;
 typedef struct s_check_cap_props	t_check_cap_props;
@@ -52,22 +51,15 @@ struct s_mlx_img
 	int		endian;
 };
 
-struct s_mouse_state
-{
-	int			last_x;
-	int			last_y;
-	bool		left_pressed;
-	bool		right_pressed;
-	t_object	*hit_object;
-};
-
 struct s_mlx
 {
 	t_xvar			*ptr;
 	void			*win;
 	t_mlx_img		*img;
 	t_scene			*scene;
-	t_mouse_state	mouse_state;
+	t_object		*hit_object;
+	int				action;
+	int				axis;
 	bool			need_render;
 	bool			interactive;
 };
@@ -173,6 +165,7 @@ struct s_scene
 	t_ambient	*ambient;
 	t_light		*light;
 	t_list		*object_list;
+	t_mlx		*mlx;
 };
 
 struct s_viewport

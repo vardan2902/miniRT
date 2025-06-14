@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 18:43:48 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:31:31 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	main(int argc, char **argv)
 	t_scene	scene;
 
 	fd = validate_args(argc, argv);
-	init_scene(&scene);
+	mlx.ptr = mlx_init();
+	if (!mlx.ptr)
+		throw_error("mlx_init failed");
+	init_scene(&scene, &mlx);
 	parse_scene(&scene, fd);
 	close(fd);
 	mlx.scene = &scene;

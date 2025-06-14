@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:33:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 19:55:05 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:05:52 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,12 @@ bool	intersect_cylinder(t_ray *ray, t_object *object, t_hit *hit)
 
 	props.side_ok = false;
 	props.cap_ok = false;
+	props.roots.t1 = 0;
 	cylinder = (t_cylinder *)object->object;
 	props.axis = compute_quadratic_parts(ray, cylinder, &coeff);
 	if (solve_quadratic(&coeff, &props))
-	{
 		props.side_ok = valid_cylinder_hit(ray, object, &props, props.roots.t1)
 			|| valid_cylinder_hit(ray, object, &props, props.roots.t2);
-	}
 	props.cap_ok = check_caps(ray, object, &props.cap_hit, props.axis);
 	intersection_found = props.side_ok && (!props.cap_ok
 			|| props.side_hit.t < props.cap_hit.t);

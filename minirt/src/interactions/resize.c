@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:29:15 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 18:03:49 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:12:39 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	resize_object(t_mlx *mlx, bool is_plus)
 	t_vector	*obj_pos;
 	float		delta;
 
-	hit_object = mlx->mouse_state.hit_object;
+	hit_object = mlx->hit_object;
 	cam_pos = mlx->scene->camera->position;
 	obj_pos = get_position_by_type(hit_object);
 	delta = v_length(v_sub(*obj_pos, *cam_pos)) * BASE_SCALE;

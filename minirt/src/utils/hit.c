@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 18:44:01 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:17:12 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
 	free_ray(ray);
 	if (closest_obj)
 		return (*object = closest_obj, true);
+	*object = NULL;
 	return (false);
 }

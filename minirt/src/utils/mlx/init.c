@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:59:05 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 17:45:19 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:32:54 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 void	register_hooks(t_mlx *mlx)
 {
-	mlx->mouse_state.hit_object = NULL;
-	mlx->mouse_state.last_x = 0;
-	mlx->mouse_state.last_y = 0;
-	mlx->mouse_state.left_pressed = false;
-	mlx->mouse_state.right_pressed = false;
+	mlx->hit_object = NULL;
+	mlx->axis = 0;
+	mlx->action = 0;
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, handle_keypress, mlx);
 	mlx_hook(mlx->win, DestroyNotify, NoEventMask, handle_close, mlx);
 	mlx_hook(mlx->win, ButtonPress, ButtonPressMask, handle_mouse_press, mlx);
-	mlx_hook(mlx->win, MotionNotify, PointerMotionMask, handle_mouse_move, mlx);
-	mlx_hook(mlx->win, ButtonRelease, ButtonReleaseMask,
-		handle_mouse_release, mlx);
 	mlx_loop_hook(mlx->ptr, renderer, mlx);
 	mlx_loop(mlx->ptr);
 }
@@ -49,9 +44,6 @@ void	init_mlx(t_mlx *mlx)
 {
 	t_mlx_img	*img;
 
-	mlx->ptr = mlx_init();
-	if (!mlx->ptr)
-		throw_error("mlx_init failed");
 	mlx->win = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, TITLE);
 	if (!mlx->win)
 		throw_error("mlx_new_window failed");
