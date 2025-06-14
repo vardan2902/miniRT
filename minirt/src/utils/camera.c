@@ -6,7 +6,7 @@
 /*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:35:24 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 13:38:40 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:04:48 by vapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_vector	get_cam_right(t_mlx *mlx)
 	t_vector	right_cross;
 
 	forward = v_normalize(*mlx->scene->camera->orientation);
-	right_cross = v_cross_product(forward, (t_vector){0, 1.0f, 0});
+	right_cross = v_cross_product(forward, mlx->scene->camera->up);
 	right = v_normalize(right_cross);
 	return (right);
 }
