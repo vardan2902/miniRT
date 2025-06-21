@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:47:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 21:20:51 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:38:48 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	assign_rgb(char **instuction, t_rgb *rgb)
 
 bool	create_object(void **obj, size_t size)
 {
-	*obj = malloc(size);
+	*obj = ft_calloc(1, size);
 	if (!obj)
 		perror(ERR_MALLOC);
 	return (!!*obj);

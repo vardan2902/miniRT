@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/21 17:27:14 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:07:14 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		cleanup_light(void *content);
 void		del_sphere(void *content);
 void		del_plane(void *content);
 void		del_cylinder(void *content);
+void		del_cone(void	*content);
 void		del_object(void	*content);
 void		set_hit_point(t_hit *hit, float t, t_ray *ray, t_object *object);
 bool		find_hit(t_ray *ray, t_hit *hit, t_scene *scene);

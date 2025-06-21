@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 20:54:00 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:24:28 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@
 # define ERR_MALLOC "Error\nminiRT: malloc"
 # define ERR_ID_DUP "miniRT: identifier duplication: "
 # define ERR_MANDATORY_C "miniRT: mandatory property `C' not provided"
-# define ERR_MANDATORY_AL "miniRT: mandatory property `A' or `L' not provided"
+# define ERR_MANDATORY_A "miniRT: mandatory property `A' not provided"
+# define ERR_MANDATORY_L "miniRT: mandatory property `L' not provided"
 # define ERR_WRONG_ID "miniRT: wrong identifier: "
 # define ERR_MAP "miniRT: bump map file error: "
 

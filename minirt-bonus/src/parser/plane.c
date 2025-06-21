@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:42:12 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:29:04 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:05:16 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	*build_plane(t_mlx *mlx, char **line)
 		|| !set_orientation(line[1], &plane->orientation)
 		|| !set_rgb(line[2], &plane->rgb)
 		|| (has_bumpmap && !set_bumpmap(mlx, line[3], &plane->bumpmap)))
-	{
-		return (NULL);
-	}
+		return (del_plane(plane), NULL);
 	return (plane);
 }

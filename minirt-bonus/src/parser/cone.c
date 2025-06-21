@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 20:49:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 20:51:41 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:07:34 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	*build_cone(t_mlx *mlx, char **line)
 		|| !set_prop(line[3], &cone->initial_height)
 		|| !set_rgb(line[4], &cone->rgb)
 		|| (has_bumpmap && !set_bumpmap(mlx, line[5], &cone->bumpmap)))
-		return (NULL);
+		return (del_cone(cone), NULL);
 	return (cone);
 }

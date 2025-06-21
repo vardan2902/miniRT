@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:51:42 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/07 17:34:39 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:44:57 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@ static void	check_mandatory_props(t_scene *scene)
 	exit(EXIT_FAILURE);
 }
 
-static void	cleanup_line(char *line, t_scene *scene)
+static void	cleanup_line(char *line, t_scene *scene, void *ptr)
 {
 	if (!line)
 		return ;
+	free(line);
 	get_next_line(-1);
 	cleanup_scene(scene);
+	if (ptr)
+	{
+		mlx_destroy_display(ptr);
+		free(ptr);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -68,7 +74,7 @@ bool	parse_object(void **obj, char **line, char *id, void *(build)(char **))
 	return (!!*obj);
 }
 
-void	parse_scene(t_scene *scene, int fd)
+void	parse_scene(void *ptr, t_scene *scene, int fd)
 {
 	char	*line;
 
@@ -86,6 +92,6 @@ void	parse_scene(t_scene *scene, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	cleanup_line(line, scene);
+	cleanup_line(line, scene, ptr);
 	check_mandatory_props(scene);
 }

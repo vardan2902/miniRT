@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 15:26:08 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:39:47 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	renderer(void *param)
 	ray->position = mlx->scene->camera->position;
 	ray->orientation = (t_vector *)malloc(sizeof (t_vector));
 	if (!ray->orientation)
-		return (0);
+		return (clean_renderer(basis, ray), 0);
 	trace_loop(mlx, basis, &vp, ray);
 	clean_renderer(basis, ray);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img->img, 0, 0);

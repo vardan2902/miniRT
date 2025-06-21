@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:42:12 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:29:04 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:54:04 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*build_plane(char **line)
 		|| !set_orientation(line[1], &plane->orientation)
 		|| !set_rgb(line[2], &plane->rgb))
 	{
+		if (plane)
+			del_plane(plane);
 		return (NULL);
 	}
 	return (plane);

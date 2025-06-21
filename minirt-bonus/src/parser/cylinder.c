@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:43:06 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 21:11:09 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:05:30 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	*build_cylinder(t_mlx *mlx, char **line)
 		|| !set_prop(line[3], &cy->initial_height)
 		|| !set_rgb(line[4], &cy->rgb)
 		|| (has_bumpmap && !set_bumpmap(mlx, line[5], &cy->bumpmap)))
-		return (NULL);
+		return (del_cylinder(cy), NULL);
 	return (cy);
 }

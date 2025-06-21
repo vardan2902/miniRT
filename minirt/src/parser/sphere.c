@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:41:44 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:56:06 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:54:02 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	*build_sphere(char **line)
 		|| !set_prop(line[1], &sphere->initial_diameter)
 		|| !set_rgb(line[2], &sphere->rgb))
 	{
+		if (sphere)
+			del_sphere(sphere);
 		return (NULL);
 	}
 	return (sphere);

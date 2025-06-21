@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:41:01 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:44:06 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:05:21 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*build_light(char **line)
 		|| !set_ratio(line[1], &light->brightness)
 		|| !set_rgb(line[2], &light->rgb))
 	{
+		if (light)
+			cleanup_light(light);
 		return (NULL);
 	}
 	return (light);

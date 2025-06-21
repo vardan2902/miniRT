@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:34:04 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 18:43:48 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:32:32 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	if (!mlx.ptr)
 		throw_error("mlx_init failed");
 	init_scene(&scene, &mlx);
-	parse_scene(&scene, fd);
+	parse_scene(mlx.ptr, &scene, fd);
 	close(fd);
 	mlx.scene = &scene;
 	init_mlx(&mlx);

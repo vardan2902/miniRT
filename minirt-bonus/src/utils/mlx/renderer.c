@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 21:26:24 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:40:19 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	clean_renderer(t_basis *basis, t_ray *ray)
 {
 	if (basis)
 		free(basis);
-	if (ray)
-		free(ray);
+	free_ray(ray);
 	return (0);
 }
 

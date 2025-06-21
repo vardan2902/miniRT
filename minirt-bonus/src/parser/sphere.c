@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:41:44 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 21:11:56 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:05:04 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	*build_sphere(t_mlx *mlx, char **line)
 		|| !set_prop(line[1], &sphere->initial_diameter)
 		|| !set_rgb(line[2], &sphere->rgb)
 		|| (has_bumpmap && !set_bumpmap(mlx, line[3], &sphere->bumpmap)))
-	{
-		return (NULL);
-	}
+		return (del_sphere(sphere), NULL);
 	return (sphere);
 }

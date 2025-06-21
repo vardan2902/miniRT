@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:54:15 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 20:59:18 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 20:20:53 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	get_map_pixels(t_bumpmap **bumpmap, t_img *img)
 
 	(*bumpmap)->pixels = (int *)mlx_get_data_addr(img, &bpp,
 			&size_line, &endian);
+	free(img->image);
+	free(img);
 }
 
 bool	set_bumpmap(t_mlx *mlx, char *line, t_bumpmap **bumpmap)
@@ -53,7 +55,7 @@ bool	set_bumpmap(t_mlx *mlx, char *line, t_bumpmap **bumpmap)
 	img = mlx_xpm_file_to_image(mlx->ptr, splitted[1],
 			&(*bumpmap)->width, &(*bumpmap)->height);
 	if (!img)
-		return (false);
+		return (free(bumpmap), false);
 	free_splitted(splitted);
 	get_map_pixels(bumpmap, img);
 	return (true);
