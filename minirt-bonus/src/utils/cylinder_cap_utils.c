@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_cap_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:57:53 by vapetros          #+#    #+#             */
-/*   Updated: 2025/06/14 15:15:18 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:27:26 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-t_cylinder_cap	calculate_cap(int i, t_cylinder *cylinder, t_vector axis)
+static t_cylinder_cap	calculate_cap(int i, t_cylinder *cylinder,
+		t_vector axis)
 {
 	t_cylinder_cap	cap;
 
@@ -26,7 +27,7 @@ t_cylinder_cap	calculate_cap(int i, t_cylinder *cylinder, t_vector axis)
 	return (cap);
 }
 
-void	set_cap_hit_point(t_hit *hit, t_check_cap_props	*props,
+static void	set_cap_hit_point(t_hit *hit, t_check_cap_props	*props,
 	t_object *object, t_vector normal)
 {
 	if (props->dist_sq <= props->radius_sq)

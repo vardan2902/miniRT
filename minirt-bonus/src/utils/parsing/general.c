@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:47:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:24:29 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:20:51 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ bool	check_arg_count(char *str)
 	return (false);
 }
 
-bool	assign_object_list(t_scene *scene, enum e_object_types type, char **line,
-	void *(build)(t_mlx *, char **))
+bool	assign_object_list(t_scene *scene, enum e_object_types type,
+			char **line, void *(build)(t_mlx *, char **))
 {
 	t_list		*new;
 	t_object	*object;

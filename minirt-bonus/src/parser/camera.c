@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:40:21 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:37:09 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:38:00 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@ void	*build_camera(char **line)
 		return (NULL);
 	}
 	camera->up = (t_vector){0, 1, 0};
+	if (camera->orientation->y > 0.9f)
+		camera->up = (t_vector){0, 0, 1};
+	else if (camera->orientation->y < -0.9f)
+		camera->up = (t_vector){0, 0, 1};
 	return (camera);
 }

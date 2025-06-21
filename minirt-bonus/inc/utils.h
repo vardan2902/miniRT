@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 17:16:51 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:27:14 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ bool		is_line_empty(char *line);
 bool		is_identifier(char *str);
 bool		to_float(const char *str, float *out_value);
 bool		is_in_limit(const char *str, float min, float max);
-bool		is_instruction_in_range(char **inst, float min, float max, int size);
+bool		is_instruction_in_range(char **inst, float min, float max,
+				int size);
 void		free_splitted(char **splitted);
 void		init_scene(t_scene *scene, t_mlx *mlx);
 void		cleanup_scene(t_scene *scene);
@@ -40,10 +41,10 @@ void		assign_rgb(char **instuction, t_rgb *rgb);
 bool		create_object(void **obj, size_t size);
 bool		check_rgb(char **rgb, char *str);
 bool		check_arg_count(char *str);
-bool		assign_object_list(t_scene *scene, enum e_object_types type, char **line,
-					void *(build)(t_mlx *, char **));
+bool		assign_object_list(t_scene *scene, enum e_object_types type,
+				char **line, void *(build)(t_mlx *, char **));
 bool		assign_light_list(t_scene *scene, char **line,
-					void *(build)(char **));
+				void *(build)(char **));
 void		cleanup_camera(t_camera *camera);
 void		cleanup_ambient(t_ambient *ambient);
 void		cleanup_light(void *content);
@@ -59,12 +60,23 @@ bool		pick_object_at(int x, int y, t_scene *scene, t_object **object);
 void		free_ray(t_ray *ray);
 t_vector	get_cam_right(t_mlx *mlx);
 t_vector	get_cam_up(t_mlx *mlx, t_vector right);
-t_basis 	*get_camera_basis(t_camera *camera);
+t_basis		*get_camera_basis(t_camera *camera);
 t_viewport	compute_viewport_size(float fov);
 t_ndc		get_pixel_ndc(int x, int y);
 bool		set_bumpmap(t_mlx *mlx, char *line, t_bumpmap **bumpmap);
 float		get_bump_height(t_bumpmap *bumpmap, float u, float v);
 t_rgb		get_color_from_bumpmap(t_bumpmap *bumpmap, float u, float v);
-
+void		get_bumped(t_map_props *props);
+void		get_sampled(t_map_props *props);
+bool		check_caps(t_ray *ray, t_object *object, t_hit *hit,
+				t_vector axis);
+void		resize_cone_height(t_cone *cone, float delta);
+void		resize_cone_diameter(t_cone *cone, float delta);
+void		resize_cylinder_height(t_cylinder *cylinder, float delta);
+void		resize_cylinder_diameter(t_cylinder *cylinder, float delta);
+void		get_diffuse(t_light_effects effects, t_light *light,
+				t_rgb *obj_color, t_rgb *diffuse);
+void		get_specular(t_light_effects effects,
+				t_light *light, t_rgb *specular);
 
 #endif

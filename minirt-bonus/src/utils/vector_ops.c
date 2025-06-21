@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_ops.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:28:58 by vapetros          #+#    #+#             */
-/*   Updated: 2025/05/18 17:49:50 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:19:20 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,4 @@ t_vector	v_rotate(t_vector v, t_vector axis, float angle)
 				v_cross_product(normalized_axis, v), sin_theta));
 	return (v_add(terms_total, v_scalar_product(normalized_axis,
 				v_dot_product(normalized_axis, v) * (1.0f - cos_theta))));
-}
-
-t_vector v_reflect(t_vector inverted_light_dir, t_vector normal)
-{
-    return v_sub(inverted_light_dir, v_scalar_product(normal, 2.0f * v_dot_product(normal, inverted_light_dir)));
 }

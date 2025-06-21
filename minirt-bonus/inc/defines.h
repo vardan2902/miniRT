@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:49:14 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/08 18:46:08 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:54:00 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@
 # define ERR_MANDATORY_C "miniRT: mandatory property `C' not provided"
 # define ERR_MANDATORY_AL "miniRT: mandatory property `A' or `L' not provided"
 # define ERR_WRONG_ID "miniRT: wrong identifier: "
+# define ERR_MAP "miniRT: bump map file error: "
 
 #endif

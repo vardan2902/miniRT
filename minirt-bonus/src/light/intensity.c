@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intensity.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:31 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 17:39:06 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:49:03 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static float	calculate_attenuation(float distance)
 	return (1.0f / (1.0f + 0.001f * distance));
 }
 
-t_light_effects	calculate_light_components(t_scene *scene, t_hit *hit, t_light *light)
+t_light_effects	calculate_light_components(t_scene *scene, t_hit *hit,
+		t_light *light)
 {
 	t_vector		light_dir;
 	t_vector		view_dir;

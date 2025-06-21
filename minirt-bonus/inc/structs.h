@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:39:56 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 15:57:27 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:19:30 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,23 @@ typedef struct s_viewport			t_viewport;
 typedef struct s_basis				t_basis;
 typedef struct s_ndc				t_ndc;
 typedef struct s_mlx_img			t_mlx_img;
-typedef struct s_mouse_state		t_mouse_state;
 typedef struct s_light_effects		t_light_effects;
 typedef struct s_bumpmap			t_bumpmap;
 typedef struct s_cylinder_props		t_cylinder_props;
+typedef struct s_cone_props			t_cone_props;
 typedef struct s_light_effects		t_light_effects;
 typedef struct s_cylinder_cap		t_cylinder_cap;
 typedef struct s_bumpmap			t_bumpmap;
 typedef struct s_check_cap_props	t_check_cap_props;
 typedef struct s_roots				t_roots;
+typedef struct s_color_props		t_color_props;
+typedef struct s_map_props			t_map_props;
+
+struct s_color_props
+{
+	t_hit	*hit;
+	t_rgb	*obj_color;
+};
 
 struct s_bumpmap
 {
@@ -64,22 +72,15 @@ struct s_mlx_img
 	int		endian;
 };
 
-struct s_mouse_state
-{
-	int			last_x;
-	int			last_y;
-	bool		left_pressed;
-	bool		right_pressed;
-	t_object	*hit_object;
-};
-
 struct s_mlx
 {
 	void			*ptr;
 	void			*win;
-	t_img			*img;
+	t_mlx_img		*img;
 	t_scene			*scene;
-	t_mouse_state	mouse_state;
+	t_object		*hit_object;
+	int				action;
+	int				axis;
 	bool			need_render;
 	bool			interactive;
 };
@@ -233,6 +234,16 @@ struct s_cylinder_props
 	t_vector	axis;
 };
 
+struct s_cone_props
+{
+	bool		side_ok;
+	bool		cap_ok;
+	float		t_side;
+	float		t_cap;
+	t_vector	p_side;
+	t_vector	apex_to_p;
+};
+
 struct s_cylinder_cap
 {
 	t_vector	center;
@@ -256,6 +267,18 @@ struct s_light_effects
 	float	specular;
 	float	attenuation;
 	bool	in_shadow;
+};
+
+struct	s_map_props
+{
+	t_vector	n;
+	float		u;
+	float		v;
+	t_rgb		color;
+	t_vector	sampled;
+	t_vector	bumped;
+	t_vector	tangent;
+	t_vector	bitangent;
 };
 
 #endif

@@ -3,11 +3,11 @@ l 5,6,-30 0.6 255,255,255
 l -5,6,-30 0.6 255,255,255
 C 0,5,-30 0,0,1 85
 
-pl  0,0,0 0,1,0 104,104,104 bumpmap:./TCom_Wall_Stone3_2x2_512_normal.xpm
+pl  0,0,0 0,1,0 104,104,104 bumpmap:./bonus-scenes/textures/TCom_Wall_Stone3_2x2_512_normal.xpm
 
 pl 0,0,120 0,0,1 2,2,2
 
-pl 0,10,0 0,-1,0 128,0,0 bumpmap:./TCom_Wall_Stone3_2x2_512_normal.xpm
+pl 0,10,0 0,-1,0 128,0,0 bumpmap:./bonus-scenes/textures/TCom_Wall_Stone3_2x2_512_normal.xpm
 
 cy -5,0,-2 0,1,0 1.8 20 140,140,140
 

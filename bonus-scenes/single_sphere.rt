@@ -4,4 +4,4 @@ C 0,0,10  0,0,1  60
 
 l 10,10,10  1.0  255,255,255
 
-sp 0,0,20  2  255,0,0 bumpmap:./TCom_Rope_PPMooring_2K_normal.xpm
+sp 0,0,20  2  255,0,0 bumpmap:./bonus-scenes/textures/TCom_Rope_PPMooring_2K_normal.xpm

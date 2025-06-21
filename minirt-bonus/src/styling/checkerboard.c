@@ -1,110 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checkerboard.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 16:19:29 by ysaroyan          #+#    #+#             */
+/*   Updated: 2025/06/21 16:34:08 by ysaroyan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minirt.h>
 
-static t_rgb get_checker_color_plane(t_vector point, t_plane *plane, float size)
+static t_rgb	get_checker_color_plane(t_vector point,
+		t_plane *plane, float size)
 {
-	t_vector normal = v_normalize(*plane->orientation);
+	t_vector	normal;
+	t_vector	ref;
+	t_vector	u_axis;
+	int			u_check;
+	int			v_check;
 
-	t_vector ref = (fabs(normal.y) < 0.999f) ? (t_vector){0, 1, 0} : (t_vector){1, 0, 0};
-	t_vector u_axis = v_normalize(v_cross_product(ref, normal));
-	t_vector v_axis = v_cross_product(normal, u_axis);
-
-	t_vector p = v_sub(point, *plane->position);
-
-	float u = v_dot_product(p, u_axis);
-	float v = v_dot_product(p, v_axis);
-
-	int u_check = floor(u / size);
-	int v_check = floor(v / size);
-
-	if ((u_check + v_check) % 2 == 0)
-		return (t_rgb){255, 255, 255};
+	normal = v_normalize(*plane->orientation);
+	if (fabs(normal.y) < 0.999f)
+		ref = (t_vector){0, 1, 0};
 	else
-		return (t_rgb){0, 0, 0};
+		ref = (t_vector){1, 0, 0};
+	u_axis = v_normalize(v_cross_product(ref, normal));
+	u_check = floor(v_dot_product(v_sub(point, *plane->position),
+				u_axis) / size);
+	v_check = floor(v_dot_product(v_sub(point, *plane->position),
+				v_cross_product(normal, u_axis)) / size);
+	if ((u_check + v_check) % 2 == 0)
+		return ((t_rgb){255, 255, 255});
+	else
+		return ((t_rgb){0, 0, 0});
 }
 
-
-static t_rgb get_checker_color_sphere(t_vector point, t_sphere *sphere, float size)
+static t_rgb	get_checker_color_sphere(t_vector point,
+		t_sphere *sphere, float size)
 {
-	t_vector p = v_sub(point, *sphere->position);
+	t_vector	p;
+	float		u;
+	float		v;
+	int			u_check;
+	int			v_check;
 
-	float theta = atan2(p.z, p.x);
-	float phi = acos(p.y / (sphere->diameter / 2));
-
-	float u = (theta + M_PI) / (2 * M_PI);
-	float v = phi / M_PI;
-
-	int u_check = floor(u * size);
-	int v_check = floor(v * size);
-
+	p = v_sub(point, *sphere->position);
+	u = (atan2(p.z, p.x) + M_PI) / (2 * M_PI);
+	v = acos(p.y / (sphere->diameter / 2)) / M_PI;
+	u_check = floor(u * size);
+	v_check = floor(v * size);
 	if ((u_check + v_check) % 2 == 0)
-		return (t_rgb){255, 255, 255};
+		return ((t_rgb){255, 255, 255});
 	else
-		return (t_rgb){0, 0, 0};
+		return ((t_rgb){0, 0, 0});
 }
 
-static t_rgb get_checker_color_cylinder(t_vector point, t_cylinder *cyl, float size)
+static t_rgb	get_checker_color_cylinder(t_vector point,
+		t_cylinder *cyl, float size)
 {
-	t_vector p = v_sub(point, *cyl->position);
+	t_vector	p;
+	t_vector	axis;
+	t_vector	proj;
+	int			u_check;
+	int			v_check;
 
-	t_vector axis = v_normalize(*cyl->orientation);
-	t_vector proj = v_sub(p, v_scalar_product(axis, v_dot_product(p, axis)));
-
-	float theta = atan2(proj.z, proj.x);
-	float height = v_dot_product(p, axis);
-
-	float u = (theta + M_PI) / (2 * M_PI);
-	float v = height / cyl->height + 0.5f;
-
-	int u_check = floor(u * size);
-	int v_check = floor(v * size);
-
+	p = v_sub(point, *cyl->position);
+	axis = v_normalize(*cyl->orientation);
+	proj = v_sub(p, v_scalar_product(axis, v_dot_product(p, axis)));
+	u_check = floor((atan2(proj.z, proj.x) + M_PI) / (2 * M_PI) * size);
+	v_check = floor(v_dot_product(p, axis) / cyl->height + 0.5f * size);
 	if ((u_check + v_check) % 2 == 0)
-		return (t_rgb){255, 255, 255};
+		return ((t_rgb){255, 255, 255});
 	else
-		return (t_rgb){0, 0, 0};
+		return ((t_rgb){0, 0, 0});
 }
 
 static t_rgb	get_checker_color_cone(t_vector point, t_cone *cone, float size)
 {
-	t_vector	v = v_normalize(*cone->orientation);
-	t_vector	hit_vec = v_sub(point, *cone->position);
+	t_vector	v;
+	float		height;
+	t_vector	around;
+	t_vector	u_axis;
+	float		theta;
 
-	float height = v_dot_product(hit_vec, v);
-	float v_val = height / cone->height;
-
-	t_vector around = v_sub(hit_vec, v_scalar_product(v, height));
-	t_vector ref = {1, 0, 0};
-
-	t_vector u_axis = v_normalize(v_cross_product(v, ref));
+	v = v_normalize(*cone->orientation);
+	height = v_dot_product(v_sub(point, *cone->position), v);
+	around = v_sub(v_sub(point, *cone->position), v_scalar_product(v, height));
+	u_axis = v_normalize(v_cross_product(v, (t_vector){1, 0, 0}));
 	if (v_length(u_axis) == 0)
 		u_axis = (t_vector){0, 0, 1};
-	t_vector w_axis = v_normalize(v_cross_product(v, u_axis));
-
-	float x = v_dot_product(around, u_axis);
-	float y = v_dot_product(around, w_axis);
-	float theta = atan2f(y, x);
+	theta = atan2f(v_dot_product(around, v_normalize(v_cross_product(v,
+						u_axis))), v_dot_product(around, u_axis));
 	if (theta < 0)
 		theta += 2 * M_PI;
-
-	float u_val = theta / (2 * M_PI);
-
-	int	u_check = (int)(u_val * size);
-	int	v_check = (int)(v_val * size);
-
-	if ((u_check + v_check) % 2 == 0)
+	if (((int)(theta / (2 * M_PI) * size)
+		+ (int)(height / cone->height * size)) % 2 == 0)
 		return ((t_rgb){255, 255, 255});
 	return ((t_rgb){0, 0, 0});
 }
 
-t_rgb get_checker_color(t_vector point, t_object *object)
+t_rgb	get_checker_color(t_vector point, t_object *object)
 {
 	if (object->type == E_PLANE)
-		return (get_checker_color_plane(point, (t_plane *)object->object, 10.0f));
+		return (get_checker_color_plane(point,
+				(t_plane *)object->object, 10.0f));
 	else if (object->type == E_SPHERE)
-		return (get_checker_color_sphere(point, (t_sphere *)object->object, 6.0f));
+		return (get_checker_color_sphere(point,
+				(t_sphere *)object->object, 6.0f));
 	else if (object->type == E_CYLINDER)
-		return (get_checker_color_cylinder(point, (t_cylinder *)object->object, 6.0f));
+		return (get_checker_color_cylinder(point,
+				(t_cylinder *)object->object, 6.0f));
 	else if (object->type == E_CONE)
 		return (get_checker_color_cone(point, (t_cone *)object->object, 6.0f));
-	return (t_rgb){0, 0, 0};
+	return ((t_rgb){0, 0, 0});
 }

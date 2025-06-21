@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:48:57 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 15:02:21 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:40:56 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-
-t_vector	*get_position_by_type(t_object *object)
-{
-	if (object->type == E_SPHERE)
-		return (((t_sphere *)object->object)->position);
-	if (object->type == E_CYLINDER)
-		return (((t_cylinder *)object->object)->position);
-	if (object->type == E_PLANE)
-		return (((t_plane *)object->object)->position);
-	if (object->type == E_CONE)
-		return (((t_cone *)object->object)->position);
-	return (NULL);
-}
-
-t_vector	*get_orientation_by_type(t_object *object)
-{
-	if (object->type == E_CYLINDER)
-		return (((t_cylinder *)object->object)->orientation);
-	if (object->type == E_PLANE)
-		return (((t_plane *)object->object)->orientation);
-	if (object->type == E_CONE)
-		return (((t_cone *)object->object)->orientation);
-	return (NULL);
-}
 
 void	set_hit_point(t_hit *hit, float t, t_ray *ray, t_object *object)
 {
@@ -77,38 +53,47 @@ bool	find_hit(t_ray *ray, t_hit *hit, t_scene *scene)
 	return (found_hit);
 }
 
-bool	pick_object_at(int x, int y, t_scene *scene, t_object **object)
+void	find_closest_obj(t_list *object_list, t_ray *ray,
+		t_object **closest_obj)
 {
-	t_hit		tmp_hit;
-	t_object	*closest_obj;
 	t_list		*node;
-	t_ray		*ray;
-	t_basis		*basis;
+	t_hit		tmp_hit;
 	float		closest_t;
 
-	closest_obj = NULL;
-	node = scene->object_list;
 	closest_t = INFINITY;
 	tmp_hit.t = FLT_MAX;
-	ray = malloc(sizeof (t_ray));
-	if (!ray)
-		return (false);
-	basis = get_camera_basis(scene->camera);
-	generate_ray(ray, get_pixel_ndc(x, y), basis, compute_viewport_size(scene->camera->fov));
-	ray->position = scene->camera->position;
+	node = object_list;
 	while (node)
 	{
 		if (intersect((t_object *)node->content, ray, &tmp_hit)
 			&& tmp_hit.t > EPSILON && tmp_hit.t < closest_t)
 		{
 			closest_t = tmp_hit.t;
-			closest_obj = (t_object *)node->content;
+			*closest_obj = (t_object *)node->content;
 		}
 		node = node->next;
 	}
+}
+
+bool	pick_object_at(int x, int y, t_scene *scene,
+			t_object **object)
+{
+	t_object	*closest_obj;
+	t_ray		*ray;
+	t_basis		*basis;
+
+	closest_obj = NULL;
+	ray = malloc(sizeof (t_ray));
+	if (!ray)
+		return (false);
+	basis = get_camera_basis(scene->camera);
+	generate_ray(ray, get_pixel_ndc(x, y), basis,
+		compute_viewport_size(scene->camera->fov));
+	ray->position = scene->camera->position;
+	find_closest_obj(scene->object_list, ray, &closest_obj);
 	free(basis);
 	free_ray(ray);
 	if (closest_obj)
 		return (*object = closest_obj, true);
-	return (false);
+	return (*object = NULL, false);
 }

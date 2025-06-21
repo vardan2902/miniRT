@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:29:47 by vapetros          #+#    #+#             */
-/*   Updated: 2025/05/18 18:52:58 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:18:35 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ t_vector	v_cross_product(t_vector a, t_vector b);
 void		assign_vector(t_vector src, t_vector *dst);
 t_vector	v_rotate(t_vector v, t_vector axis, float angle);
 t_vector	init_zero_vec(void);
-t_vector    v_reflect(t_vector inverted_light_dir, t_vector normal);
+t_vector	v_reflect(t_vector inverted_light_dir, t_vector normal);
 
 #endif

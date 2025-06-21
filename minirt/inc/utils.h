@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:05:35 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/06/14 19:34:00 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:16:26 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ t_vector		get_cam_up(t_mlx *mlx, t_vector right);
 t_basis			*get_camera_basis(t_camera *camera);
 t_viewport		compute_viewport_size(float fov);
 t_ndc			get_pixel_ndc(int x, int y);
-void			set_cap_hit_point(t_hit *hit, t_check_cap_props	*props,
-					t_object *object, t_vector normal);
-t_cylinder_cap	calculate_cap(int i, t_cylinder *cylinder,
-					t_vector axis);
 bool			check_caps(t_ray *ray, t_object *object, t_hit *hit,
 					t_vector axis);
 

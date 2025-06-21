@@ -57,7 +57,7 @@ SRC_FILES				=	$(addprefix $(UTILS_DIR)/, $(UTILS_SRCS))						\
 							$(addprefix $(INTERACTIONS_DIR)/, $(INTERACTIONS_SRCS))			\
 							main.c
 
-UTILS_BONUS_SRCS		=	bumpmap.c	cylinder_cap_utils.c
+UTILS_BONUS_SRCS		=	bumpmap.c resize_utils.c v_reflect.c
 INTERSECTION_BONUS_SRCS	=	cone.c
 PARSER_BONUS_SRCS		=	cone.c
 STYLING_DIR				=	styling
@@ -115,6 +115,6 @@ fclean: clean
 re: fclean all
 
 bonus: $(LIBFT) $(LIBMLX) $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MINIRT_BONUS_INC) $(INCLUDES) $(LINKERS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME) $(MINIRT_BONUS_INC) $(INCLUDES) $(LINKERS)
 
 .PHONY: all clean fclean re bonus

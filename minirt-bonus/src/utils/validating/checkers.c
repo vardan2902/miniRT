@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:56:36 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 20:25:16 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:52:16 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	is_identifier(char *str)
 {
 	return (!ft_strcmp(str, AMBIENT) || !ft_strcmp(str, CAMERA)
 		|| !ft_strcmp(str, LIGHT) || !ft_strcmp(str, SPHERE)
-		|| !ft_strcmp(str, CYLINDER) || !ft_strcmp(str, PLANE) 
+		|| !ft_strcmp(str, CYLINDER) || !ft_strcmp(str, PLANE)
 		|| !ft_strcmp(str, CONE));
 }
 

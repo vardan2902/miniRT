@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:41:44 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:56:06 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:11:56 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	*build_sphere(t_mlx *mlx, char **line)
 {
 	t_sphere	*sphere;
-	bool	has_bumpmap;
-	char	*last_str;
+	bool		has_bumpmap;
+	char		*last_str;
 
 	sphere = NULL;
 	if (!create_object((void **)&sphere, sizeof (t_sphere)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:19:59 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 17:41:13 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:14:35 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,46 +42,66 @@ static t_rgb	get_ambient_effect(t_ambient *ambient, t_rgb obj_color)
 	return (ambient_effect);
 }
 
+static t_rgb	calculate_final_color(t_rgb *ambient, t_rgb *diff_spec,
+		t_object *active, t_object *hit)
+{
+	int	blur_effect;
+
+	blur_effect = 0;
+	if (active && active != hit)
+		blur_effect = 100;
+	return ((t_rgb){
+		fmax(fmin(255, ambient->r + diff_spec->r + blur_effect), 0),
+		fmax(fmin(255, ambient->g + diff_spec->g + blur_effect), 0),
+		fmax(fmin(255, ambient->b + diff_spec->b + blur_effect), 0)
+	});
+}
+
+static void	calculate_diffuse_and_specular(t_scene *scene,
+		t_color_props color_props, t_rgb *diffuse, t_rgb *specular)
+{
+	t_list			*light_node;
+	t_light_effects	effects;
+	t_light			*light;
+
+	light_node = scene->lights;
+	while (light_node)
+	{
+		light = (t_light *)light_node->content;
+		effects = calculate_light_components(scene, color_props.hit, light);
+		if (!effects.in_shadow)
+		{
+			get_diffuse(effects, light, color_props.obj_color, diffuse);
+			get_specular(effects, light, specular);
+		}
+		light_node = light_node->next;
+	}
+}
+
 t_rgb	trace_ray(t_ray *ray, t_scene *scene)
 {
 	t_hit			hit;
 	t_rgb			obj_color;
-	t_rgb			diffuse_effect = {0, 0, 0};
-	t_rgb			specular_effect = {0, 0, 0};
-	t_rgb			ambient_effect;
-	t_rgb			final;
-	t_light_effects	effects;
+	t_rgb			diffuse;
+	t_rgb			specular;
+	t_rgb			ambient;
 
 	hit.t = FLT_MAX;
+	diffuse = (t_rgb){0, 0, 0};
+	specular = (t_rgb){0, 0, 0};
 	if (!find_hit(ray, &hit, scene))
-		return ((t_rgb){0.0, 0.0, 0.0});	
+		return ((t_rgb){0.0, 0.0, 0.0});
 	if (hit.object->checkerboard)
 		obj_color = get_checker_color(hit.position, hit.object);
 	else
 		obj_color = *get_rgb_by_type(hit.object);
 	hit.orientation = get_bumped_orient(&hit);
-	ambient_effect = get_ambient_effect(scene->ambient, obj_color);
-	t_list *light_node = scene->lights;
-	while (light_node)
-	{
-		t_light *light = (t_light *)light_node->content;
-		effects = calculate_light_components(scene, &hit, light);
-
-		if (!effects.in_shadow)
-		{
-			diffuse_effect.r += obj_color.r * (light->rgb->r / 255.0f) * light->brightness * effects.diffuse * effects.attenuation;
-			diffuse_effect.g += obj_color.g * (light->rgb->g / 255.0f) * light->brightness * effects.diffuse * effects.attenuation;
-			diffuse_effect.b += obj_color.b * (light->rgb->b / 255.0f) * light->brightness * effects.diffuse * effects.attenuation;
-			specular_effect.r += light->rgb->r * light->brightness * effects.specular * effects.attenuation;
-			specular_effect.g += light->rgb->g * light->brightness * effects.specular * effects.attenuation;
-			specular_effect.b += light->rgb->b * light->brightness * effects.specular * effects.attenuation;
-		}
-		light_node = light_node->next;
-	}
-	final = (t_rgb){
-		fmin(255, ambient_effect.r + diffuse_effect.r + specular_effect.r),
-		fmin(255, ambient_effect.g + diffuse_effect.g + specular_effect.g),
-		fmin(255, ambient_effect.b + diffuse_effect.b + specular_effect.b)
-	};
-	return (final);
+	ambient = get_ambient_effect(scene->ambient, obj_color);
+	calculate_diffuse_and_specular(scene, (t_color_props){&hit, &obj_color},
+		&diffuse, &specular);
+	return (calculate_final_color(&ambient, &(t_rgb){
+			diffuse.r + specular.r,
+			diffuse.g + specular.g,
+			diffuse.b + specular.b
+		}, scene->mlx->hit_object, hit.object));
 }

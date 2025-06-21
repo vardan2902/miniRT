@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:07 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 19:09:14 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:26:24 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-static void	put_pixel(t_img *img, int x, int y, int color)
+static void	put_pixel(t_mlx_img *img, int x, int y, int color)
 {
 	char	*data;
 
@@ -61,7 +61,7 @@ void	trace_loop(t_mlx *mlx, t_basis *basis, t_viewport *vp, t_ray *ray)
 			dir = v_add(v_add(
 						v_scalar_product(basis->right, sx * (vp->width / 2.0f)),
 						v_scalar_product(basis->up, sy * (vp->height / 2.0f))),
-					basis->forward);	
+					basis->forward);
 			assign_vector(v_normalize(dir), ray->orientation);
 			put_pixel(mlx->img, x, y, rgb_to_hex(trace_ray(ray, mlx->scene)));
 		}
@@ -93,4 +93,3 @@ int	renderer(void *param)
 	mlx->need_render = false;
 	return (0);
 }
-

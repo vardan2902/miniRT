@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_ray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vapetros <vapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:55 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/05/18 20:17:41 by vapetros         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:12:16 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ t_basis	*get_camera_basis(t_camera *camera)
 
 	basis = malloc(sizeof(t_basis));
 	if (!basis)
-		return NULL;
-	basis->right = v_normalize(v_cross_product(camera->up, *camera->orientation));
-	basis->up = v_normalize(v_cross_product(*camera->orientation, basis->right));
+		return (NULL);
+	basis->right = v_normalize(v_cross_product(camera->up,
+				*camera->orientation));
+	basis->up = v_normalize(v_cross_product(*camera->orientation,
+				basis->right));
 	basis->forward = *camera->orientation;
 	return (basis);
 }

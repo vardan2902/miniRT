@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:07:28 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:48:56 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:17:06 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	del_cone(void	*content)
 	free(co->bumpmap);
 	free(co);
 }
-
 
 void	del_object(void	*content)
 {

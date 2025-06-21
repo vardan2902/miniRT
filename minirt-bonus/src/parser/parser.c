@@ -6,7 +6,7 @@
 /*   By: ysaroyan <ysaroyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:43:58 by ysaroyan          #+#    #+#             */
-/*   Updated: 2025/04/14 17:20:35 by ysaroyan         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:11:27 by ysaroyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 bool	parse_line(t_scene *scene, char *id, char **line)
 {
 	if (!ft_strcmp(id, AMBIENT))
-		return (parse_object((void **)&scene->ambient, line, id, build_ambient));
+		return (parse_object((void **)&scene->ambient,
+				line, id, build_ambient));
 	if (!ft_strcmp(id, CAMERA))
 		return (parse_object((void **)&scene->camera, line, id, build_camera));
 	if (!ft_strcmp(id, LIGHT))
