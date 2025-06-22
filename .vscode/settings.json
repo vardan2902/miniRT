@@ -4,6 +4,19 @@
         "enums.h": "c",
         "structs.h": "c",
         "stdbool.h": "c",
-        "mlx_int.h": "c"
+        "mlx_int.h": "c",
+        "random": "c",
+        "minirt_bonus.h": "c",
+        "defines.h": "c",
+        "libft.h": "c",
+        "intersect.h": "c",
+        "vector.h": "c",
+        "interactions.h": "c",
+        "ray.h": "c",
+        "calculations.h": "c",
+        "minirt_mandatory.h": "c",
+        "limits": "c",
+        "algorithm": "c",
+        "utils.h": "c"
     }
 }
